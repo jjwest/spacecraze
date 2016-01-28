@@ -1,0 +1,230 @@
+\documentclass{TDP003mall}
+\usepackage{graphicx}
+
+
+\newcommand{\version}{Version 1.0}
+\author{Jonathan Dandemar, \url{jonda429@student.liu.se}\\
+  Jonas Vestlund, \url{jonve547@student.liu.se}\\
+  Christian Kalmelid \url{chrka755@student.liu.se} \\
+ }
+\title{Kravspecifikation}
+\date{2015-11-13}
+\rhead{Jonathan Dandemar\\
+Jonas Vestlund\\
+Christian Kalmelid \\
+}
+
+\begin{document}
+\projectpage
+\section*{Revisionshistorik}
+\begin{table}[!h]
+\begin{tabularx}{\linewidth}{|l|X|l|}
+\hline
+Ver. & Revisionsbeskrivning & Datum \\\hline
+1.0 & Skapade dokumentet & 2015-11-13 \\\hline
+\end{tabularx}
+\end{table}
+
+\newpage
+
+\section{Spelidé}
+Spelet skall vara ett 2-dimensionellt flygspel av Multidirectional shooter genren. Spelaren skall styra ett rymdskepp i en statisk rektangulär rymdmiljö och skjuta ner motståndare utan att själv bli träffad av attacker eller fiendeskepp. Spelaren får poäng för att skjuta ner fiender och tanken är att spelet skall bli succesivt mer utmanande genom att fler och fler fiender skapas desto mer tid som går.
+  
+\section{Målgrupp}
+Spelet riktar sig till personer i alla åldrar som har ett spelintresse och tillgång till en dator.
+
+\section{Spelupplevelse}
+Spelaren kommer uppleva en stigande nivå av stress och utmaning under spelets gång då antalet
+fiender ständigt ökar, och därigenom även svårighetsnivån. Spelets svårighetsnivå får spelaren
+att sträva efter att slå sina tidigare tider, och gör även spelet lämpligt för tävling
+vänner emellan.
+
+\section{Spelmekanik}
+Spelplanen är statisk med en fast bakgrundsbild med rymdtema. Spelaren kommer att kunna navigera
+sitt skepp över hela planen genom att styra med olika tangenter samt musen. Under spelets gång kommer
+asteroider att färdas över spelplanen, samt två sorters fiender: en drönare som aktivt
+försöker att krocka med spelaren, samt ett större skepp som driver i en rät bana och skjuter
+på spelaren. 
+
+\begin{table}[!h]
+\centering
+\begin{tabularx}{255pt}{|l|l|}
+\hline
+Knapp & Åtgärd \\\hline
+w & Flytta skeppet uppåt. \\
+s & Flytta skeppet nedåt. \\
+a & Flytta skeppet åt vänster. \\
+d & Flytta skeppet åt höger. \\
+Vänster musknapp & Avfyra skeppets grundvapen. \\
+Höger musknapp & Aktivera supervapen. \\
+Esc & Pausa spelet och visa pausmenyn.\\
+\hline
+\end{tabularx}
+\caption{Användarkommandon}
+\end{table}
+
+\section{Regler}
+
+\subsection{Allmänt}
+De tre olika typerna av icke-spelar objekt på skärmen (asteroid, fiendeskepp 1 och fiendeskepp 2) 
+kommer att genereras med olika frekvens, där fiendeskepp 2 förekommer mindre frekvent än 
+asteroider och 
+fiendeskepp 1. Fiender kommer inte att kunna kollidera med varandra, och skotten från
+ fiendeskepp 2
+kommer ej heller kollidera med vare sig fiende 1 eller asteroider. Spelet
+ fortgår tills dess att spelaren dör.
+Spelaren kommer att ackumulera poäng genom att skjuta ned fiender. \\ \\
+Om spelaren skepp kolliderar med ett fiendeskepp eller en asteroid avslutas spelet.\\
+Om spelaren blir träffad av ett skott från en fiende avslutas spelet. \\
+Om en fiende blir träffad av ett skott minskas deras liv. Om livet når 0 dör dem. \\
+
+\subsection{Spelplanen}
+Spelplanen är rektangulärt utformad med en statisk bakgrund. Fiender och asteroider genereras vid gränsen
+av spelplanen, och kan därmed helt eller delvis ritas utanför spelplanen. Om fiender flyger ut från
+spelplanen vänder dessa och flyger in igen. Spelaren kan ej lämna spelplanen under några omständigheter.
+
+
+\subsection{Spelaren}
+Spelaren har obegränsat med vanliga skott. \\
+Spelaren kan skjuta framåt från skeppets nos. \\
+Spelaren har möjlighet att plocka upp ett supervapen (Singularity) när dessa dyker upp på banan. \\
+Spelaren kan endast bära ett supervapen. \\
+Spelaren tål endast en kollision med ett annat objekt (asteroid, fiendeskepp, fiendeskott). \\
+Spelaren kan ej lämna spelplanen. \\
+Spelarens rörelse, om så förekommer, sker med konstant hastighet. \\
+
+\subsection{Asteroider}
+Asteroider skall flyga in från spelplanens utkant på ett slumpvalt ställe och flyga på en rak linje
+ genom banan och försvinna vid spelplanens utkant. \\
+Asteroider kan endast kollidera med spelarens skepp. \\
+Asteroider kan inte skjutas sönder av spelarens vanliga attack. \\
+Asteroider kan förstöras med supervapnet. \\
+Asteroider genereras med kortare intervall ju längre spelaren överlevt. \\
+
+\subsection{Fiendeskepp 1 - Drone}
+Drone skall flyga in från spelplanens utkant på ett slumpvalt ställe. \\
+Drone skall ständigt flyga mot spelarens skepp. \\
+Drone kan enbart kollidera med spelarens skepp. \\
+Drone kan förstöras av spelarens kanon och supervapen. \\
+
+\subsection{Fiendeskepp 2 - Blaster}
+Blaster skall flyga in från spelplanens utkant på ett slumpvalt ställe. \\
+Blaster kan endast flyga i en rät linje. \\
+Om Blaster kolliderar med en vägg ändras färdriktningen till det motsatta
+i relation till väggens axel. \\
+Blaster ska skjuta skott mot spelarens skepp med jämna mellanrum. \\
+
+\subsection{Skott}
+\subsubsection{Spelarens skott}
+Spelarens skott färdas i en rak linje med konstant hastighet. \\
+Skotten upphör att existera när dessa träffar en fiende eller lämnar spelplanen. \\
+
+\subsubsection{Fiendens skott}
+Fiendens skott färdas i en rak linje med konstant hastighet. \\
+Fiendens skott färdas långsammare än spelarens. \\
+Fiendens skott kan enbart kollidera med spelarens skepp. \\
+Skotten upphör att existera när dessa träffar spelarens skepp eller lämnar spelplanen. \\
+
+\subsection{Supervapen - Singularity}
+Singularity förstör allt på spelplanen förutom spelarens skepp. \\
+Endast en instans av Singularity kan bäras av spelaren åt gången. \\
+Nya instanser av Singularity genereras på spelplanen med jämna mellanrum. \\
+
+\newpage
+
+\section{Visualisering}
+Nedan visas en konceptuell bild av hur spelet ska se ut. Skeppen, asteroiderna och laserskotten representeras av samma sprites som planeras att användas i det faktiska spelet, bakgrunden och skalor på figurerna kommer dock att justeras under implementationen, det kan även tänkas att det kommer att finnas en poängruta i något av de övre hörnen som visar spelarens poäng.
+\begin{figure}[!h]
+\includegraphics[scale=0.55]{spelplan_koncept.jpg}
+\caption{Konceptuell bild av spelet} 
+\end{figure}
+\\Spelaren styr det gröna skeppet på bilden. 
+Tefaten är fiendeskepp 1 - Drones, de försöker hela tiden flyga in i spelaren. 
+Skeppen som skjuter röd laser är fiendeskepp 2 - Blasters, de rör sig i en rak linje men ändrar riktning när de kolliderar med en vägg och de försöker hela tiden skjuta på spelaren. 
+Asteroiderna är de bruna rymdstenarna på bilden och de kommer att färdas över spelplanen på en rak linje.
+
+\newpage
+
+\section{Kravformulering}
+
+\subsection{Krav}
+\begin{enumerate}
+
+\item{Det ska finnas en start-, paus- och highscore-meny.}
+\item{Spelet ska innehålla en spelare}
+\item{Spelet ska innehålla  motståndare i form av asteroider och två olika fiendeskepp.}
+\item{Samtliga objekt skall kunna röra sig över skärmen.}
+\item{Spelarens skepp skall kunna rotera.}
+
+\item{Spelarens skepp navigeras över spelplanen med tangentbordet.}
+\item{Spelarens skepp roteras med musen.}
+\item{Spelarens skepp skall kunna skjuta skott.}
+\item{Ett av fiendeskeppen skall kunna skjuta skott.}
+\item{Det skall finnas kollisionshantering.}
+
+\item{Det skall finnas ett supervapen tillgängligt för spelaren.}
+\item{Spelaren ska få poäng för antalet fiender denne förstört.}
+\item{Nuvarande poäng ska visas med en poängräknare.}
+\item{Highscore ska sparas till en extern fil och läsas in vid senare körningar. Spelaren får ange ett namn
+som ska synas tillsammans med poängen.}
+
+
+\end{enumerate}
+
+\subsection{Tilläggskrav}
+
+\begin{enumerate}
+\item{Det skall finnas bakgrundsmusik.}
+\item{Det skall finnas ljud för avfyrande av skott.}
+\item{Det skall finnas ljud för kollisioner.}
+\item{Det skall finnas animation för kollisioner.}
+\item{Det skall finnas en powerup för spelarens vanliga skott så att dessa förstärks, blir större, 
+och gör mer skada.}
+\item{Det skall finnas en powerup för spelarens vanliga skott som gör att dessa förutom att skjuta rakt framåt
+även skjuter två extra skott med 20-25 graders vinkel ut från de vanliga skotten, ett på varderas sida.}
+\item{Det skall finnas en powerup som gör spelaren odödlig i fem sekunder.}
+\item{Det skall finnas möjlighet att lägga till väggar på spelplanen som spelaren ej får kollideras med.
+Dessa kommer även att blockera fiender, skott och asteroider.}
+\item{Storleken på spelplanen skall kunna justeras från startmenyn.}
+
+\end{enumerate}
+
+\section{Kravuppfyllelse}
+1. \emph{Spelet ska simulera en värld som innehåller olika typer av objekt. Objekten ska ha olika beteenden och röra sig i världen och agera på olika sätt när de möter andra objekt.} \\
+\\
+Spelet simulerar en värld med olika objekt (spelare, asteroider, fiendeskepp, skott). Dessa har olika beteenden
+i form av unika rörelsemönster och hur de agerar vid kollision med andra objekt. \\
+\\
+2. \emph{Det måste finnas minst tre olika typer av objekt och det ska finnas flera instanser av minst två av dessa. T.ex ett spelarobjekt och många instanser av två olika slags fiendeobjekt.} \\
+\\
+Det finns fem olika typer av objekt (spelaren, fiendeskepp 1, fiendeskepp 2, spelarens skott, fiendens skott, 
+asteroider). Flera instanser kommer att finnas vid större delen av tiden för asteroider, fiendeskepp 1 och 
+spelarens skott. \\
+\\
+3. \emph{Ett beteende som måste finnas med är att figurerna ska röra sig över skärmen. Rörelsen kan följa ett mönster och/eller vara slumpmässig. Minst ett objekt, utöver spelaren ska ha någon typ av rörelse.}\\
+\\
+Samtliga objekt förutom supervapnet kommer att röra sig över skärmen. Rörelsen är användarstyrd för spelarens
+skepp samt en kombination av slumpmässig förbestämdhet för övriga objekt.
+4. \emph{En figur ska styras av spelaren, antingen med tangentbordet eller med musen. Du kan även göra ett spel där man spelar två stycken genom att dela på tangentbordet (varje spelare använder olika tangenter). Då styr man var sin figur.} \\
+\\
+Spelarens skepp styrs med både tangentbordet (för rörelse över spelplanen) samt musen (för rotation av skeppet
+och avfyrande av vapen).\\
+\\
+5. \emph{Grafiken ska vara tvådimensionell.} \\
+\\
+Grafiken är tvådimensionell. \\
+\\
+6. \emph{Världen (spelplanen) kan antas vara lika stor som fönstret (du kan göra en större spelplan med scrollning, men det blir lite krångligare).} \\
+\\
+Spelplanen är lika stor som fönstet. \\
+\\
+7. \emph{Det ska finnas kollisionshantering, det vill säga, det ska hända olika saker när objekten möter varandra, de ska påverka varandra på något sätt. T.ex kan ett av objekten tas bort, eller så kan objekten förvandlas på något sätt, eller så kan ett nytt objekt skapas.}\\
+\\
+Det finns kollisionshantering. Om spelarens skepp kolliderar med ett fiendeskepp, fiendeskott eller asteroid
+avslutas spelet. Om spelarens skott kolliderar med ett fiendeskepp tas både skottet och fiendeskeppet (om dess
+liv nått 0) bort.
+8. \emph{Spelet måste upplevas som ett sammanhängande spel som går att spela! } \\
+\\
+Spelet hänger ihop, det går att spela, och det är hardcore.
+
+\end{document}
