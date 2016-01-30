@@ -7,7 +7,7 @@ class VisibleObject
 {
 public:
     VisibleObject();
-    virtual void draw(SDL_Renderer*);
+    virtual void draw(SDL_Renderer*) const = 0;
     SDL_Rect getRect() const;
 
 protected:

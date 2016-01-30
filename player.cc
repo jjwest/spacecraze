@@ -1,4 +1,4 @@
-#include "../inc/player.h"
+#include "player.h"
 
 #include <utility>
 #include <SDL2/SDL.h>
