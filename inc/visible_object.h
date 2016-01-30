@@ -1,13 +1,13 @@
-#ifndef SPRITE_H
-#define SPRITE_H
+#ifndef VISIBLE_OBJECT_H
+#define VISIBLE_OBJECT_H
 
 #include <SDL2/SDL_image.h>
 
-class Sprite 
+class VisibleObject 
 {
 public:
-    Sprite();
-    virtual void draw(SDL_Renderer*) const = 0;
+    VisibleObject();
+    virtual void draw(SDL_Renderer*);
     SDL_Rect getRect() const;
 
 protected:

@@ -1,26 +1,33 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <map>
+#include "visible_object.h"
+
+#include <SDL2/SDL.h>
 #include <string>
+#include <list>
 
-#include "moving_object.h"
-
-class Player: public MovingObject {
+class Player: public VisibleObject
+{
 public:
-    Player(Texture*, int, int, int, int);
-    bool hasSingularity() const; // Checks if the player has singularity
-    void move() override;
-    void update(const std::map<std::string, bool>&, function<void()>&); 
-    void update() override;
-    void setSingularity(bool);
-    std::pair<int, int> getPosistion() const;
+    Player(int x, int y, SDL_Renderer* renderer);
+    ~Player();
+    static void updateEach();
+    std::pair<int, int> getPos() const;
 
 private:
-    bool carries_singularity;
-    Uint32 shoot_cooldown;
-    void setAngle();
+    static Texture texture;
+    static std::list<Player*> players;
+    std::list<Player*>::iterator it;
+
+    bool singularity;
+    int damage;
+    Uint32 last_shot;
+
+    void update();
     void shoot();
+    void move();
+    void setSingularity();
 };
 
 #endif

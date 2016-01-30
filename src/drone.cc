@@ -6,23 +6,23 @@
 
 #include "../inc/drone.h"
 
-Drone::Drone(Texture* t, int x, int y, 
-             int s, int hp, double a,
-             std::pair<double, double>* p_pos)
-    : Moving_Object(t, x, y, s, hp, a), destination{p_pos}, score{10} {}
+using namespace std;
 
-void Drone::move()
+Drone::Drone(Texture* t, int x, int y, int s, int hp)
+    : MovingObject(t, x, y, s, hp), score{10} {}
+
+void Drone::move(const pair<int, int>& player_pos)
 {
     //Calculates angle to player and moves accordingly
     float angle_to_player;
-    double dest_x = destination->first;
-    double dest_y = destination->second;
+    double dest_x = player_pos.first;
+    double dest_y = player_pos.second;
     double center_drone_x = rect.x + (rect.h / 2);  
     double center_drone_y = rect.y + (rect.w / 2);
 
     double x_dist = dest_x - center_drone_x;
     double y_dist = dest_y - center_drone_y;
-    double longest = std::max(abs(x_dist), abs(y_dist));
+    double longest = max(abs(x_dist), abs(y_dist));
 
     double delta_x = x_dist / longest;
     double delta_y = y_dist /longest;
@@ -39,13 +39,13 @@ void Drone::move()
     angle = (static_cast<int> (angle_to_player)+90)%360;
 }
 
-void Drone::update()
+void Drone::update(const pair<int, int>& player_pos)
 {
-    move();
-    update_AABB();
+    move(player_pos);
+    updateAABB();
 }
 
-int Drone::get_score() const
+int Drone::getScore() const
 {
     return score;
 }

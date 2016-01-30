@@ -5,18 +5,16 @@
 #include <utility>
 #include "moving_object.h"
 
-class Drone: public Moving_Object
+class Drone: public MovingObject
 {
 public:
-    Drone(Texture*, int, int, int, int, double,
-          std::pair<double, double>*);
+    Drone(Texture* t, int x, int y, int s, int hp);
     ~Drone() = default;
-    void move() override;
-    void update() override;
-    int get_score() const;
+    void move(const std::pair<int, int>& player_pos);
+    void update(const std::pair<int, int>& player_pos);
+    int getScore() const;
   
 private:
-    std::pair<double, double>* destination; // Destination is always the playerships position
     const int score;
 };
 

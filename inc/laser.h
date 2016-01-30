@@ -3,12 +3,12 @@
 
 #include "moving_object.h"
 
-class Laser : public Moving_Object
+class Laser : public MovingObject
 {
 public:
-    Laser(Texture*, int, int, int, int, double, int, std::pair<int, int>);
+    Laser(Texture*, int, int, int, int, int, std::pair<int, int>);
     ~Laser() = default;
-    void move() override;
+    void move();
     void update();
     int get_damage() const;
     

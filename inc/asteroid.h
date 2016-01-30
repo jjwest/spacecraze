@@ -3,20 +3,20 @@
 
 #include "moving_object.h"
 
-class Asteroid: public Moving_Object
+class Asteroid: public MovingObject
 {
 public:
-    Asteroid(Texture*, int, int, int, int, double);
-    void move() override;
-    void update() override;
+    Asteroid(Texture*, int, int, int, int);
+    void move();
+    void update();
 
 private:
     std::pair<int, int> exit_point;
     int move_x;
     int move_y;
-    void calculate_exit_point();
-    void calculate_direction();
-    void kill_if_outside_screen();
+    void calculateExitPoint();
+    void calculateDirection();
+    void killIfOutsideScreen();
 };
 
 #endif

@@ -13,7 +13,8 @@
 #include "laser.h"
 #include "enums.h"
 
-class World {
+class World 
+{
 public:
     World();
     ~World();
@@ -21,11 +22,12 @@ public:
     void addEnemyAsteroid();
     void addEnemyBlaster();
     void addEnemyDrone();
-    void addFriendlyLaser();
-    void addHostileLaser();
+    void addEnemyLaser(const std::pair<int, int>& from);
+    void addPlayerLaser(int x, int y, int dmg, 
+                        const std::pair<int, int>& direction);
 
 private:
-    // Player player;              
+    Player player;              
     SDL_Texture* background;
     std::vector<Asteroid*> asteroids;
     std::vector<Blaster*> blasters;

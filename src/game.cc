@@ -5,8 +5,7 @@
 #include "../inc/gamestate_manager.h"
 #include "../inc/globals.h"
 
-Game::Game() 
-    :    window{nullptr}, renderer{nullptr} {
+Game::Game() : {nullptr}, renderer{nullptr} {
     initializeSDL();
     loadMedia();
 }

@@ -3,21 +3,15 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <string>
 
-class Texture
+struct Texture
 {
-public:
-    Texture(SDL_Texture*, int, int);
+    Texture(std::string const& path, SDL_Renderer* renderer);
     ~Texture();
-    SDL_Texture* getTexture() const;
-    int getWidth() const;
-    int getHeight() const;
-    void setScale(float);
-
-private:
     SDL_Texture* texture;
     int width;
-    int height;
+    int sheight;
 };
 
 #endif

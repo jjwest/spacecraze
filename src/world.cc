@@ -11,9 +11,10 @@ namespace {
     }
 }
 
-World::World() {
-    background = ResourceManager::getInstance().getTexture("background")->getTexture();
-}
+World::World() : 
+    player{ResourceManager::getInstance().getTexture("player"), 500, 350, 3, 1},
+    background{ResourceManager::getInstance().getTexture("background")->getTexture()}
+    {}
 
 World::~World() {
     for (auto i : asteroids) {
@@ -36,8 +37,8 @@ World::~World() {
 GameStates World::update(SDL_Renderer* renderer, 
                          const map<string, bool>& player_actions) {
     GameStates gamestate{ PLAY };
-
     draw(renderer);
+    player_actions.at(0);
     return gamestate;
 }
 
@@ -70,7 +71,7 @@ void World::draw(SDL_Renderer* renderer) {
         i->draw(renderer);
     }
 
-    // player.draw(renderer); 
+    player.draw(renderer); 
 }
 
 

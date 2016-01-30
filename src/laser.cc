@@ -10,7 +10,7 @@
 
 Laser::Laser(Texture* t, int x, int y, int s,
              int hp, int dmg, std::pair<int, int> aim_at):
-    Moving_Object(t, x, y, s, hp), damage{dmg}                                        
+    MovingObject(t, x, y, s, hp), damage{dmg}                                        
 {
     // Calculates movement direction
     double center_laser_x = rect.x + (rect.h / 2);  
@@ -37,17 +37,13 @@ void Laser::move()
 void Laser::update() 
 {
     move();
-    update_AABB();
+    updateAABB();
 
     // Kills laser if outside screen
-    if( (rect.x < 0 || rect.x > 1024) || (rect.y < 0 || rect.y > 768) )
-    {
+    if ((rect.x < 0 || rect.x > 1024) || (rect.y < 0 || rect.y > 768)) {
         current_hp = 0;
     }
 }
 
-int Laser::get_damage() const
-{
-  return damage;
-}
+int Laser::get_damage() const {return damage;}
 
