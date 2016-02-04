@@ -1,7 +1,14 @@
-CC = g++
-CCFLAGS = -std=c++11 -Wall -Wextra -Wold-style-cast -Woverloaded-virtual -pedantic -Werror -g
-LDFLAGS = -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
+CXX = g++-4.9
+INCL = ../inc
+CXXFLAGS = -std=c++11 -Wall -Wextra -Weffc++ -Wold-style-cast -Woverloaded-virtual -pedantic -g -I ${INCL}
+LDLIBS = -lSDL2 -lSDL2main -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 
-all: ../inc/player.h player.cc unit_test.cc
-	${CC} ${CCFLAGS} player.cc unit_test.cc ${LDFLAGS}
+all: main
+
+main: unit_test.o player.o
+	${CXX} ${CXXFLAGS} unit_test.o player.o visible_object.o -o $@ ${LDLIBS}
+
+player.o: player.cc ../inc/player.h visible_object.o
+unit_test.o: unit_test.cc
+visible_object.o: visible_object.cc ../inc/visible_object.h
 

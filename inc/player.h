@@ -6,19 +6,26 @@
 #include <SDL2/SDL.h>
 #include <string>
 #include <list>
+#include <memory>
+
+#include "texture.h"
 
 class Player: public VisibleObject
 {
 public:
-    Player(int x, int y, SDL_Renderer* renderer);
+    Player(int x, int y);
+    Player(const Player&) = delete;
     ~Player();
+    Player& operator=(const Player&) = delete;
     static void updateEach();
     std::pair<int, int> getPos() const;
     void draw(SDL_Renderer* renderer) const;
+    void setSingularity();
+
+    static std::list<Player*> list;
 
 private:
-    static Texture texture;
-    static std::list<Player*> players;
+    Texture* texture;
     std::list<Player*>::iterator it;
     
     bool singularity;
@@ -29,7 +36,6 @@ private:
     void update();
     void shoot();
     void move();
-    void setSingularity();
 };
 
 #endif

@@ -3,62 +3,53 @@
 #include <utility>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include <stdexcept>
 #include <string>
+
+#include "../inc/asset_manager.h"
 
 using namespace std;
 
-Player::Player(int x, int y, SDL_Renderer* renderer): 
-    VisibleObject(), singularity{true}, health{1}, damage{2}, last_shot{0} 
-{
-    if (players.empty()) {
-        string path {"../sprites/playership.png"};
-
-        SDL_Surface* surface = IMG_Load(path.c_str());
-        if (surface == NULL) {
-            throw invalid_argument("Could not load sprite: " + path);
-        }
-        
-        texture.texture = SDL_CreateTextureFromSurface(renderer, surface);
-        texture.width = surface->w;
-        texture.height = surface->h;
-        SDL_FreeSurface(surface);
-    }
+Player::Player(int x, int y)
+    :  VisibleObject(), 
+       texture{AssetManager::getInstance().getTexture("player")},
+    it{nullptr}, singularity{true}, health{1}, damage{2}, last_shot{0}
+{    
     rect.x = x;
     rect.y = y;
-    rect.w = texture.width;
-    rect.h = texture.height;
-
-    players.push_front(this);
-    it = players.begin();
+    rect.w = texture->getWidth();
+    rect.h = texture->getHeight();
+    
+    list.push_front(this);
+    it = list.begin();
 }
 
 Player::~Player()
 {
-    players.erase(it);
-    if (players.empty()) {
-        SDL_DestroyTexture(texture.texture);
-    }
+    list.erase(it);
 }
 
 void Player::updateEach()
 {
-    for (auto p : players) {
-        p->update();
+    for (auto i : list) 
+    {
+        i->update();
     }
 }
 
 void Player::draw(SDL_Renderer* renderer) const
 {
-    SDL_RenderCopyEx(renderer, texture.texture, NULL, &rect,
-                     angle, NULL, SDL_FLIP_NONE);
+    SDL_RenderCopyEx(renderer, texture->getTexture(), &rect, 
+                     NULL, angle, NULL, SDL_FLIP_NONE);
 }
+
+std::list<Player*> Player::list;
 
 void Player::shoot()
 {
     Uint32 current_time{ SDL_GetTicks() };
 
-    if (current_time - last_shot > 80) {
+    if (current_time - last_shot > 80) 
+    {
         int mouse_x, mouse_y;
         SDL_GetMouseState(&mouse_x, &mouse_y);
         pair<int, int> direction{mouse_x, mouse_y};
@@ -116,8 +107,8 @@ void Player::setSingularity() {}
 
 pair<int, int> Player::getPos() const 
 {
-    int pos_x{ rect.x + rect.h / 2 };
-    int pos_y{ rect.y + rect.w / 2 };
+    int pos_x {rect.x + rect.h / 2};
+    int pos_y {rect.y + rect.w / 2};
     pair<int, int> player_pos{pos_x, pos_y};
 
     return player_pos;

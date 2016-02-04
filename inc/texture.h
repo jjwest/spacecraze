@@ -5,13 +5,22 @@
 #include <SDL2/SDL_image.h>
 #include <string>
 
-struct Texture
+class Texture
 {
-    Texture(std::string const& path, SDL_Renderer* renderer);
+public:
+    Texture(SDL_Renderer* renderer, const std::string& path, float scale);
+    Texture(const Texture&) = delete;
     ~Texture();
+    Texture& operator=(Texture&) = delete;
+    SDL_Texture* getTexture() const;
+    int getWidth() const;
+    int getHeight() const;
+    void setScale(float scale);
+
+private:
     SDL_Texture* texture;
     int width;
-    int sheight;
+    int height;
 };
 
 #endif

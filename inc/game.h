@@ -4,8 +4,10 @@
 #include <SDL2/SDL.h>
 #include <map>
 #include <iostream>
+#include <memory>
 
-class Game {
+class Game 
+{
 public:
     Game();
     ~Game();

@@ -1,23 +1,33 @@
 #include "../inc/texture.h"
 
-#include <stderr>
+#include <SDL2/SDL_image.h>
 
-using namespace std;
-
-Texture::Texture(string const& path, SDL_Renderer* renderer)
+Texture::Texture(SDL_Renderer* renderer, const std::string& path, float scale)
+    : texture{nullptr}, width{0}, height{0}
 {
-    SDL_Surface*  surface = Load_IMG(path.c_str());
-    if (surface == NULL) {
-        throw invalid_argument("Could not load sprite: " + path);
-    }
-        
+    SDL_Surface* surface = IMG_Load(path.c_str());
     texture = SDL_CreateTextureFromSurface(renderer, surface);
-    width = surface->w;
-    height = surface->h;
+    width = surface->w * scale;
+    height = surface->h * scale;;
     SDL_FreeSurface(surface);
 }
 
 Texture::~Texture()
 {
     SDL_DestroyTexture(texture);
+}
+
+SDL_Texture* Texture::getTexture() const
+{
+    return texture;
+}
+
+int Texture::getWidth() const
+{
+    return width;
+}
+
+int Texture::getHeight() const
+{
+    return height;
 }
