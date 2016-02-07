@@ -4,8 +4,8 @@
 #include <SDL2/SDL_ttf.h>
 #include <iostream>
 
-#include "../inc/player.h"
-#include "../inc/asset_manager.h"
+#include "../include/player.h"
+#include "../include/asset_manager.h"
 
 using namespace std;
 

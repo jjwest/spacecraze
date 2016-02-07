@@ -1,7 +1,7 @@
-#include "../inc/world.h"
+#include "../include/world.h"
 
-#include "../inc/aabb.h"
-#include "../inc/resourcemanager.h"
+#include "../include/aabb.h"
+#include "../include/resourcemanager.h"
 
 using namespace std;
 

@@ -1,10 +1,10 @@
-#include "../inc/asteroid.h"
+#include "../include/asteroid.h"
 
 #include <utility>
 #include <random>
 
-#include "../inc/asset_manager.h"
-#include "../inc/constants.h"
+#include "../include/asset_manager.h"
+#include "../include/constants.h"
 
 using namespace std;
 

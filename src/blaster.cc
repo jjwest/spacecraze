@@ -1,6 +1,6 @@
-#include "../inc/blaster.h"
-#include "../inc/constants.h"
-#include "../inc/asset_manager.h"
+#include "../include/blaster.h"
+#include "../include/constants.h"
+#include "../include/asset_manager.h"
 
 using namespace std;
 

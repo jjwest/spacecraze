@@ -1,5 +1,5 @@
-#include "../inc/enemy_generator.h"
-#include "../inc/globals.h"
+#include "../include/enemy_generator.h"
+#include "../include/globals.h"
 
 using namespace std;
 

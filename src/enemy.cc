@@ -1,4 +1,4 @@
-#include "../inc/enemy.h"
+#include "../include/enemy.h"
 
 Enemy::Enemy(Texture* t, int x, int y, double hp, int sp, int sc)
     : VisibleObject(t, x, y), 

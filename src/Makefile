@@ -8,7 +8,7 @@ all: main
 main: unit_test.o player.o
 	${CXX} ${CXXFLAGS} unit_test.o player.o visible_object.o -o $@ ${LDLIBS}
 
-player.o: player.cc ../inc/player.h visible_object.o
+player.o: player.cc ../include/player.h visible_object.o
 unit_test.o: unit_test.cc
-visible_object.o: visible_object.cc ../inc/visible_object.h
+visible_object.o: visible_object.cc ../include/visible_object.h
 

@@ -1,4 +1,4 @@
-#include "../inc/input_handler.h"
+#include "../include/input_handler.h"
 
 using namespace std;
 

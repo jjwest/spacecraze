@@ -1,4 +1,4 @@
-#include "../inc/laser.h"
+#include "../include/laser.h"
 
 #include <algorithm>
 #include <cmath>

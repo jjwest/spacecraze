@@ -1,5 +1,6 @@
-#include "../inc/asset_manager.h"
+#include "../include/asset_manager.h"
 #include <iostream>
+
 using namespace std;
 
 AssetManager::AssetManager()

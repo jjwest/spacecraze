@@ -1,13 +1,13 @@
-#include "../inc/game.h"
+#include "../include/game.h"
 
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 
-#include "../inc/asset_manager.h"
-#include "../inc/enums.h"
-#include "../inc/constants.h"
-#include "../inc/player.h"
+#include "../include/asset_manager.h"
+#include "../include/enums.h"
+#include "../include/constants.h"
+#include "../include/player.h"
 
 Game::Game() : window{nullptr}, renderer{nullptr} 
 {

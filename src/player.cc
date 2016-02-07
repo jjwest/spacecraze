@@ -1,12 +1,12 @@
-#include "../inc/player.h"
+#include "../include/player.h"
 
 #include <utility>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <string>
 
-#include "../inc/asset_manager.h"
-#include "../inc/constants.h"
+#include "../include/asset_manager.h"
+#include "../include/constants.h"
 
 using namespace std;
 

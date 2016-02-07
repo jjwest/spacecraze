@@ -1,4 +1,4 @@
-#include "../inc/visible_object.h"
+#include "../include/visible_object.h"
 
 VisibleObject::VisibleObject(Texture* t, int x, int y) 
     : texture{t}, angle{0}, rect{x, y, texture->getHeight(), 

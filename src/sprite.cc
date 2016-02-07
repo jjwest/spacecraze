@@ -1,4 +1,4 @@
-#include "../inc/visible_object.h"
+#include "../include/visible_object.h"
 
 VisibleObject::VisibleObject() : angle{0} {}
 
