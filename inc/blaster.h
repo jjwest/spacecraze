@@ -5,26 +5,21 @@
 #include <vector>
 #include <utility>
 #include <random>
-#include <iostream>
 
-#include "moving_object.h"
-#include "laser.h"
-#include "world.h"
+#include "enemy.h"
 
-class Blaster: public MovingObject
+class Blaster: public Enemy
 {
 public:
-    Blaster(Texture* t, int x, int y, int s, int hp);
-    ~Blaster() = default;
-    void move();
-    void update(World& world);
-    int getScore() const override; 
+    Blaster(int x, int y);
+    void update();
   
 private:
-    std::pair<int, int> go_to; // Sets direction to point on opposite side
+    Point move_to; // Sets direction to point on opposite side
     Uint32 last_shot; // Timer for the blasters gun
-    int score;
-    void shoot(World& world);
+
+    void move();
+    void shoot();
     void setAngle();
     void changeDirection();
 };

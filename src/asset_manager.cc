@@ -1,4 +1,5 @@
 #include "../inc/asset_manager.h"
+#include <iostream>
 using namespace std;
 
 AssetManager::AssetManager()
@@ -6,31 +7,22 @@ AssetManager::AssetManager()
 
 AssetManager& AssetManager::getInstance() 
 {
-    static AssetManager instance;
-    return instance;
+    return *instance;
 }
 
-AssetManager::~AssetManager()
+void AssetManager::destroyInstance()
 {
-    for (auto i : textures) 
-    {
-        delete i.second;
-    }
-    for (auto i : music) 
-    {
-        Mix_FreeMusic(i.second);
-    }
-    for (auto i : fonts) 
-    {
-        TTF_CloseFont(i.second);
-    }
+    delete instance;
+    instance = nullptr;
 }
+
+AssetManager* AssetManager::instance(new AssetManager);
 
 Texture* AssetManager::getTexture(const string& name) const 
 {
     try
     {
-        return textures.at(name);        
+        return &*textures.at(name);        
     }
     catch (exception& e)
     {
@@ -42,7 +34,7 @@ Mix_Music* AssetManager::getMusic(const string& name) const
 {
     try
     {
-        return music.at(name);        
+        return music.at(name)->getMusic();
     }
     catch (exception& e)
     {
@@ -54,7 +46,7 @@ TTF_Font* AssetManager::getFont(const string& name) const
 {
     try
     {
-        return fonts.at(name);        
+        return fonts.at(name)->getFont();        
     }
     catch (exception& e)
     {
@@ -65,18 +57,18 @@ TTF_Font* AssetManager::getFont(const string& name) const
 void AssetManager::loadTexture(const string& name, const string& path, float scale,
                                SDL_Renderer* renderer) 
 {   
-    textures.insert( make_pair(name, new Texture(renderer, path, scale)) );
+    unique_ptr<Texture> loaded_texture { new Texture(renderer, path, scale) };
+    textures.insert(make_pair( name, move(loaded_texture) ));
 }
 
 void AssetManager::loadMusic(const string& name, const string& path) 
 {
-    Mix_Music* loaded_music = Mix_LoadMUS(path.c_str());
-    music.insert( make_pair(name, loaded_music) );
+    unique_ptr<Music> loaded_music { new Music(path) };
+    music.insert(make_pair( name, move(loaded_music) ));
 }
 
-void AssetManager::loadFont(const string& name, const string& path, int size) 
+void AssetManager::loadFont(const string& name, const string& path, int size)
 {
-    TTF_Font* loaded_font = TTF_OpenFont(path.c_str(), size);
-    fonts.insert(make_pair(name, move(loaded_font)));
+    unique_ptr<Font> loaded_font { new Font(path, size) };
+    fonts.insert(make_pair( name, move(loaded_font) ));
 }
-

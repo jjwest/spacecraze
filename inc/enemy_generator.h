@@ -26,6 +26,7 @@ private:
     int asteroid_spawn_count;
     int blaster_spawn_count;
     int drone_spawn_count;
+
     void update_asteroids();
     void update_drones();
     void update_blasters();

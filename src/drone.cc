@@ -1,22 +1,23 @@
-#include <iostream>
+#include "../inc/drone.h"
+
 #include <utility>
 #include <math.h>
 #include <cmath>
 #include <algorithm>
 
-#include "../inc/drone.h"
+#include "../inc/asset_manager.h"
 
 using namespace std;
 
-Drone::Drone(Texture* t, int x, int y, int s, int hp)
-    : MovingObject(t, x, y, s, hp), score{10} {}
+Drone::Drone(int x, int y)
+    : Enemy(AssetManager::getInstance().getTexture("drone"), x, y, 6, 2, 10) {}
 
-void Drone::move(const pair<int, int>& player_pos)
+void Drone::move(const Point& player_pos)
 {
     //Calculates angle to player and moves accordingly
     float angle_to_player;
-    double dest_x = player_pos.first;
-    double dest_y = player_pos.second;
+    double dest_x = player_pos.x;
+    double dest_y = player_pos.y;
     double center_drone_x = rect.x + (rect.h / 2);  
     double center_drone_y = rect.y + (rect.w / 2);
 
@@ -39,15 +40,10 @@ void Drone::move(const pair<int, int>& player_pos)
     angle = (static_cast<int> (angle_to_player)+90)%360;
 }
 
-void Drone::update(const pair<int, int>& player_pos)
+void Drone::update(const Point& player_pos)
 {
     move(player_pos);
     updateAABB();
-}
-
-int Drone::getScore() const
-{
-    return score;
 }
 
 

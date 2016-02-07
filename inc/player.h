@@ -5,37 +5,33 @@
 
 #include <SDL2/SDL.h>
 #include <string>
-#include <list>
+#include <map>
 #include <memory>
 
 #include "texture.h"
+#include "aabb.h"
 
 class Player: public VisibleObject
 {
 public:
     Player(int x, int y);
-    Player(const Player&) = delete;
-    ~Player();
-    Player& operator=(const Player&) = delete;
-    static void updateEach();
     std::pair<int, int> getPos() const;
-    void draw(SDL_Renderer* renderer) const;
-    void setSingularity();
-
-    static std::list<Player*> list;
+    void update(const std::map<std::string, bool>& player_actions);
+    void addSingularity();
 
 private:
-    Texture* texture;
-    std::list<Player*>::iterator it;
-    
+    AABB this_aabb;
     bool singularity;
-    int health;
-    int damage;
+    double health;
+    double damage;
+    int speed;
+    Uint32 shoot_cooldown;
     Uint32 last_shot;
 
-    void update();
     void shoot();
-    void move();
+    void move(const std::map<std::string, bool>& player_actions);
+    void setAngle();
+    void updateAABB();
 };
 
 #endif

@@ -2,20 +2,17 @@
 #define DRONE_H
 
 #include <utility>
-#include <utility>
-#include "moving_object.h"
+#include "enemy.h"
 
-class Drone: public MovingObject
+class Drone: public Enemy
 {
 public:
-    Drone(Texture* t, int x, int y, int s, int hp);
-    ~Drone() = default;
-    void move(const std::pair<int, int>& player_pos);
-    void update(const std::pair<int, int>& player_pos);
+    Drone(int x, int y);
+    void update(const Point& player_pos);
     int getScore() const;
   
-private:
-    const int score;
+private:    
+    void move(const Point& player_pos);
 };
 
 #endif

@@ -3,17 +3,20 @@
 
 #include <SDL2/SDL_image.h>
 
+#include "texture.h"
+
 class VisibleObject 
 {
 public:
-    VisibleObject();
+    VisibleObject(Texture* t, int x, int y);
     virtual ~VisibleObject();
-    virtual void draw(SDL_Renderer*) const = 0;
     SDL_Rect getRect() const;
+    void draw(SDL_Renderer*) const;
 
 protected:
-    SDL_Rect rect;
+    Texture* texture;
     double angle;
+    SDL_Rect rect;
 };
 
 #endif

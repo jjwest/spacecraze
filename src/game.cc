@@ -7,33 +7,32 @@
 #include "../inc/asset_manager.h"
 #include "../inc/enums.h"
 #include "../inc/constants.h"
+#include "../inc/player.h"
 
 Game::Game() : window{nullptr}, renderer{nullptr} 
 {
-    initializeSDL();
+    initSDL();
     loadMedia();
 }
 
 Game::~Game()  
 {
+    AssetManager::destroyInstance();
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
     Mix_CloseAudio();
-    Mix_Quit();
-    TTF_Quit();
     IMG_Quit();
+    TTF_Quit();
     SDL_Quit();
 }
 
 void Game::run() 
 {
-    // GameStates gamestate{ MENU };
-    bool running{true};
 
-    while (running) 
-    {
-    }
+
 }
 
-void Game::initializeSDL() 
+void Game::initSDL() 
 {
     if ( SDL_Init(SDL_INIT_VIDEO) != 0 || SDL_Init(SDL_INIT_AUDIO) != 0 ) 
     {
@@ -66,34 +65,20 @@ void Game::selectMusic() {}
 
 void Game::loadMedia() 
 {
-    AssetManager::getInstance().loadTexture("asteroid", 
-                                               "../sprites/meteorBrown_big3.png",
-                                               1, renderer);
-    AssetManager::getInstance().loadTexture("background", 
-                                               "../sprites/background.jpg", 
-                                               1, renderer);
-    AssetManager::getInstance().loadTexture("blaster", 
-                                               "../sprites/enemyRed1.png", 
-                                               1, renderer);
-    AssetManager::getInstance().loadTexture("drone", 
-                                               "../sprites/enemyRed2.png", 
-                                               0.5, renderer);
-    AssetManager::getInstance().loadTexture("player", 
-                                               "../sprites/playerShip2_green.png",
-                                               0.60, renderer);
-    AssetManager::getInstance().loadTexture("laser_friendly", 
-                                               "../sprites/laserGreen11.png", 
-                                               1, renderer);
-    AssetManager::getInstance().loadTexture("laser_hostile", 
-                                               "../sprites/laserRed16.png", 
-                                               1, renderer);
-    AssetManager::getInstance().loadTexture("singularity", 
-                                               "../sprites/laserGree.png", 
-                                               1, renderer);
+    auto& assets = AssetManager::getInstance();
 
-    AssetManager::getInstance().loadMusic("menu", "../sounds/menu_music.mp3");
-    AssetManager::getInstance().loadMusic("play", "../sounds/play_music.mp3");
+    assets.loadTexture("asteroid", "../sprites/meteor.png", 1, renderer);
+    assets.loadTexture("background", "../sprites/background.jpg", 1, renderer);
+    assets.loadTexture("blaster", "../sprites/blaster.png", 1, renderer);
+    assets.loadTexture("drone", "../sprites/drone.png", 0.5, renderer);
+    assets.loadTexture("player", "../sprites/playership.png", 0.60, renderer);
+    assets.loadTexture("laser_friendly", "../sprites/playerlaser.png", 1, renderer);
+    assets.loadTexture("laser_hostile", "../sprites/enemylaser.png", 1, renderer);
+    assets.loadTexture("singularity", "../sprites/singularity.png", 1, renderer);
 
-    AssetManager::getInstance().loadFont("button", "../fonts/Akashi.ttf", 36);
+    assets.loadMusic("menu", "../sounds/menu_music.mp3");
+    assets.loadMusic("play", "../sounds/play_music.mp3");
+
+    assets.loadFont("button", "../fonts/Akashi.ttf", 36);
 }
 

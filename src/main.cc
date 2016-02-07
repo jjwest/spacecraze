@@ -7,9 +7,9 @@ int main()
         Game game;
         game.run();
     }
-    catch (std::exception& e)
+    catch (std::string& e)
     {
-        std::cerr << "ERROR occurred:" << e.what() 
+        std::cerr << "ERROR occurred: " << e 
                   << "\nExiting program." << std::endl;
     }
 

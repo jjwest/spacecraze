@@ -1,21 +1,21 @@
 #ifndef ASTEROID_H
 #define ASTEROID_H
 
-#include "moving_object.h"
+#include "enemy.h"
 
-class Asteroid: public MovingObject
+class Asteroid: public Enemy
 {
 public:
-    Asteroid(Texture*, int, int, int, int);
-    void move();
+    Asteroid(int x, int y);
     void update();
 
 private:
-    std::pair<int, int> exit_point;
     int move_x;
     int move_y;
-    void calculateExitPoint();
-    void calculateDirection();
+
+    void move();
+    Point calculateExitPoint();
+    void calculateDirection(const Point& exit);
     void killIfOutsideScreen();
 };
 
