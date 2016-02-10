@@ -58,18 +58,18 @@ TTF_Font* AssetManager::getFont(const string& name) const
 void AssetManager::loadTexture(const string& name, const string& path, float scale,
                                SDL_Renderer* renderer) 
 {   
-    unique_ptr<Texture> loaded_texture { new Texture(renderer, path, scale) };
+    auto loaded_texture = make_unique(new Texture(renderer, path, scale));
     textures.insert(make_pair( name, move(loaded_texture) ));
 }
 
 void AssetManager::loadMusic(const string& name, const string& path) 
 {
-    unique_ptr<Music> loaded_music { new Music(path) };
+    auto loaded_music = make_unique(new Music(path));
     music.insert(make_pair( name, move(loaded_music) ));
 }
 
 void AssetManager::loadFont(const string& name, const string& path, int size)
 {
-    unique_ptr<Font> loaded_font { new Font(path, size) };
+    auto loaded_font = make_unique(new Font(path, size));
     fonts.insert(make_pair( name, move(loaded_font) ));
 }

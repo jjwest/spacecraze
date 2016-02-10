@@ -1,7 +1,7 @@
-CXX      = g++-4.9
-CXXFLAGS = -std=c++11 -Wall -Wextra -Wold-style-cast -Woverloaded-virtual -pedantic -g
+CXX      = g++-5
+CXXFLAGS = -std=c++14 -Wall -Wextra -Wold-style-cast -Woverloaded-virtual -pedantic -g
 LDLIBS   = -lSDL2 -lSDL2main -lSDL2_image -lSDL2_ttf -lSDL2_mixer
-VPATH    = ../src:../inc
+VPATH    = ./src:./include:./build
 
 EXEC     = a
 
@@ -24,8 +24,8 @@ asteroid.o: asteroid.cc asteroid.h constants.h enemy.o asset_manager.o
 blaster.o: blaster.cc blaster.h constants.h enemy.o asset_manager.o
 
 %.o: %.cc
-	${CXX} ${CXXFLAGS} -c -o $@ $< ${LDLIBS}
+	${CXX} ${CXXFLAGS} -c -o build/$@ $< ${LDLIBS}
 
 clean:
-	rm -rf *.o
+	rm -rf build/*.o
 
