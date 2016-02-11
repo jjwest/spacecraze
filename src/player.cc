@@ -10,17 +10,38 @@
 
 using namespace std;
 
-Player::Player(int x, int y)
-    :  VisibleObject( AssetManager::getInstance().getTexture("player") ), 
-       this_aabb{1, 1, 1, 1}, singularity{true}, health{1}, damage{2}, speed{2}, 
-       shoot_cooldown{80}, last_shot{0}
-{    
-    rect.x = x;
-    rect.y = y;
-    rect.w = texture->getWidth();
-    rect.h = texture->getHeight();
+Player::Player(const Point& pos)
+    :  VisibleObject( AssetManager::getInstance().getTexture("player"), pos), 
+       this_aabb{pos.y, pos.x, pos.y + rect.h, pos.x + rect.w}, singularity{true}, health{1},
+       damage{2}, speed{2}, shoot_cooldown{80}, last_shot{0} {}
 
-    this_aabb = AABB(y, x, y + rect.h, x + rect.w);
+Point Player::getPos() const 
+{
+    int x = rect.x + rect.h / 2;
+    int y = rect.y + rect.w / 2;
+
+    return {x, y};
+}
+
+AABB Player::getAABB() const
+{
+    return this_aabb;
+}
+
+void Player::update(const map<string, bool>& player_actions)
+{
+    move(player_actions);
+    updateAABB();
+}
+
+void Player::addSingularity() 
+{
+    singularity = true;
+}
+
+void Player::reduceHealth(double dmg)
+{
+    health -= dmg;
 }
 
 void Player::shoot()
@@ -57,12 +78,6 @@ void Player::move(const map<string, bool>& player_actions)
     setAngle();
 }
 
-void Player::update(const map<string, bool>& player_actions)
-{
-    move(player_actions);
-    updateAABB();
-}
-
 void Player::setAngle() 
 {
      int x, y;
@@ -80,20 +95,6 @@ void Player::setAngle()
      angle = (static_cast<int> (ang) - 90)%360;
 }
 
-void Player::addSingularity() 
-{
-    singularity = true;
-}
-
-pair<int, int> Player::getPos() const 
-{
-    int pos_x {rect.x + rect.h / 2};
-    int pos_y {rect.y + rect.w / 2};
-    pair<int, int> player_pos{pos_x, pos_y};
-
-    return player_pos;
-}
-               
 void Player::updateAABB()
 {
     this_aabb = AABB(rect.y + 10, 
@@ -101,3 +102,4 @@ void Player::updateAABB()
                      rect.y + rect.h - 10, 
                      rect.x + rect.w - 10);    
 }
+

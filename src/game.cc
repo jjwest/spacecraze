@@ -28,7 +28,7 @@ Game::~Game()
 
 void Game::run() 
 {
-
+    SDL_Delay(3000);
 
 }
 

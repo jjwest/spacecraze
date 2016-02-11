@@ -4,24 +4,30 @@
 
 using namespace std;
 
-Blaster::Blaster(int x, int y)
-    : Enemy(AssetManager::getInstance().getTexture("blaster"), x, y, 15, 1, 40),
-      last_shot{0} {}
+Blaster::Blaster(const Point& pos)
+    : Enemy(AssetManager::getInstance().getTexture("blaster"), pos, 15, 1, 40),
+      last_shot{0}, shoot_cooldown{300} {}
 
-
-void Blaster::shoot()
+void Blaster::update(const Point& player_pos,
+                     LaserManager& laser_manager)
 {
-    // Uint32 current_time = SDL_GetTicks();
+    move();
+    setAngle(player_pos);
+    shoot(player_pos, laser_manager);
+    updateAABB();
+}
 
-    // if (current_time - last_shot > 300) {
-    //     // pair<int, int> aim_to;
-    //     // aim_to.first = static_cast<int> (player_pos.first);
-    //     // aim_to.second = static_cast<int> (player_pos.second);
-    //     // setAngle();
-    //     pair<int, int> this_pos{rect.x, rect.y};
-    //     world.addEnemyLaser(this_pos);
-    //     last_shot = current_time;
-    // }
+void Blaster::shoot(const Point& player_pos,
+                    LaserManager& laser_manager)
+{
+    Uint32 current_time = SDL_GetTicks();
+
+    if (current_time - last_shot > shoot_cooldown)
+    {
+        Point this_pos {rect.x, rect.y};
+        laser_manager.addEnemyLaser(this_pos, player_pos);
+        last_shot = current_time;
+    }
 }
 
 void Blaster::changeDirection() 
@@ -71,28 +77,15 @@ void Blaster::move()
 
     rect.x = rect.x + static_cast<int>(round(move_x));
     rect.y = rect.y + static_cast<int>(round(move_y));
-
-    setAngle();
 }
 
-void Blaster::update()
+void Blaster::setAngle(const Point& player_pos)
 {
-    move();
-    shoot();
-    updateAABB();
-}
-
-void Blaster::setAngle()
-{
-    // Calculates angle to player
-     // int center_x, center_y;
-     // float ang;
-          
-     // center_x = rect.x + (rect.h / 2);
-     // center_y = rect.y + (rect.w / 2);
+    int center_x = rect.x + (rect.h / 2);
+    int center_y = rect.y + (rect.w / 2);
      
-     // ang = atan2(center_y - aim_at->second, center_x - aim_at->first);
-     // ang = ang * 180 / M_PI;
+    float ang = atan2(center_y - player_pos.y, center_x - player_pos.x);
+    ang = ang * 180 / M_PI;
      
-     // angle = (static_cast<int> (ang) + 90)%360;
+    angle = (static_cast<int> (ang) + 90)%360;
 }

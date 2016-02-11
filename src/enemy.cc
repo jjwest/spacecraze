@@ -1,9 +1,16 @@
 #include "../include/enemy.h"
 
-Enemy::Enemy(Texture* t, int x, int y, double hp, int sp, int sc)
-    : VisibleObject(t, x, y), 
+Enemy::Enemy(Texture* t, const Point& pos, double hp, int sp, int sc)
+    : VisibleObject(t, pos), 
       this_aabb{rect.y, rect.x, rect.y + rect.h, rect.x + rect.w}, 
       health{hp}, speed{sp}, score{sc} {}
+
+Enemy::~Enemy() {}
+
+AABB Enemy::getAABB() const
+{
+    return this_aabb;
+}
 
 bool Enemy::isDead() const
 {
@@ -13,6 +20,11 @@ bool Enemy::isDead() const
 int Enemy::getScore() const
 {
     return score;
+}
+
+void Enemy::reduceHealth(double damage)
+{
+    health -= damage;
 }
 
 void Enemy::updateAABB()

@@ -6,7 +6,7 @@
 class Asteroid: public Enemy
 {
 public:
-    Asteroid(int x, int y);
+    Asteroid(const Point& pos);
     void update();
 
 private:

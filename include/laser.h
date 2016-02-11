@@ -1,20 +1,28 @@
 #ifndef LASER_H
 #define LASER_H
 
-#include "moving_object.h"
+#include "visible_object.h"
+#include "aabb.h"
 
-class Laser : public MovingObject
+class Laser : public VisibleObject
 {
 public:
-    Laser(Texture*, int, int, int, int, int, std::pair<int, int>);
-    ~Laser() = default;
-    void move();
+    Laser(Texture* t, const Point& pos, const Point& destination, double dmg);
+    AABB getAABB() const;
     void update();
-    int get_damage() const;
+    int getDamage() const;
     
 private:
-  int damage;
-  double delta_x;
-  double delta_y;
+    AABB this_aabb;
+    double damage;
+    double health;
+    double speed;
+    double current_x;
+    double current_y;
+    double delta_x;
+    double delta_y;
+
+    void move();
+    void updateAABB();
 };
 #endif

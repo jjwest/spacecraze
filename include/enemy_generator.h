@@ -3,19 +3,16 @@
 
 #include <SDL2/SDL.h>
 #include <vector>
-#include <map>
-#include <random>
 
-#include "world.h"
 #include "texture.h"
 
-class EnemyGenerator {
+class EnemyGenerator
+{
 public:
     EnemyGenerator();
-    void update(const World&);
+    void update();
 
 private:
-    std::vector<std::pair<char, int>> spawn_sections;
     double asteroid_spawn_delay;
     double drone_spawn_delay;
     double blaster_spawn_delay;
@@ -27,9 +24,9 @@ private:
     int blaster_spawn_count;
     int drone_spawn_count;
 
-    void update_asteroids();
-    void update_drones();
-    void update_blasters();
+    void updateAsteroids();
+    void updateDrones();
+    void updateBlasters();
     std::pair<int, int> getSpawnPoint(Texture*); 
 };
 

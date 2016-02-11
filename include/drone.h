@@ -7,7 +7,7 @@
 class Drone: public Enemy
 {
 public:
-    Drone(int x, int y);
+    Drone(const Point& pos);
     void update(const Point& player_pos);
     int getScore() const;
   

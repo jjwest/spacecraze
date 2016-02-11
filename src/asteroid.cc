@@ -8,15 +8,10 @@
 
 using namespace std;
 
-Asteroid::Asteroid(int x, int y) 
-    : Enemy(AssetManager::getInstance().getTexture("asteroid"), x, y, 50, 2, 0),
-      move_x{0}, move_y{0}
+Asteroid::Asteroid(const Point& pos) 
+    : Enemy(AssetManager::getInstance().getTexture("asteroid"),
+            pos, 50, 2, 0), move_x{0}, move_y{0}
 {
-    rect.x = x;
-    rect.y = y;
-    rect.w = texture->getWidth();
-    rect.h = texture->getHeight();
-
     Point exit = calculateExitPoint();
     calculateDirection(exit);
 }

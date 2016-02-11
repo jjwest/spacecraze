@@ -14,10 +14,12 @@
 class Player: public VisibleObject
 {
 public:
-    Player(int x, int y);
-    std::pair<int, int> getPos() const;
+    Player(const Point& pos);
+    Point getPos() const;
+    AABB getAABB() const;
     void update(const std::map<std::string, bool>& player_actions);
     void addSingularity();
+    void reduceHealth(double dmg);
 
 private:
     AABB this_aabb;

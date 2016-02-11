@@ -9,8 +9,9 @@
 
 using namespace std;
 
-Drone::Drone(int x, int y)
-    : Enemy(AssetManager::getInstance().getTexture("drone"), x, y, 6, 2, 10) {}
+Drone::Drone(const Point& pos)
+    : Enemy(AssetManager::getInstance().getTexture("drone"),
+            pos, 6, 2, 10) {}
 
 void Drone::move(const Point& player_pos)
 {

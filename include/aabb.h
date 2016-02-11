@@ -1,10 +1,7 @@
 #ifndef AABB_H
 #define AABB_H
 
-struct Point
-{
-    int x, y;
-};
+#include "point.h"
 
 class AABB
 {

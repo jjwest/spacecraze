@@ -8,10 +8,12 @@
 class Enemy: public VisibleObject
 {
 public:
-    Enemy(Texture* t, int x, int y, double hp, int sp, int sc);
+    Enemy(Texture* t, const Point& pos, double hp, int sp, int sc);
     virtual ~Enemy();
+    AABB getAABB() const;
     bool isDead() const;
     int getScore() const;
+    void reduceHealth(double damage);
     
 protected:
     AABB this_aabb;
