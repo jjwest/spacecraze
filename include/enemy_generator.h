@@ -4,13 +4,14 @@
 #include <SDL2/SDL.h>
 #include <vector>
 
+#include "enemy_manager.h"
 #include "texture.h"
 
 class EnemyGenerator
 {
 public:
     EnemyGenerator();
-    void update();
+    void update(EnemyManager& enemies);
 
 private:
     double asteroid_spawn_delay;
@@ -24,10 +25,9 @@ private:
     int blaster_spawn_count;
     int drone_spawn_count;
 
-    void updateAsteroids();
-    void updateDrones();
-    void updateBlasters();
-    std::pair<int, int> getSpawnPoint(Texture*); 
+    void updateAsteroids(EnemyManager& enemies);
+    void updateDrones(EnemyManager& enemies);
+    void updateBlasters(EnemyManager& enemies);
 };
 
 #endif

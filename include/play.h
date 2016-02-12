@@ -3,6 +3,7 @@
 
 #include <SDL2/SDL.h>
 #include <memory>
+#include <map>
 
 #include "gamestate.h"
 #include "player.h"
@@ -15,7 +16,6 @@ class Play: public GameState
 {
 public:
     Play(SDL_Renderer* r);
-    ~Play();
     void handleEvents();
     void update();
     void render();
@@ -24,13 +24,19 @@ public:
 private:
     SDL_Event event;
     SDL_Renderer* renderer;
-
-    EnemyManager enemy_manager;
-    LaserManager laser_manager;
-    Player player;
-
     GameStates next_state;
-};
 
+    EnemyGenerator enemy_generator;
+    EnemyManager enemies;
+    LaserManager lasers;
+    Player player;
+    std::map<std::string, bool> player_actions;
+
+    void handleCollisions();
+    void handleKeyPressed();
+    void handleKeyReleased();
+    void handleMousePressed();
+    void handleMouseReleased();
+};
 
 #endif // _PLAY_H_

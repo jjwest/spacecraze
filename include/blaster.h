@@ -13,8 +13,7 @@ class Blaster: public Enemy
 {
 public:
     Blaster(const Point& pos);
-    void update(const Point& player_pos,
-                LaserManager& laser_manager);
+    void update(const Point& player_pos, LaserManager& lasers);
   
 private:
     Point move_to;    
@@ -22,8 +21,7 @@ private:
     Uint32 shoot_cooldown;
 
     void move();
-    void shoot(const Point& player_pos,
-               LaserManager& laser_manager);
+    void shoot(const Point& player_pos, LaserManager& lasers);
     void setAngle(const Point& player_pos);
     void changeDirection();
 };

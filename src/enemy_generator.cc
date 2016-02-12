@@ -11,67 +11,70 @@ EnemyGenerator::EnemyGenerator()
     last_asteroid_spawned{0}, last_drone_spawned{0}, last_blaster_spawned{0}, 
     asteroid_spawn_count{0}, blaster_spawn_count{0}, drone_spawn_count{0} {}
 
-void EnemyGenerator::update()
+void EnemyGenerator::update(EnemyManager& enemies)
 {
-    // current_time = SDL_GetTicks();
+    current_time = SDL_GetTicks();
 
-    // updateAsteroid();
-    // update_drone();
-    // update_blaster();
+    updateAsteroids(enemies);
+    updateDrones(enemies);
+    updateBlasters(enemies);
 }
 
-void EnemyGenerator::updateAsteroids()
+void EnemyGenerator::updateAsteroids(EnemyManager& enemies)
 {
-    // if (current_time - last_asteroid_spawned  > asteroid_spawn_delay * 1000)
-    // {
-    //     asteroid_spawn_count++;
-
-    //     if (asteroid_spawn_count % 3 == 0)
-    //     {
-    //         world.addEnemyAsteroid();
-    //     }
-    //     if (asteroid_spawn_count % 6 == 0)
-    //     {
-    //         asteroid_spawn_delay *= 0.80;
-    //     }       
-    // }
+    if (current_time - last_asteroid_spawned  > asteroid_spawn_delay * 1000)
+    {
+        asteroid_spawn_count++;
+        enemies.addAsteroid();
+        if (asteroid_spawn_count % 3 == 0)
+        {
+            enemies.addAsteroid();
+        }
+        if (asteroid_spawn_count % 6 == 0)
+        {
+            asteroid_spawn_delay *= 0.80;
+        }       
+    }
 }
 
-void EnemyGenerator::updateDrones()
+void EnemyGenerator::updateDrones(EnemyManager& enemies)
 {
-//     if (current_time - last_drone_spawned)  > drone_spawn_delay * 1000)
-// {
-//         world.addEnemyDrone();
-//         world.addEnemyDrone();
-//         drone_spawn_count++;
+    if (current_time - last_drone_spawned  > drone_spawn_delay * 1000)
+    {
+        drone_spawn_count++;
+        enemies.addDrone();
+        enemies.addDrone();
 
-//         if (drone_spawn_count % 4 == 0) {
-//             generate_drone();
-//             generate_drone();
-//         }
-//         else if (drone_spawn_count % 2 == 0) {
-//             generate_drone();
-//         }
-//         if (drone_spawn_count % 5 == 0) {
-//             drone_spawn_delay *= 0.80;
-//         }
-//     }
+        if (drone_spawn_count % 4 == 0)
+        {
+            enemies.addDrone();
+            enemies.addDrone();
+        }
+        else if (drone_spawn_count % 2 == 0)
+        {
+            enemies.addDrone();
+        }
+        if (drone_spawn_count % 5 == 0)
+        {
+            drone_spawn_delay *= 0.80;
+        }
+    }
 }
 
-void EnemyGenerator::updateBlasters()
+void EnemyGenerator::updateBlasters(EnemyManager& enemies)
 {
-    // if( (current_time - last_blaster_spawned)  > (blaster_spawn_delay * 1000))
-    // {
-    //     generate_blaster();
-    //     blaster_spawn_count++;
-    //     if( blaster_spawn_count % 3 == 0 )
-    //     {
-    //         generate_blaster();
-    //     }
-    //     if( blaster_spawn_count % 4 == 0 )
-    //     {
-    //         blaster_spawn_delay *= 0.80;
-    //     }
-    // }
+    if( current_time - last_blaster_spawned  > blaster_spawn_delay * 1000)
+    {
+        blaster_spawn_count++;
+        enemies.addBlaster();
+        if( blaster_spawn_count % 3 == 0 )
+        {
+            enemies.addBlaster();
+        }
+        if( blaster_spawn_count % 4 == 0 )
+        {
+            blaster_spawn_delay *= 0.80;
+        }
+    }
 }
 

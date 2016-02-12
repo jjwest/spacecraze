@@ -9,23 +9,23 @@ Blaster::Blaster(const Point& pos)
       last_shot{0}, shoot_cooldown{300} {}
 
 void Blaster::update(const Point& player_pos,
-                     LaserManager& laser_manager)
+                     LaserManager& lasers)
 {
     move();
     setAngle(player_pos);
-    shoot(player_pos, laser_manager);
+    shoot(player_pos, lasers);
     updateAABB();
 }
 
 void Blaster::shoot(const Point& player_pos,
-                    LaserManager& laser_manager)
+                    LaserManager& lasers)
 {
     Uint32 current_time = SDL_GetTicks();
 
     if (current_time - last_shot > shoot_cooldown)
     {
         Point this_pos {rect.x, rect.y};
-        laser_manager.addEnemyLaser(this_pos, player_pos);
+        lasers.addEnemyLaser(this_pos, player_pos);
         last_shot = current_time;
     }
 }

@@ -27,6 +27,8 @@ drone.o: drone.cc drone.h
 aabb.o: aabb.cc aabb.h
 laser.o: laser.cc laser.h visible_object.o
 laser_manager.o: laser_manager.cc laser_manager.h
+enemy_manager.o: enemy_manager.cc enemy_manager.h
+play.o: play.cc play.h gamestate.h
 
 %.o: %.cc
 	${CXX} ${CXXFLAGS} -c -o $@ $< ${LDLIBS}

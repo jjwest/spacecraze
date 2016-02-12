@@ -12,9 +12,6 @@ public:
     virtual void update() = 0;
     virtual void render() = 0;
     virtual GameStates nextState() = 0;
-
-private:
-    virtual void setNextState(GameStates state) = 0;
 };
 
 

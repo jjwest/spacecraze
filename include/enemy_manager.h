@@ -8,6 +8,7 @@
 #include "asteroid.h"
 #include "blaster.h"
 #include "drone.h"
+#include "player.h"
 
 class EnemyManager
 {
@@ -17,6 +18,7 @@ public:
     void addBlaster();
     void addDrone();
     void update(const Point& player_pos, LaserManager& laser_manager);
+    void checkCollisions(Player& player);
 
 private:
     std::vector<std::unique_ptr<Asteroid>> asteroids;

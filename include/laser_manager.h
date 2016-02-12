@@ -8,18 +8,24 @@
 #include "enemy.h"
 #include "player.h"
 
+namespace
+{
+    using lasers = std::vector<std::unique_ptr<Laser>>;
+}
+
 class LaserManager
 {
 public:
-    LaserManager();
+    lasers& getEnemyLasers();
+    lasers& getPlayerLasers();
     void addEnemyLaser(const Point& pos, const Point& player_pos);
     void addPlayerLaser(const Point& pos);
-    void handleCollissionEnemyLaser(Player& player);
-    void handleCollissionPlayerLaser(Enemy& enemy);
+    void checkCollisionPlayerLaser(Enemy& enemy);
+    void update();
     
 private:
-    std::vector<std::unique_ptr<Laser>> enemy_lasers;
-    std::vector<std::unique_ptr<Laser>> player_lasers;    
+    lasers enemy_lasers;
+    lasers player_lasers;    
 };
 
 

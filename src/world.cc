@@ -1,10 +1,10 @@
-#include "../include/enemy_manager.h"
+#include "../include/world.h"
 
 #include <random>
+#include <algorithm>
 
-#include "../include/texture.h"
-#include "../include/asset_manager.h"
 #include "../include/constants.h"
+#include "../include/asset_manager.h"
 
 using namespace std;
 
@@ -52,7 +52,7 @@ namespace
     }
 
     template<class TYPE>
-    void collisionCheck(TYPE enemy, TYPE end, Player& player)
+    void collisionCheckEnemy(TYPE enemy, TYPE end, Player& player)
     {
         auto player_aabb = player.getAABB();
         while (enemy != end)
@@ -61,13 +61,16 @@ namespace
             if (player_aabb.intersect(enemy_aabb)) 
             {
                 player.reduceHealth(500);
-                return;
+                break;
             }
         }
     }
 }
 
-void EnemyManager::addAsteroid()
+World::World()
+    : player{{500, 350}} {}
+
+void World::addAsteroid()
 {
     auto& assets = AssetManager::getInstance();
     auto texture = assets.getTexture("asteroid");
@@ -76,7 +79,7 @@ void EnemyManager::addAsteroid()
     asteroids.push_back( move(asteroid) );
 }
 
-void EnemyManager::addBlaster()
+void World::addBlaster()
 {
     auto& assets = AssetManager::getInstance();
     auto texture = assets.getTexture("blaster");
@@ -85,7 +88,7 @@ void EnemyManager::addBlaster()
     blasters.push_back( move(blaster) );    
 }
 
-void EnemyManager::addDrone()
+void World::addDrone()
 {
     auto& assets = AssetManager::getInstance();
     auto texture = assets.getTexture("drone");
@@ -94,25 +97,37 @@ void EnemyManager::addDrone()
     drones.push_back( move(drone) );    
 }
 
-void EnemyManager::update(const Point& player_pos, LaserManager& laser_manager)
+void World::update(const map<string, bool>& player_actions)
 {
-    for (auto& i : asteroids) 
+    updateObjects(player_actions);
+    handleCollisions();
+}
+
+void World::updateObjects(const map<string, bool>& player_actions)
+{
+    player.update(player_actions);
+    
+    for (auto& i : asteroids)
     {
         i->update();
     }
     for (auto& i : blasters) 
     {
-        i->update(player_pos, laser_manager);
+        i->update(player.getPos(), lasers);
     }
     for (auto& i : drones) 
     {
-        i->update(player_pos);
+        i->update(player.getPos());
     }
+
+    lasers.update();
 }
 
-void EnemyManager::checkCollisions(Player& player)
+void World::handleCollisions()
 {
-    collisionCheck( begin(asteroids), end(asteroids), player );
-    collisionCheck( begin(blasters), end(blasters), player );
-    collisionCheck( begin(drones), end(drones), player );
+    collisionCheckEnemy(begin(asteroids), end(asteroids), player);
+    collisionCheckEnemy(begin(blasters), end(blasters), player);
+    collisionCheckEnemy(begin(drones), end(drones), player);
+
+    
 }
