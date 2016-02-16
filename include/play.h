@@ -9,7 +9,7 @@
 #include "player.h"
 #include "laser_manager.h"
 #include "enemy_generator.h"
-#include "enemy_manager.h"
+#include "world.h"
 #include "enums.h"
 
 class Play: public GameState
@@ -27,16 +27,7 @@ private:
     GameStates next_state;
 
     EnemyGenerator enemy_generator;
-    EnemyManager enemies;
-    LaserManager lasers;
-    Player player;
-    std::map<std::string, bool> player_actions;
-
-    void handleCollisions();
-    void handleKeyPressed();
-    void handleKeyReleased();
-    void handleMousePressed();
-    void handleMouseReleased();
+    World world;
 };
 
 #endif // _PLAY_H_

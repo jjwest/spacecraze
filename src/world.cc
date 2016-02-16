@@ -3,6 +3,7 @@
 #include <random>
 #include <algorithm>
 
+#include "../include/point.h"
 #include "../include/constants.h"
 #include "../include/asset_manager.h"
 
@@ -50,21 +51,6 @@ namespace
 
         return spawn_point;
     }
-
-    template<class TYPE>
-    void collisionCheckEnemy(TYPE enemy, TYPE end, Player& player)
-    {
-        auto player_aabb = player.getAABB();
-        while (enemy != end)
-        {
-            auto enemy_aabb = (*enemy)->getAABB();
-            if (player_aabb.intersect(enemy_aabb)) 
-            {
-                player.reduceHealth(500);
-                break;
-            }
-        }
-    }
 }
 
 World::World()
@@ -97,15 +83,15 @@ void World::addDrone()
     drones.push_back( move(drone) );    
 }
 
-void World::update(const map<string, bool>& player_actions)
+void World::update()
 {
-    updateObjects(player_actions);
+    updateObjects();
     handleCollisions();
 }
 
-void World::updateObjects(const map<string, bool>& player_actions)
+void World::updateObjects()
 {
-    player.update(player_actions);
+    player.update(lasers);
     
     for (auto& i : asteroids)
     {
@@ -125,9 +111,29 @@ void World::updateObjects(const map<string, bool>& player_actions)
 
 void World::handleCollisions()
 {
-    collisionCheckEnemy(begin(asteroids), end(asteroids), player);
-    collisionCheckEnemy(begin(blasters), end(blasters), player);
-    collisionCheckEnemy(begin(drones), end(drones), player);
-
+    auto player_aabb = player.getAABB();
     
+    for (auto& a : asteroids) 
+    {
+        if (a->collides(player_aabb)) 
+        {
+            player.reduceHealth(500);
+        }
+    }
+    for (auto& b : blasters) 
+    {
+        if (b->collides(player_aabb)) 
+        {
+            player.reduceHealth(500);
+        }
+    }
+    for (auto& d : drones) 
+    {
+        if (d->collides(player_aabb)) 
+        {
+            player.reduceHealth(500);
+        }
+    }
 }
+
+

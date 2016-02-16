@@ -5,8 +5,6 @@
 #include <vector>
 
 #include "laser.h"
-#include "enemy.h"
-#include "player.h"
 
 namespace
 {
@@ -16,11 +14,12 @@ namespace
 class LaserManager
 {
 public:
-    lasers& getEnemyLasers();
-    lasers& getPlayerLasers();
+    const lasers* getEnemyLasers() const;
+    const lasers* getPlayerLasers() const;
+    const lasers* removeEnemyLaser(lasers*);
+    const lasers* removePlayerLaser(lasers*);
     void addEnemyLaser(const Point& pos, const Point& player_pos);
     void addPlayerLaser(const Point& pos);
-    void checkCollisionPlayerLaser(Enemy& enemy);
     void update();
     
 private:

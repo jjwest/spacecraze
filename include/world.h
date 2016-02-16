@@ -20,7 +20,7 @@ public:
     void addAsteroid();
     void addBlaster();
     void addDrone();
-    void update(const std::map<std::string, bool>& player_actions);
+    void update();
 
 private:
     Player player;
@@ -29,7 +29,7 @@ private:
     std::vector<std::unique_ptr<Blaster>> blasters;
     std::vector<std::unique_ptr<Drone>> drones;
 
-    void updateObjects(const std::map<std::string, bool>& player_actions);
+    void updateObjects();
     void handleCollisions();
 };
 

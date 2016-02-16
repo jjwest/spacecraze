@@ -3,14 +3,14 @@
 #include "../include/texture.h"
 #include "../include/aabb.h"
 
-lasers& LaserManager::getEnemyLasers()
+const lasers* LaserManager::getEnemyLasers() const
 {
-    return enemy_lasers;
+    return &enemy_lasers;
 }
 
-lasers& LaserManager::getPlayerLasers()
+const lasers* LaserManager::getPlayerLasers() const
 {
-    return player_lasers;
+    return &player_lasers;
 }
 
 void LaserManager::addEnemyLaser(const Point& pos, const Point& player_pos)

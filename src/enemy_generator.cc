@@ -11,24 +11,24 @@ EnemyGenerator::EnemyGenerator()
     last_asteroid_spawned{0}, last_drone_spawned{0}, last_blaster_spawned{0}, 
     asteroid_spawn_count{0}, blaster_spawn_count{0}, drone_spawn_count{0} {}
 
-void EnemyGenerator::update(EnemyManager& enemies)
+void EnemyGenerator::update(World& world)
 {
     current_time = SDL_GetTicks();
 
-    updateAsteroids(enemies);
-    updateDrones(enemies);
-    updateBlasters(enemies);
+    updateAsteroids(world);
+    updateDrones(world);
+    updateBlasters(world);
 }
 
-void EnemyGenerator::updateAsteroids(EnemyManager& enemies)
+void EnemyGenerator::updateAsteroids(World& world)
 {
     if (current_time - last_asteroid_spawned  > asteroid_spawn_delay * 1000)
     {
         asteroid_spawn_count++;
-        enemies.addAsteroid();
+        world.addAsteroid();
         if (asteroid_spawn_count % 3 == 0)
         {
-            enemies.addAsteroid();
+            world.addAsteroid();
         }
         if (asteroid_spawn_count % 6 == 0)
         {
@@ -37,22 +37,22 @@ void EnemyGenerator::updateAsteroids(EnemyManager& enemies)
     }
 }
 
-void EnemyGenerator::updateDrones(EnemyManager& enemies)
+void EnemyGenerator::updateDrones(World& world)
 {
     if (current_time - last_drone_spawned  > drone_spawn_delay * 1000)
     {
         drone_spawn_count++;
-        enemies.addDrone();
-        enemies.addDrone();
+        world.addDrone();
+        world.addDrone();
 
         if (drone_spawn_count % 4 == 0)
         {
-            enemies.addDrone();
-            enemies.addDrone();
+            world.addDrone();
+            world.addDrone();
         }
         else if (drone_spawn_count % 2 == 0)
         {
-            enemies.addDrone();
+            world.addDrone();
         }
         if (drone_spawn_count % 5 == 0)
         {
@@ -61,15 +61,15 @@ void EnemyGenerator::updateDrones(EnemyManager& enemies)
     }
 }
 
-void EnemyGenerator::updateBlasters(EnemyManager& enemies)
+void EnemyGenerator::updateBlasters(World& world)
 {
     if( current_time - last_blaster_spawned  > blaster_spawn_delay * 1000)
     {
         blaster_spawn_count++;
-        enemies.addBlaster();
+        world.addBlaster();
         if( blaster_spawn_count % 3 == 0 )
         {
-            enemies.addBlaster();
+            world.addBlaster();
         }
         if( blaster_spawn_count % 4 == 0 )
         {

@@ -8,35 +8,18 @@ void Play::handleEvents()
 {
     while (SDL_PollEvent(&event) != 0)
     {
-        switch (event.type)
+        if (event.type == SDL_QUIT) 
         {
-        case SDL_QUIT:
             next_state = QUIT;
-            break;
-
-        case SDL_KEYDOWN:
-            handleKeyPressed();
-            break;
-
-        case SDL_KEYUP:
-            handleKeyReleased();
-            break;
-
-        case SDL_MOUSEBUTTONDOWN:
-            handleMousePressed();
-            break;
-
-        case SDL_MOUSEBUTTONUP:
-            handleMouseReleased();
-            break;
         }
     }
 }
 
 void Play::update()
 {
-    enemy_generator.update(enemies);
-    player.update(player_actions);
+    handleEvents();
+    enemy_generator.update(world);
+    player.update(lasers);
     enemies.update(player.getPos(), lasers);
     handleCollisions();
 }
@@ -53,9 +36,7 @@ GameStates Play::nextState()
 
 void Play::handleCollisions()
 {
-    enemies.checkCollisions(player);
-    enemies.checkCollisions(lasers);
-    player.checkCollisions(lasers);
+
 }
 
 void Play::handleKeyPressed()

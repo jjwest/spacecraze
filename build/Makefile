@@ -14,7 +14,7 @@ ${EXEC}: ${OBJS}
 
 main.o: main.cc game.o
 game.o: game.cc player.o asset_manager.o
-player.o: player.cc player.h constants.h asset_manager.o aabb.o
+player.o: player.cc player.h constants.h asset_manager.o aabb.o laser_manager.o
 visible_object.o: visible_object.cc visible_object.h
 asset_manager.o: asset_manager.cc asset_manager.h texture.o font.o music.o
 texture.o: texture.cc texture.h

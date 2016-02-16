@@ -12,6 +12,11 @@ AABB Enemy::getAABB() const
     return this_aabb;
 }
 
+bool Enemy::collides(const AABB& other) const
+{
+    return this_aabb.intersect(other);
+}
+
 bool Enemy::isDead() const
 {
     return health <= 0;

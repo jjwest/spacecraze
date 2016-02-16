@@ -11,6 +11,7 @@ public:
     Enemy(Texture* t, const Point& pos, double hp, int sp, int sc);
     virtual ~Enemy();
     AABB getAABB() const;
+    bool collides(const AABB& other) const;
     bool isDead() const;
     int getScore() const;
     void reduceHealth(double damage);

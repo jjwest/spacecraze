@@ -2,7 +2,6 @@
 
 #include <utility>
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
 #include <string>
 
 #include "../include/asset_manager.h"
@@ -12,8 +11,9 @@ using namespace std;
 
 Player::Player(const Point& pos)
     :  VisibleObject( AssetManager::getInstance().getTexture("player"), pos), 
-       this_aabb{pos.y, pos.x, pos.y + rect.h, pos.x + rect.w}, singularity{true}, health{1},
-       damage{2}, speed{2}, shoot_cooldown{80}, last_shot{0} {}
+       this_aabb{pos.y, pos.x, pos.y + rect.h, pos.x + rect.w},
+       has_singularity{true}, health{1}, damage{2}, speed{2}, shoot_cooldown{80},
+       last_shot{0} {}
 
 Point Player::getPos() const 
 {
@@ -28,15 +28,16 @@ AABB Player::getAABB() const
     return this_aabb;
 }
 
-void Player::update(const map<string, bool>& player_actions)
+void Player::update(LaserManager& lasers)
 {
-    move(player_actions);
+    move();
+    shoot(lasers);
     updateAABB();
 }
 
 void Player::addSingularity() 
 {
-    singularity = true;
+    has_singularity = true;
 }
 
 void Player::reduceHealth(double dmg)
@@ -44,33 +45,35 @@ void Player::reduceHealth(double dmg)
     health -= dmg;
 }
 
-void Player::shoot()
+void Player::shoot(LaserManager& lasers)
 {
-    // Uint32 current_time{ SDL_GetTicks() };
-    // if (current_time - last_shot > shoot_cooldown) 
-    // {
-    //     int mouse_x, mouse_y;
-    //     SDL_GetMouseState(&mouse_x, &mouse_y);
-    //     pair<int, int> direction{mouse_x, mouse_y};
-
-    //     last_shot = current_time;
-    // }
+    Uint32 current_time = SDL_GetTicks();
+    SDL_GetMouseState(NULL, NULL);
+    
+    if (SDL_BUTTON(SDL_BUTTON_LEFT) && current_time - last_shot > shoot_cooldown) 
+    {
+        int center_x = rect.x + (rect.h / 2);
+        int center_y = rect.y + (rect.w / 2);
+        lasers.addPlayerLaser( {center_x, center_y} );
+        last_shot = current_time;
+    }
 }
-void Player::move(const map<string, bool>& player_actions)  
-{    
-    if (player_actions.at("RIGHT") && rect.x + rect.w + speed < SCREEN_WIDTH) 
+void Player::move()
+{
+    const Uint8* state = SDL_GetKeyboardState(NULL);
+    if (state[SDL_SCANCODE_D])
     {
         rect.x += speed;
     }
-    if (player_actions.at("LEFT") && rect.x > 0 + speed) 
+    if (state[SDL_SCANCODE_A])
     {
         rect.x -= speed;
     }
-    if (player_actions.at("UP") && rect.y > 0 + speed) 
+    if (state[SDL_SCANCODE_W])
     {
         rect.y -= speed;
     }
-    if (player_actions.at("DOWN") && rect.y < SCREEN_HEIGHT - speed + rect.h) 
+    if (state[SDL_SCANCODE_S])
     {
         rect.y += speed;
     }
