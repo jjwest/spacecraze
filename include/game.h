@@ -15,7 +15,6 @@ public:
 private:
     SDL_Window* window;
     SDL_Renderer* renderer;
-
     void initSDL();
     void selectMusic();
     void loadMedia(); 

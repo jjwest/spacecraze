@@ -31,11 +31,33 @@ void Game::run()
 {
     Play play(renderer);
     GameState* current_state = &play;
+    GameStates next_state;
 
-    while (current_state != nullptr)
+    bool running = true;
+    
+    while (running)
     {
         current_state->handleEvents();
-        current_state->update();        
+        current_state->update();
+        current_state->render();
+        next_state = current_state->getNextState();
+        
+        switch (next_state)
+        {
+        case PLAY:
+            current_state = &play;
+            break;
+
+        case MENU:
+            break;
+
+        case HIGHSCORE:
+            break;
+
+        case QUIT:
+            running = false;
+            break;
+        }
     }
 }
 
