@@ -8,6 +8,7 @@
 #include "../include/enums.h"
 #include "../include/constants.h"
 #include "../include/player.h"
+#include "../include/play.h"
 
 Game::Game() : window{nullptr}, renderer{nullptr} 
 {
@@ -28,8 +29,14 @@ Game::~Game()
 
 void Game::run() 
 {
-    SDL_Delay(3000);
+    Play play(renderer);
+    GameState* current_state = &play;
 
+    while (current_state != nullptr)
+    {
+        current_state->handleEvents();
+        current_state->update();        
+    }
 }
 
 void Game::initSDL() 

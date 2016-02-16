@@ -10,7 +10,6 @@
 #include "laser_manager.h"
 #include "enemy_generator.h"
 #include "world.h"
-#include "enums.h"
 
 class Play: public GameState
 {
@@ -19,7 +18,7 @@ public:
     void handleEvents();
     void update();
     void render();
-    GameStates nextState();
+    GameStates getNextState();
 
 private:
     SDL_Event event;

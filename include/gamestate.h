@@ -6,12 +6,12 @@
 class GameState
 {
 public:
-    GameState();
-    virtual ~GameState();
+    GameState() {};
+    virtual ~GameState() {};
     virtual void handleEvents() = 0;
     virtual void update() = 0;
     virtual void render() = 0;
-    virtual GameStates nextState() = 0;
+    virtual GameStates getNextState() = 0;
 };
 
 

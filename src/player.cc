@@ -10,7 +10,7 @@
 using namespace std;
 
 Player::Player(const Point& pos)
-    :  VisibleObject( AssetManager::getInstance().getTexture("player"), pos), 
+    :  VisibleObject( AssetManager::getInstance().getTexture("player"), pos ), 
        this_aabb{pos.y, pos.x, pos.y + rect.h, pos.x + rect.w},
        has_singularity{true}, health{1}, damage{2}, speed{2}, shoot_cooldown{80},
        last_shot{0} {}
@@ -52,15 +52,16 @@ void Player::shoot(LaserManager& lasers)
     
     if (SDL_BUTTON(SDL_BUTTON_LEFT) && current_time - last_shot > shoot_cooldown) 
     {
-        int center_x = rect.x + (rect.h / 2);
-        int center_y = rect.y + (rect.w / 2);
+        int center_x = rect.x + rect.h / 2;
+        int center_y = rect.y + rect.w / 2;
         lasers.addPlayerLaser( {center_x, center_y} );
         last_shot = current_time;
     }
 }
 void Player::move()
 {
-    const Uint8* state = SDL_GetKeyboardState(NULL);
+    auto state = SDL_GetKeyboardState(NULL);
+    
     if (state[SDL_SCANCODE_D])
     {
         rect.x += speed;
