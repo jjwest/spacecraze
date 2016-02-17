@@ -83,6 +83,25 @@ void World::addDrone()
     drones.push_back( move(drone) );    
 }
 
+void World::render(SDL_Renderer* renderer)
+{
+    for (auto& i : asteroids) 
+    {
+        i->draw(renderer);
+    }
+    for (auto& i : blasters) 
+    {
+        i->draw(renderer);
+    }
+    for (auto& i : drones) 
+    {
+        i->draw(renderer);
+    }
+
+    lasers.draw(renderer);
+    player.draw(renderer);
+}
+
 void World::update()
 {
     updateObjects();

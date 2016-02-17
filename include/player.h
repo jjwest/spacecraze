@@ -1,7 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "visible_object.h"
+#include "game_object.h"
 
 #include <SDL2/SDL.h>
 #include <string>
@@ -12,7 +12,7 @@
 #include "texture.h"
 #include "aabb.h"
 
-class Player: public VisibleObject
+class Player: public GameObject
 {
 public:
     Player(const Point& pos);

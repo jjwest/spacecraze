@@ -6,12 +6,12 @@
 #include "texture.h"
 #include "point.h"
 
-class VisibleObject 
+class GameObject 
 {
 public:
-    VisibleObject(Texture* t, const Point& pos);
-    virtual ~VisibleObject();
-    void draw(SDL_Renderer*) const;
+    GameObject(Texture* t, const Point& pos);
+    virtual ~GameObject();
+    void draw(SDL_Renderer*);
 
 protected:
     Texture* texture;

@@ -14,17 +14,15 @@
 class Play: public GameState
 {
 public:
-    Play(SDL_Renderer* r);
+    Play();
     void handleEvents();
     void update();
-    void render();
-    GameStates getNextState();
+    void render(SDL_Renderer* renderer);
+    GameStates getNextState() const;
 
 private:
     SDL_Event event;
-    SDL_Renderer* renderer;
     GameStates next_state;
-
     EnemyGenerator enemy_generator;
     World world;
 };

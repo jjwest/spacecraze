@@ -1,6 +1,7 @@
 #ifndef _WORLD_H_
 #define _WORLD_H_
 
+#include <SDL2/SDL.h>
 #include <memory>
 #include <vector>
 #include <map>
@@ -20,6 +21,7 @@ public:
     void addAsteroid();
     void addBlaster();
     void addDrone();
+    void render(SDL_Renderer* renderer);
     void update();
 
 private:

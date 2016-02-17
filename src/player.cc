@@ -10,7 +10,7 @@
 using namespace std;
 
 Player::Player(const Point& pos)
-    :  VisibleObject( AssetManager::getInstance().getTexture("player"), pos ), 
+    :  GameObject( AssetManager::getInstance().getTexture("player"), pos ), 
        this_aabb{pos.y, pos.x, pos.y + rect.h, pos.x + rect.w},
        has_singularity{true}, health{1}, damage{2}, speed{2}, shoot_cooldown{80},
        last_shot{0} {}

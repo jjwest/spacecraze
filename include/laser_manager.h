@@ -1,6 +1,7 @@
 #ifndef _LASER_MANAGER_H_
 #define _LASER_MANAGER_H_
 
+#include <SDL2/SDL.h>
 #include <memory>
 #include <vector>
 
@@ -20,6 +21,7 @@ public:
     const lasers* removePlayerLaser(lasers*);
     void addEnemyLaser(const Point& pos, const Point& player_pos);
     void addPlayerLaser(const Point& pos);
+    void draw(SDL_Renderer* renderer) const;
     void update();
     
 private:

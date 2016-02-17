@@ -10,7 +10,7 @@
 #include "../include/player.h"
 #include "../include/play.h"
 
-Game::Game() : window{nullptr}, renderer{nullptr} 
+Game::Game() : window{nullptr}, renderer{nullptr}, current_state_id{PLAY}
 {
     initSDL();
     loadMedia();
@@ -29,35 +29,17 @@ Game::~Game()
 
 void Game::run() 
 {
-    Play play(renderer);
-    GameState* current_state = &play;
-    GameStates next_state;
-
-    bool running = true;
+    GameStates next_state{PLAY};
+    current_state = new Play();
     
-    while (running)
+    while (next_state != QUIT)
     {
         current_state->handleEvents();
         current_state->update();
-        current_state->render();
+        current_state->render(renderer);
         next_state = current_state->getNextState();
-        
-        switch (next_state)
-        {
-        case PLAY:
-            current_state = &play;
-            break;
-
-        case MENU:
-            break;
-
-        case HIGHSCORE:
-            break;
-
-        case QUIT:
-            running = false;
-            break;
-        }
+        changeState(next_state);
+        SDL_Delay(10);
     }
 }
 
@@ -74,6 +56,10 @@ void Game::initSDL()
     if ( IMG_Init(0) != 0 ) 
     {
         throw "Error initializing SDL_Image";
+
+
+
+
     }
     if ( TTF_Init() != 0 ) 
     {
@@ -111,3 +97,28 @@ void Game::loadMedia()
     assets.loadFont("button", "../fonts/Akashi.ttf", 36);
 }
 
+void Game::changeState(GameStates next_state)
+{
+    if (next_state != current_state_id) 
+    {
+        switch (next_state)
+        {
+        case PLAY:
+            delete current_state;
+            current_state = new Play();
+            break;
+
+        case MENU:
+            break;
+
+        case HIGHSCORE:
+            break;
+
+        case QUIT:
+            delete current_state;
+            break;
+        }
+        
+        current_state_id = next_state;
+    }
+}

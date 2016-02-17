@@ -5,6 +5,8 @@
 #include <map>
 #include <iostream>
 
+#include "gamestate.h"
+
 class Game 
 {
 public:
@@ -15,9 +17,12 @@ public:
 private:
     SDL_Window* window;
     SDL_Renderer* renderer;
+    GameState* current_state;
+    GameStates current_state_id;
     void initSDL();
     void selectMusic();
-    void loadMedia(); 
+    void loadMedia();
+    void changeState(GameStates next_state);
 };
 
 #endif

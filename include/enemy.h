@@ -1,11 +1,11 @@
 #ifndef _ENEMY_H_
 #define _ENEMY_H_
 
-#include "visible_object.h"
+#include "game_object.h"
 #include "texture.h"
 #include "aabb.h"
 
-class Enemy: public VisibleObject
+class Enemy: public GameObject
 {
 public:
     Enemy(Texture* t, const Point& pos, double hp, int sp, int sc);

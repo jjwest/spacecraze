@@ -1,10 +1,10 @@
 #ifndef LASER_H
 #define LASER_H
 
-#include "visible_object.h"
+#include "game_object.h"
 #include "aabb.h"
 
-class Laser : public VisibleObject
+class Laser : public GameObject
 {
 public:
     Laser(Texture* t, const Point& pos, const Point& destination, double dmg);

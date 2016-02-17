@@ -33,7 +33,8 @@ void EnemyGenerator::updateAsteroids(World& world)
         if (asteroid_spawn_count % 6 == 0)
         {
             asteroid_spawn_delay *= 0.80;
-        }       
+        }
+        last_asteroid_spawned = current_time;
     }
 }
 
@@ -58,12 +59,14 @@ void EnemyGenerator::updateDrones(World& world)
         {
             drone_spawn_delay *= 0.80;
         }
+
+        last_drone_spawned = current_time;
     }
 }
 
 void EnemyGenerator::updateBlasters(World& world)
 {
-    if( current_time - last_blaster_spawned  > blaster_spawn_delay * 1000)
+    if (current_time - last_blaster_spawned  > blaster_spawn_delay * 1000)
     {
         blaster_spawn_count++;
         world.addBlaster();
@@ -75,6 +78,8 @@ void EnemyGenerator::updateBlasters(World& world)
         {
             blaster_spawn_delay *= 0.80;
         }
+
+        last_blaster_spawned = current_time;
     }
 }
 

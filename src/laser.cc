@@ -10,7 +10,7 @@
 #include "../include/constants.h"
 
 Laser::Laser(Texture* t, const Point& pos, const Point& destination, double dmg)
-    : VisibleObject(t, pos),
+    : GameObject(t, pos),
       this_aabb{rect.y, rect.x, rect.y + rect.h, rect.x + rect.w},
       damage{dmg}, health{1}, speed{3}, current_x{pos.x}, current_y{pos.y}
 {
