@@ -6,6 +6,7 @@
 #include "../include/point.h"
 #include "../include/constants.h"
 #include "../include/asset_manager.h"
+#include "../include/enums.h"
 
 using namespace std;
 
@@ -55,6 +56,26 @@ namespace
 
 World::World()
     : player{{500, 350}} {}
+
+const vec::enemy* World::getAsteroids() const
+{
+    return &asteroids;
+}
+
+const vec::enemy* World::getBlasters() const
+{
+    return &blasters;
+}
+
+const vec::enemy* World::getDrones() const
+{
+    return &drones;
+}
+
+const Player* World::getPlayer() const
+{
+    return &player;
+}
 
 void World::addAsteroid()
 {
@@ -106,6 +127,7 @@ void World::update()
 {
     updateObjects();
     handleCollisions();
+    setNextState();
 }
 
 void World::updateObjects()
@@ -126,33 +148,6 @@ void World::updateObjects()
     }
 
     lasers.update();
-}
-
-void World::handleCollisions()
-{
-    auto player_aabb = player.getAABB();
-    
-    for (auto& a : asteroids) 
-    {
-        if (a->collides(player_aabb)) 
-        {
-            player.reduceHealth(500);
-        }
-    }
-    for (auto& b : blasters) 
-    {
-        if (b->collides(player_aabb)) 
-        {
-            player.reduceHealth(500);
-        }
-    }
-    for (auto& d : drones) 
-    {
-        if (d->collides(player_aabb)) 
-        {
-            player.reduceHealth(500);
-        }
-    }
 }
 
 

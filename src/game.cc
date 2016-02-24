@@ -10,7 +10,8 @@
 #include "../include/player.h"
 #include "../include/play.h"
 
-Game::Game() : window{nullptr}, renderer{nullptr}, current_state_id{PLAY}
+Game::Game()
+    : window{nullptr}, renderer{nullptr}, current_state_id{PLAY}
 {
     initSDL();
     loadMedia();
@@ -29,17 +30,18 @@ Game::~Game()
 
 void Game::run() 
 {
-    GameStates next_state{PLAY};
-    current_state = new Play();
+    GameStates next_state_id{PLAY};
+    current_state.reset(new Play());
     
-    while (next_state != QUIT)
+    while (next_state_id != QUIT)
     {
         current_state->handleEvents();
         current_state->update();
         current_state->render(renderer);
-        next_state = current_state->getNextState();
-        changeState(next_state);
+        next_state_id = current_state->getNextState();
+        changeState(next_state_id);
         SDL_Delay(10);
+        std::cout << next_state_id << std::endl;
     }
 }
 
@@ -97,15 +99,14 @@ void Game::loadMedia()
     assets.loadFont("button", "../fonts/Akashi.ttf", 36);
 }
 
-void Game::changeState(GameStates next_state)
+void Game::changeState(GameStates next_state_id)
 {
-    if (next_state != current_state_id) 
+    if (next_state_id != current_state_id) 
     {
-        switch (next_state)
+        switch (next_state_id)
         {
         case PLAY:
-            delete current_state;
-            current_state = new Play();
+            current_state.reset(new Play());
             break;
 
         case MENU:
@@ -115,10 +116,9 @@ void Game::changeState(GameStates next_state)
             break;
 
         case QUIT:
-            delete current_state;
             break;
         }
         
-        current_state_id = next_state;
+        current_state_id = next_state_id;
     }
 }

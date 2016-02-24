@@ -13,11 +13,21 @@
 #include "blaster.h"
 #include "drone.h"
 #include "laser.h"
+#include "enums.h"
+
+namespace vec
+{
+    using enemy = std::vector<std::unique_ptr<Enemy>>;
+}
 
 class World
 {
 public:
     World();
+    const vec::enemy* getAsteroids() const;
+    const vec::enemy* getBlasters() const;
+    const vec::enemy* getDrones() const;
+    const Player* getPlayer() const;
     void addAsteroid();
     void addBlaster();
     void addDrone();
@@ -27,12 +37,11 @@ public:
 private:
     Player player;
     LaserManager lasers;
-    std::vector<std::unique_ptr<Asteroid>> asteroids;
-    std::vector<std::unique_ptr<Blaster>> blasters;
-    std::vector<std::unique_ptr<Drone>> drones;
+    vec::enemy asteroids;
+    vec::enemy blasters;
+    vec::enemy drones;
 
     void updateObjects();
-    void handleCollisions();
 };
 
 
