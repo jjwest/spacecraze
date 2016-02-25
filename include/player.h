@@ -8,7 +8,6 @@
 #include <map>
 #include <memory>
 
-#include "laser_manager.h"
 #include "texture.h"
 #include "aabb.h"
 
@@ -17,24 +16,21 @@ class Player: public GameObject
 public:
     Player(const Point& pos);
     Point getPos() const;
-    AABB getAABB() const;
-    void update(LaserManager& lasers);
+    void update();
     void addSingularity();
-    void reduceHealth(double dmg);
 
 private:
-    AABB this_aabb;
     bool has_singularity;
-    double health;
     double damage;
-    int speed;
+    double x_pos;
+    double y_pos;
+    double speed;
     Uint32 shoot_cooldown;
     Uint32 last_shot;
 
-    void shoot(LaserManager& lasers);
+    void shoot();
     void move();
     void setAngle();
-    void updateAABB();
 };
 
 #endif

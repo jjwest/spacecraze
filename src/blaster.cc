@@ -5,27 +5,24 @@
 using namespace std;
 
 Blaster::Blaster(const Point& pos)
-    : Enemy(AssetManager::getInstance().getTexture("blaster"), pos, 15, 1, 40),
-      last_shot{0}, shoot_cooldown{300} {}
+    : Enemy(AssetManager::getInstance().getTexture("blaster"), pos, 15, 40),
+      damage{1}, speed{1}, last_shot{0}, shoot_cooldown{300} {}
 
-void Blaster::update(const Point& player_pos,
-                     LaserManager& lasers)
+void Blaster::update(const Point& player_pos)
 {
     move();
     setAngle(player_pos);
-    shoot(player_pos, lasers);
+    shoot(player_pos);
     updateAABB();
 }
 
-void Blaster::shoot(const Point& player_pos,
-                    LaserManager& lasers)
+void Blaster::shoot(const Point& player_pos)
 {
     Uint32 current_time = SDL_GetTicks();
 
     if (current_time - last_shot > shoot_cooldown)
     {
         Point this_pos {rect.x, rect.y};
-        lasers.addEnemyLaser(this_pos, player_pos);
         last_shot = current_time;
     }
 }

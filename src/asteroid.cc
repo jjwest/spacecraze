@@ -10,20 +10,13 @@ using namespace std;
 
 Asteroid::Asteroid(const Point& pos) 
     : Enemy(AssetManager::getInstance().getTexture("asteroid"),
-            pos, 50, 2, 0), move_x{0}, move_y{0}
+            pos, 50, 0), speed{1.5}, move_x{0}, move_y{0}
 {
     Point exit = calculateExitPoint();
     calculateDirection(exit);
 }
 
-void Asteroid::move() 
-{   
-    rect.x += move_x;
-    rect.y += move_y;
-    angle++;
-}
-
-void Asteroid::update()
+void Asteroid::update(const Point&)
 {
     move();
     updateAABB();
@@ -61,6 +54,14 @@ Point Asteroid::calculateExitPoint()
     return exit;
 }
 
+void Asteroid::move() 
+{   
+    rect.x += move_x;
+    rect.y += move_y;
+    angle++;
+}
+
+
 void Asteroid::calculateDirection(const Point& exit)
 {
     double center_asteroid_x = rect.x + (rect.h / 2);  
@@ -79,7 +80,7 @@ void Asteroid::killIfOutsideScreen()
     if (rect.x + (rect.w * 2) < 0 || rect.x > SCREEN_WIDTH || 
         rect.y + (rect.h * 2) < 0 || rect.y > SCREEN_HEIGHT) 
     {
-        health = 0;
+        reduceHealth(500);
     }
 }
 

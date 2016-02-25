@@ -1,13 +1,30 @@
 #include "../include/game_object.h"
 
-GameObject::GameObject(Texture* t, const Point& pos) 
-    : texture{t}, angle{0}, rect{pos.x, pos.y, texture->getHeight(),
-                                    texture->getWidth()} {}
+GameObject::GameObject(Texture* t, const Point& pos, double hp)
+    : Sprite(t, pos),
+      this_aabb{rect.y, rect.x, rect.y + rect.h, rect.x + rect.w}, health{hp} {}
 
-GameObject::~GameObject() {}
-
-void GameObject::draw(SDL_Renderer* renderer)
+AABB GameObject::getAABB() const
 {
-    SDL_RenderCopyEx(renderer, texture->getTexture(), NULL, 
-                     &rect, angle, NULL, SDL_FLIP_NONE);
+    return this_aabb;
+}
+
+bool GameObject::collides(const AABB& other) const
+{
+    return this_aabb.intersect(other);
+}
+
+bool GameObject::isDead() const
+{
+    return health <= 0;
+}
+
+void GameObject::reduceHealth(double damage)
+{
+    health -= damage;
+}
+
+void GameObject::updateAABB()
+{
+    this_aabb = AABB(rect.y, rect.x, rect.y + rect.h, rect.x + rect.w);
 }

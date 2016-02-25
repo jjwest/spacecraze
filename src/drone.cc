@@ -11,11 +11,10 @@ using namespace std;
 
 Drone::Drone(const Point& pos)
     : Enemy(AssetManager::getInstance().getTexture("drone"),
-            pos, 6, 2, 10) {}
+            pos, 6, 10), speed{2} {}
 
 void Drone::move(const Point& player_pos)
 {
-    //Calculates angle to player and moves accordingly
     float angle_to_player;
     double dest_x = player_pos.x;
     double dest_y = player_pos.y;

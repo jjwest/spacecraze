@@ -7,14 +7,15 @@ class Asteroid: public Enemy
 {
 public:
     Asteroid(const Point& pos);
-    void update();
+    void update(const Point&) override;
 
 private:
+    double speed;
     int move_x;
     int move_y;
 
-    void move();
     Point calculateExitPoint();
+    void move();
     void calculateDirection(const Point& exit);
     void killIfOutsideScreen();
 };

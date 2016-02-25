@@ -41,7 +41,6 @@ void Game::run()
         next_state_id = current_state->getNextState();
         changeState(next_state_id);
         SDL_Delay(10);
-        std::cout << next_state_id << std::endl;
     }
 }
 

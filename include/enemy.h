@@ -8,21 +8,13 @@
 class Enemy: public GameObject
 {
 public:
-    Enemy(Texture* t, const Point& pos, double hp, int sp, int sc);
+    Enemy(Texture* t, const Point& pos, double hp, int sc);
     virtual ~Enemy();
-    AABB getAABB() const;
-    bool collides(const AABB& other) const;
-    bool isDead() const;
     int getScore() const;
-    void reduceHealth(double damage);
+    virtual void update(const Point& player_pos) = 0;
     
-protected:
-    AABB this_aabb;
-    double health;
-    int speed;
-    int score;
-
-    void updateAABB();
+private:
+    int score; 
 };
 
 

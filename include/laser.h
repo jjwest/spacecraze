@@ -4,7 +4,7 @@
 #include "game_object.h"
 #include "aabb.h"
 
-class Laser : public GameObject
+class Laser : public Sprite
 {
 public:
     Laser(Texture* t, const Point& pos, const Point& destination, double dmg);

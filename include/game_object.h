@@ -1,22 +1,26 @@
-#ifndef VISIBLE_OBJECT_H
-#define VISIBLE_OBJECT_H
+#ifndef _GAME_OBJECT_H_
+#define _GAME_OBJECT_H_
 
-#include <SDL2/SDL_image.h>
-
+#include "sprite.h"
 #include "texture.h"
 #include "point.h"
+#include "aabb.h"
 
-class GameObject 
+class GameObject: public Sprite
 {
 public:
-    GameObject(Texture* t, const Point& pos);
+    GameObject(Texture* t, const Point& pos, double hp);
     virtual ~GameObject();
-    void draw(SDL_Renderer*);
-
-protected:
-    Texture* texture;
-    double angle;
-    SDL_Rect rect;
+    AABB getAABB() const;
+    bool collides(const AABB& other) const;
+    bool isDead() const;
+    void reduceHealth(double damage);
+    void updateAABB();
+    
+private:
+    AABB this_aabb;
+    double health;
 };
 
-#endif
+
+#endif // _GAME_OBJECT_H_

@@ -6,6 +6,10 @@
 Play::Play()
     : GameState(), next_state{PLAY} {}
 
+GameStates Play::getNextState() const
+{
+    return next_state;
+}
 
 void Play::handleEvents()
 {
@@ -13,7 +17,7 @@ void Play::handleEvents()
     {
         if (event.type == SDL_QUIT) 
         {
-            next_state = QUIT;
+            setNextState(QUIT);
         }
     }
 }
@@ -34,8 +38,10 @@ void Play::render(SDL_Renderer* renderer)
     SDL_RenderPresent(renderer);
 }
 
-GameStates Play::getNextState() const
+void Play::setNextState(GameStates state)
 {
-    return next_state;
+    if (next_state != QUIT) 
+    {
+        next_state = state;
+    }
 }
-
