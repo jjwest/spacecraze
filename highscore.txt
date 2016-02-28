@@ -1,5 +1,0 @@
-test 780
-s 670
-Jonas 360
-Jonas 340
-Test 280
