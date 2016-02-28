@@ -54,7 +54,7 @@ void Player::shoot(LaserManager& laser_manager)
     auto current_time = SDL_GetTicks();
     SDL_GetMouseState(NULL, NULL);
     
-    if (SDL_BUTTON(SDL_BUTTON_LEFT) && current_time - last_shot > shoot_cooldown) 
+    if (readyToShoot()) 
     {
         int center_x = rect.x + rect.h / 2;
         int center_y = rect.y + rect.w / 2;
@@ -108,3 +108,13 @@ void Player::setAngle()
      
      angle = (static_cast<int> (ang) - 90) % 360;
 }
+
+bool Player::readyToShoot() const
+{
+    auto current_time = SDL_GetTicks();
+    
+    return SDL_GetMouseState(NULL, NULL) &&
+           SDL_BUTTON(SDL_BUTTON_LEFT) &&
+           current_time - last_shot > shoot_cooldown;
+}
+

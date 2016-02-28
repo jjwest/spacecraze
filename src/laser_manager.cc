@@ -23,10 +23,11 @@ void LaserManager::addEnemyLaser(const Point& pos, const Point& dest)
 
 void LaserManager::addPlayerLaser(const Point& pos)
 {
-    auto& factory = ObjectFactory::getInstance();
     Point destination;
     SDL_GetMouseState(&destination.x, &destination.y);
-    enemy_lasers.push_back(factory.createLaser("player", pos, destination));
+
+    auto& factory = ObjectFactory::getInstance();
+    player_lasers.push_back(factory.createLaser("player", pos, destination));
 }
 
 laser::vec::const_iterator LaserManager::removeEnemyLaser(laser::vec::const_iterator it)

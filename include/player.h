@@ -29,6 +29,7 @@ private:
     Uint32 shoot_cooldown;
     Uint32 last_shot;
 
+    bool readyToShoot() const;
     void shoot(LaserManager& laser_manager);
     void move();
     void setAngle();

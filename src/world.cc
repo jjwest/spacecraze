@@ -1,15 +1,11 @@
 #include "../include/world.h"
 
-#include <random>
-#include <algorithm>
 #include <iostream>
 
 #include "../include/point.h"
 #include "../include/constants.h"
 #include "../include/asset_manager.h"
 #include "../include/enums.h"
-
-
 
 World::World() : GameWorld(), player{{500, 350}} {}
 
@@ -81,24 +77,34 @@ void World::updateObjects()
 void World::resolveCollisions()
 {
     auto player_aabb = player.getAABB();
-    for (auto& enemy : enemies) 
+    auto current_enemy = begin(enemies);
+
+    while (current_enemy != end(enemies))
     {
-        if (enemy->collides(player_aabb)) 
+        if ( (*current_enemy)->collides(player_aabb)) 
         {
             player.reduceHealth(500);
-            std::cout << "Collided with enemy" << std::endl;
             return;
         }
-        resolveLaserCollisions(*enemy);
-    }
 
+        resolveLaserCollisions(**current_enemy);
+
+        if ( (*current_enemy)->isDead() ) 
+        {
+            current_enemy = enemies.erase(current_enemy);
+        }
+        else 
+        {
+            current_enemy++;
+        }
+    }
+    
     resolveLaserCollisions(player);
 }
 
 void World::resolveLaserCollisions(Enemy& enemy)
 {
     auto enemy_aabb = enemy.getAABB();
-
     auto& player_lasers = laser_manager.getPlayerLasers();
     auto current_laser = begin(player_lasers);
 
@@ -119,7 +125,6 @@ void World::resolveLaserCollisions(Enemy& enemy)
 void World::resolveLaserCollisions(Player& player)
 {
     auto player_aabb = player.getAABB();
-
     auto& enemy_lasers = laser_manager.getEnemyLasers();
     auto current_laser = begin(enemy_lasers);
 
@@ -127,7 +132,6 @@ void World::resolveLaserCollisions(Player& player)
     {
         if ( (*current_laser)->collides(player_aabb) ) 
         {
-            std::cout << "Collided with laser" << std::endl;
             player.reduceHealth( (*current_laser)->getDamage() );
             current_laser = laser_manager.removeEnemyLaser(current_laser);
         }

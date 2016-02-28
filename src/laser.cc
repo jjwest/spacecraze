@@ -24,14 +24,17 @@ Laser::Laser(Texture* t, const Point& pos, const Point& destination,
     
     double longest = std::max( abs(x_dist), abs(y_dist) );
 
-    delta_x = x_dist / longest;
-    delta_y = y_dist / longest;
+    delta_x = x_dist / longest * speed;
+    delta_y = y_dist / longest * speed;
+
+    setAngle();
 }
 
 void Laser::update() 
 {
     move();
     updateAABB(rect);
+    killIfOutsideScreen();
 }
 
 int Laser::getDamage() const

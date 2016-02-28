@@ -87,7 +87,7 @@ void Game::loadMedia()
     assets.loadTexture("blaster", "../sprites/blaster.png", 1, renderer);
     assets.loadTexture("drone", "../sprites/drone.png", 0.5, renderer);
     assets.loadTexture("player", "../sprites/playership.png", 0.60, renderer);
-    assets.loadTexture("laser_friendly", "../sprites/playerlaser.png", 1, renderer);
+    assets.loadTexture("laser_friendly", "../sprites/playerlaser.png", 0.5, renderer);
     assets.loadTexture("laser_hostile", "../sprites/enemylaser.png", 1, renderer);
     assets.loadTexture("singularity", "../sprites/singularity.png", 1, renderer);
 
