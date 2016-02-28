@@ -19,7 +19,7 @@ Asteroid::Asteroid(const Point& pos)
 void Asteroid::update(const Point&)
 {
     move();
-    updateAABB();
+    updateAABB(rect);
     killIfOutsideScreen();
 }
 

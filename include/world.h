@@ -5,29 +5,31 @@
 #include <memory>
 #include <vector>
 
+#include "game_world.h"
 #include "enemy.h"
 #include "player.h"
 #include "laser.h"
+#include "laser_manager.h"
 #include "enums.h"
 
-class World
+class World: public GameWorld
 {
 public:
     World();
-    void addEnemyLaser(const Point& pos);
-    void addPlayerLaser(const Point& pos);
+    bool playerDead() const;
     void addEnemy(std::unique_ptr<Enemy> enemy);
     void render(SDL_Renderer* renderer);
     void update();
 
 private:
     Player player;
+    LaserManager laser_manager;
     std::vector<std::unique_ptr<Enemy>> enemies;
-    std::vector<std::unique_ptr<Laser>> enemy_lasers;
-    std::vector<std::unique_ptr<Laser>> player_lasers;
-    
+
     void updateObjects();
-    void handleCollisions();
+    void resolveCollisions();
+    void resolveLaserCollisions(Enemy& enemy);
+    void resolveLaserCollisions(Player& player);
 };
 
 

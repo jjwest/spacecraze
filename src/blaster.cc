@@ -13,7 +13,7 @@ void Blaster::update(const Point& player_pos)
     move();
     setAngle(player_pos);
     shoot(player_pos);
-    updateAABB();
+    updateAABB(rect);
 }
 
 void Blaster::shoot(const Point& player_pos)

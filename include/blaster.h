@@ -13,7 +13,7 @@ class Blaster: public Enemy
 public:
     Blaster(const Point& pos);
     void update(const Point& player_pos) override;
-  
+    
 private:
     double damage;
     double speed;

@@ -10,6 +10,8 @@
 #include "../include/player.h"
 #include "../include/play.h"
 
+#include <iostream>
+
 Game::Game()
     : window{nullptr}, renderer{nullptr}, current_state_id{PLAY}
 {
@@ -33,13 +35,14 @@ void Game::run()
     GameStates next_state_id{PLAY};
     current_state.reset(new Play());
     
-    while (next_state_id != QUIT)
+    while (current_state_id != QUIT)
     {
         current_state->handleEvents();
         current_state->update();
         current_state->render(renderer);
         next_state_id = current_state->getNextState();
         changeState(next_state_id);
+        std::cout << current_state_id << std::endl;
         SDL_Delay(10);
     }
 }
@@ -57,10 +60,6 @@ void Game::initSDL()
     if ( IMG_Init(0) != 0 ) 
     {
         throw "Error initializing SDL_Image";
-
-
-
-
     }
     if ( TTF_Init() != 0 ) 
     {

@@ -43,7 +43,7 @@ void Drone::move(const Point& player_pos)
 void Drone::update(const Point& player_pos)
 {
     move(player_pos);
-    updateAABB();
+    updateAABB(rect);
 }
 
 

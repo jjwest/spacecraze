@@ -8,6 +8,7 @@
 #include <map>
 #include <memory>
 
+#include "laser_manager.h"
 #include "texture.h"
 #include "aabb.h"
 
@@ -16,7 +17,7 @@ class Player: public GameObject
 public:
     Player(const Point& pos);
     Point getPos() const;
-    void update();
+    void update(LaserManager& laser_manager);
     void addSingularity();
 
 private:
@@ -28,7 +29,7 @@ private:
     Uint32 shoot_cooldown;
     Uint32 last_shot;
 
-    void shoot();
+    void shoot(LaserManager& laser_manager);
     void move();
     void setAngle();
 };

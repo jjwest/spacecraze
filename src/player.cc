@@ -3,31 +3,45 @@
 #include <utility>
 #include <SDL2/SDL.h>
 #include <string>
+#include <iostream>
 
 #include "../include/asset_manager.h"
 #include "../include/constants.h"
 
-using namespace std;
+namespace
+{
+    SDL_Rect shrinkRect(const SDL_Rect& rect)
+    {
+        SDL_Rect shrunk_rect = rect;
+        shrunk_rect.x -= 5;
+        shrunk_rect.y -= 5;
+        shrunk_rect.w -= 5;
+        shrunk_rect.h -= 5;
+        
+        return shrunk_rect;
+    }
+}
 
 Player::Player(const Point& pos)
     :  GameObject( AssetManager::getInstance().getTexture("player"), pos, 1), 
-       has_singularity{true}, damage{2}, x_pos{rect.x}, y_pos{rect.y},
-       speed{3}, shoot_cooldown{80},
+       has_singularity{true}, damage{2}, x_pos{static_cast<double>(rect.x)},
+       y_pos{static_cast<double>(rect.y)}, speed{4.5}, shoot_cooldown{80},
        last_shot{0} {}
 
 Point Player::getPos() const 
 {
-    int x = rect.x + rect.h / 2;
-    int y = rect.y + rect.w / 2;
+    int x = round(rect.x + rect.h / 2);
+    int y = round(rect.y + rect.w / 2);
 
     return {x, y};
 }
 
-void Player::update()
+void Player::update(LaserManager& laser_manager)
 {
     move();
-    shoot();
-    updateAABB();
+    shoot(laser_manager);
+    auto collision_rect = shrinkRect(rect);
+    updateAABB(collision_rect);
 }
 
 void Player::addSingularity() 
@@ -35,7 +49,7 @@ void Player::addSingularity()
     has_singularity = true;
 }
 
-void Player::shoot()
+void Player::shoot(LaserManager& laser_manager)
 {
     auto current_time = SDL_GetTicks();
     SDL_GetMouseState(NULL, NULL);
@@ -44,6 +58,9 @@ void Player::shoot()
     {
         int center_x = rect.x + rect.h / 2;
         int center_y = rect.y + rect.w / 2;
+        Point current_pos{center_x, center_y};
+
+        laser_manager.addPlayerLaser(current_pos);
         last_shot = current_time;
     }
 }
@@ -54,22 +71,22 @@ void Player::move()
     if (state[SDL_SCANCODE_D] && rect.x + rect.w + speed <= SCREEN_WIDTH)
     {
         x_pos += speed;
-        rect.x += round(x_pos);
+        rect.x = (round(x_pos));
     }
     if (state[SDL_SCANCODE_A] && rect.x - speed >= 0)
     {
         x_pos -= speed;
-        rect.x -= x_pos;
+        rect.x = round(x_pos);
     }
     if (state[SDL_SCANCODE_W] && rect.y - speed >= 0)
     {
         y_pos -= speed;
-        rect.y -= y_pos;
+        rect.y = round(y_pos);
     }
     if (state[SDL_SCANCODE_S] && rect.y + rect.h + speed <= SCREEN_HEIGHT)
     {
         y_pos += speed;
-        rect.y += y_pos;
+        rect.y = round(y_pos);
     }
 
     setAngle();
@@ -89,5 +106,5 @@ void Player::setAngle()
      ang = atan2(center_y - y, center_x - x);
      ang = ang * 180 / M_PI;
      
-     angle = (static_cast<int> (ang) - 90)%360;
+     angle = (static_cast<int> (ang) - 90) % 360;
 }

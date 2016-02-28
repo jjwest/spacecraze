@@ -4,6 +4,8 @@ GameObject::GameObject(Texture* t, const Point& pos, double hp)
     : Sprite(t, pos),
       this_aabb{rect.y, rect.x, rect.y + rect.h, rect.x + rect.w}, health{hp} {}
 
+GameObject::~GameObject() {}
+
 AABB GameObject::getAABB() const
 {
     return this_aabb;
@@ -24,7 +26,7 @@ void GameObject::reduceHealth(double damage)
     health -= damage;
 }
 
-void GameObject::updateAABB()
+void GameObject::updateAABB(const SDL_Rect& rect)
 {
     this_aabb = AABB(rect.y, rect.x, rect.y + rect.h, rect.x + rect.w);
 }

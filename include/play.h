@@ -3,13 +3,10 @@
 
 #include <SDL2/SDL.h>
 #include <memory>
-#include <map>
 
 #include "gamestate.h"
-#include "player.h"
-
 #include "enemy_generator.h"
-#include "world.h"
+#include "game_world.h"
 
 class Play: public GameState
 {
@@ -24,7 +21,7 @@ private:
     SDL_Event event;
     GameStates next_state;
     EnemyGenerator enemy_generator;
-    World world;
+    std::unique_ptr<GameWorld> world;
 
     void setNextState(GameStates state);
 };

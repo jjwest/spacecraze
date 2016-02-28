@@ -91,13 +91,13 @@ unique_ptr<Laser> ObjectFactory::createLaser(const string& type,
     {
         double damage = 3;
         auto texture = AssetManager::getInstance().getTexture("laser_friendly");
-        return make_unique<Laser>(texture, pos, destination, damage);
+        return make_unique<Laser>(texture, pos, destination, damage, 5);
     }
     else if (type == "enemy")
     {
         double damage = 1;
         auto texture = AssetManager::getInstance().getTexture("laser_hostile");
-        return make_unique<Laser>(texture, pos, destination, damage);
+        return make_unique<Laser>(texture, pos, destination, damage, 2.5);
     }
     else 
     {

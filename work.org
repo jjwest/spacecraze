@@ -1,0 +1,2 @@
+* Gör klart PLAY-läget
+** Spelare kolliderar med laser direkt.

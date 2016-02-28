@@ -4,18 +4,16 @@
 #include "game_object.h"
 #include "aabb.h"
 
-class Laser : public Sprite
+class Laser : public GameObject
 {
 public:
-    Laser(Texture* t, const Point& pos, const Point& destination, double dmg);
-    AABB getAABB() const;
+    Laser(Texture* t, const Point& pos, const Point& destination,
+          double dmg, double sp);
     void update();
     int getDamage() const;
     
 private:
-    AABB this_aabb;
     double damage;
-    double health;
     double speed;
     double current_x;
     double current_y;
@@ -23,6 +21,7 @@ private:
     double delta_y;
 
     void move();
-    void updateAABB();
+    void killIfOutsideScreen();
+    void setAngle();
 };
 #endif

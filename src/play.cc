@@ -2,9 +2,15 @@
 
 #include "../include/asset_manager.h"
 #include "../include/texture.h"
+#include "../include/world.h"
 
-Play::Play()
-    : GameState(), next_state{PLAY} {}
+#include <iostream>
+
+Play::Play() : GameState(), next_state{PLAY}
+{
+    world.reset(new World());
+}
+      
 
 GameStates Play::getNextState() const
 {
@@ -24,8 +30,13 @@ void Play::handleEvents()
 
 void Play::update()
 {
-    enemy_generator.update(world);
-    world.update();
+    enemy_generator.update(*world);
+    world->update();
+
+    if (world->playerDead()) 
+    {
+        setNextState(QUIT);
+    }
 }
 
 void Play::render(SDL_Renderer* renderer)
@@ -34,7 +45,7 @@ void Play::render(SDL_Renderer* renderer)
     auto& assets = AssetManager::getInstance();
     auto background = assets.getTexture("background")->getTexture();
     SDL_RenderCopy(renderer, background, NULL, NULL);
-    world.render(renderer);
+    world->render(renderer);
     SDL_RenderPresent(renderer);
 }
 

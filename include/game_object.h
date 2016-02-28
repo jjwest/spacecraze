@@ -15,7 +15,7 @@ public:
     bool collides(const AABB& other) const;
     bool isDead() const;
     void reduceHealth(double damage);
-    void updateAABB();
+    void updateAABB(const SDL_Rect& pos);
     
 private:
     AABB this_aabb;

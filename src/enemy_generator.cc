@@ -1,85 +1,56 @@
 #include "../include/enemy_generator.h"
 
-#include <random>
+#include <SDL2/SDL.h>
 
 #include "../include/constants.h"
 
 using namespace std;
 
+namespace
+{
+    bool isMultiple(int a, int b)
+    {
+        return a % b == 0;
+    }
+}
+
 EnemyGenerator::EnemyGenerator()
-    :  asteroid_spawn_delay{5}, drone_spawn_delay{3}, blaster_spawn_delay{10}, 
-    last_asteroid_spawned{0}, last_drone_spawned{0}, last_blaster_spawned{0}, 
-    asteroid_spawn_count{0}, blaster_spawn_count{0}, drone_spawn_count{0} {}
-
-void EnemyGenerator::update(World& world)
 {
-    current_time = SDL_GetTicks();
+    enemy_types.push_back( EnemyType{"asteroid", 4, 2, 2, 4} );
+    enemy_types.push_back( EnemyType{"blaster", 10, 2, 2, 5} );
+    enemy_types.push_back( EnemyType{"drone", 2, 3, 2, 4} );
+ }
 
-    updateAsteroids(world);
-    updateDrones(world);
-    updateBlasters(world);
-}
-
-void EnemyGenerator::updateAsteroids(World& world)
+void EnemyGenerator::update(GameWorld& world)
 {
-    if (current_time - last_asteroid_spawned  > asteroid_spawn_delay * 1000)
+    for (auto& enemy : enemy_types) 
     {
-        asteroid_spawn_count++;
-        world.addAsteroid();
-        if (asteroid_spawn_count % 3 == 0)
+        auto current_time = SDL_GetTicks();
+        if (readyToSpawn(enemy, current_time)) 
         {
-            world.addAsteroid();
+            spawnEnemy(world, enemy);
+            enemy.num_times_spawned += 1;
+            enemy.last_time_spawned = current_time;
+
+            if (isMultiple(enemy.num_times_spawned,
+                           enemy.spawns_until_decreased_delay))
+            {
+                enemy.spawn_delay *= 0.85;
+            }
         }
-        if (asteroid_spawn_count % 6 == 0)
-        {
-            asteroid_spawn_delay *= 0.80;
-        }
-        last_asteroid_spawned = current_time;
     }
 }
 
-void EnemyGenerator::updateDrones(World& world)
+bool EnemyGenerator::readyToSpawn(const EnemyType& enemy, Uint32 current_time)
 {
-    if (current_time - last_drone_spawned  > drone_spawn_delay * 1000)
-    {
-        drone_spawn_count++;
-        world.addDrone();
-        world.addDrone();
-
-        if (drone_spawn_count % 4 == 0)
-        {
-            world.addDrone();
-            world.addDrone();
-        }
-        else if (drone_spawn_count % 2 == 0)
-        {
-            world.addDrone();
-        }
-        if (drone_spawn_count % 5 == 0)
-        {
-            drone_spawn_delay *= 0.80;
-        }
-
-        last_drone_spawned = current_time;
-    }
+    return current_time - enemy.last_time_spawned > enemy.spawn_delay * 1000;
 }
 
-void EnemyGenerator::updateBlasters(World& world)
+void EnemyGenerator::spawnEnemy(GameWorld& world, const EnemyType& enemy)
 {
-    if (current_time - last_blaster_spawned  > blaster_spawn_delay * 1000)
+    auto& factory = ObjectFactory::getInstance();
+    for (int i = 0; i < enemy.spawn_amount; i++)
     {
-        blaster_spawn_count++;
-        world.addBlaster();
-        if( blaster_spawn_count % 3 == 0 )
-        {
-            world.addBlaster();
-        }
-        if( blaster_spawn_count % 4 == 0 )
-        {
-            blaster_spawn_delay *= 0.80;
-        }
-
-        last_blaster_spawned = current_time;
+        world.addEnemy(factory.createEnemy(enemy.name));
     }
 }
-

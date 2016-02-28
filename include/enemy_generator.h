@@ -1,33 +1,36 @@
 #ifndef ENEMY_GENERATOR
 #define ENEMY_GENERATOR
 
-#include <SDL2/SDL.h>
 #include <vector>
+#include <string>
+#include <memory>
 
 #include "world.h"
-#include "texture.h"
+#include "object_factory.h"
+
 
 class EnemyGenerator
 {
 public:
     EnemyGenerator();
-    void update(World& world);
+    void update(GameWorld& world);
 
 private:
-    double asteroid_spawn_delay;
-    double drone_spawn_delay;
-    double blaster_spawn_delay;
-    Uint32 current_time;
-    Uint32 last_asteroid_spawned; 
-    Uint32 last_drone_spawned;
-    Uint32 last_blaster_spawned;
-    int asteroid_spawn_count;
-    int blaster_spawn_count;
-    int drone_spawn_count;
+struct EnemyType
+{
+    std::string name;
+    double spawn_delay;
+    int spawn_amount;
+    int spawn_multiplier;
+    int spawns_until_decreased_delay;
+    int num_times_spawned = 0;
+    Uint32 last_time_spawned = 0;
+};
+        
+    std::vector<EnemyType> enemy_types;
 
-    void updateAsteroids(World& world);
-    void updateDrones(World& world);
-    void updateBlasters(World& world);
+    bool readyToSpawn(const EnemyType& enemy, Uint32 current_time);
+    void spawnEnemy(GameWorld& world, const EnemyType& enemy);
 };
 
 #endif

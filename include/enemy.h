@@ -12,7 +12,6 @@ public:
     virtual ~Enemy();
     int getScore() const;
     virtual void update(const Point& player_pos) = 0;
-    
 private:
     int score; 
 };

@@ -16,10 +16,10 @@
 class AssetManager 
 {
 public:
-    static AssetManager& getInstance();
-    static void destroyInstance();
     AssetManager(const AssetManager&) = delete;
     void operator=(const AssetManager&) = delete;
+    static AssetManager& getInstance();
+    static void destroyInstance();
 
     Mix_Music* getMusic(const std::string& name) const;
     Texture* getTexture(const std::string& name) const;

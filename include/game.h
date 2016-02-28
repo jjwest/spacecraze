@@ -20,6 +20,7 @@ private:
     SDL_Renderer* renderer;
     std::unique_ptr<GameState> current_state;
     GameStates current_state_id;
+
     void initSDL();
     void selectMusic();
     void loadMedia();
