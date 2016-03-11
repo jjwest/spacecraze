@@ -1,5 +1,5 @@
-#include "../include/laser_manager.h"
-#include "../include/object_factory.h"
+#include "laser_manager.h"
+#include "object_factory.h"
 
 #include <SDL2/SDL.h>
 

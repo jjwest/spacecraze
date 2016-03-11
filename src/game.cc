@@ -1,14 +1,14 @@
-#include "../include/game.h"
+#include "game.h"
 
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 
-#include "../include/asset_manager.h"
-#include "../include/enums.h"
-#include "../include/constants.h"
-#include "../include/player.h"
-#include "../include/play.h"
+#include "asset_manager.h"
+#include "enums.h"
+#include "constants.h"
+#include "player.h"
+#include "play.h"
 
 #include <iostream>
 
@@ -42,7 +42,6 @@ void Game::run()
         current_state->render(renderer);
         next_state_id = current_state->getNextState();
         changeState(next_state_id);
-        std::cout << current_state_id << std::endl;
         SDL_Delay(10);
     }
 }
@@ -82,19 +81,19 @@ void Game::loadMedia()
 {
     auto& assets = AssetManager::getInstance();
 
-    assets.loadTexture("asteroid", "../sprites/meteor.png", 1, renderer);
-    assets.loadTexture("background", "../sprites/background.jpg", 1, renderer);
-    assets.loadTexture("blaster", "../sprites/blaster.png", 1, renderer);
-    assets.loadTexture("drone", "../sprites/drone.png", 0.5, renderer);
-    assets.loadTexture("player", "../sprites/playership.png", 0.60, renderer);
-    assets.loadTexture("laser_friendly", "../sprites/playerlaser.png", 0.5, renderer);
-    assets.loadTexture("laser_hostile", "../sprites/enemylaser.png", 1, renderer);
-    assets.loadTexture("singularity", "../sprites/singularity.png", 1, renderer);
+    assets.loadTexture("asteroid", "sprites/meteor.png", 1, renderer);
+    assets.loadTexture("background", "sprites/background.jpg", 1, renderer);
+    assets.loadTexture("blaster", "sprites/blaster.png", 1, renderer);
+    assets.loadTexture("drone", "sprites/drone.png", 0.5, renderer);
+    assets.loadTexture("player", "sprites/playership.png", 0.60, renderer);
+    assets.loadTexture("laser_friendly", "sprites/playerlaser.png", 0.5, renderer);
+    assets.loadTexture("laser_hostile", "sprites/enemylaser.png", 1, renderer);
+    assets.loadTexture("singularity", "sprites/singularity.png", 1, renderer);
 
-    assets.loadMusic("menu", "../sounds/menu_music.mp3");
-    assets.loadMusic("play", "../sounds/play_music.mp3");
+    assets.loadMusic("menu", "sounds/menu_music.mp3");
+    assets.loadMusic("play", "sounds/play_music.mp3");
 
-    assets.loadFont("button", "../fonts/Akashi.ttf", 36);
+    assets.loadFont("button", "fonts/Akashi.ttf", 36);
 }
 
 void Game::changeState(GameStates next_state_id)

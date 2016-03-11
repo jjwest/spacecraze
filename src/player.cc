@@ -1,12 +1,12 @@
-#include "../include/player.h"
+#include "player.h"
 
 #include <utility>
 #include <SDL2/SDL.h>
 #include <string>
 #include <iostream>
 
-#include "../include/asset_manager.h"
-#include "../include/constants.h"
+#include "asset_manager.h"
+#include "constants.h"
 
 namespace
 {

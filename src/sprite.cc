@@ -1,4 +1,4 @@
-#include "../include/game_object.h"
+#include "game_object.h"
 
 Sprite::Sprite(Texture* t, const Point& pos) 
     : texture{t}, angle{0}, rect{pos.x, pos.y, texture->getWidth(),

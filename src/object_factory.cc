@@ -1,9 +1,9 @@
-#include "../include/object_factory.h"
+#include "object_factory.h"
 
-#include "../include/asset_manager.h"
-#include "../include/constants.h"
-#include "../include/point.h"
-#include "../include/texture.h"
+#include "asset_manager.h"
+#include "constants.h"
+#include "point.h"
+#include "texture.h"
 
 using namespace std;
 

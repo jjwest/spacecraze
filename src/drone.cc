@@ -1,11 +1,11 @@
-#include "../include/drone.h"
+#include "drone.h"
 
 #include <utility>
 #include <math.h>
 #include <cmath>
 #include <algorithm>
 
-#include "../include/asset_manager.h"
+#include "asset_manager.h"
 
 using namespace std;
 

@@ -1,10 +1,8 @@
-#include "../include/play.h"
+#include "play.h"
 
-#include "../include/asset_manager.h"
-#include "../include/texture.h"
-#include "../include/world.h"
-
-#include <iostream>
+#include "asset_manager.h"
+#include "texture.h"
+#include "world.h"
 
 Play::Play() : GameState(), next_state{PLAY}
 {

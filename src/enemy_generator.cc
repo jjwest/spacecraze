@@ -1,8 +1,8 @@
-#include "../include/enemy_generator.h"
+#include "enemy_generator.h"
 
 #include <SDL2/SDL.h>
 
-#include "../include/constants.h"
+#include "constants.h"
 
 using namespace std;
 

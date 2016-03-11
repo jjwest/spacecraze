@@ -1,7 +1,7 @@
 #include <cmath>
 #include <algorithm>
 
-#include "../include/aabb.h"
+#include "aabb.h"
 
 using namespace std;
 

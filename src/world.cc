@@ -1,11 +1,11 @@
-#include "../include/world.h"
+#include "world.h"
 
 #include <iostream>
 
-#include "../include/point.h"
-#include "../include/constants.h"
-#include "../include/asset_manager.h"
-#include "../include/enums.h"
+#include "point.h"
+#include "constants.h"
+#include "asset_manager.h"
+#include "enums.h"
 
 World::World() : GameWorld(), player{{500, 350}} {}
 

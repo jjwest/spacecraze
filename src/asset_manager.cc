@@ -1,4 +1,4 @@
-#include "../include/asset_manager.h"
+#include "asset_manager.h"
 #include <iostream>
 
 using namespace std;

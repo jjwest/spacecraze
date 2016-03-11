@@ -1,4 +1,4 @@
-#include "../include/music.h"
+#include "music.h"
 
 using namespace std;
 

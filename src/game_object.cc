@@ -1,4 +1,4 @@
-#include "../include/game_object.h"
+#include "game_object.h"
 
 GameObject::GameObject(Texture* t, const Point& pos, double hp)
     : Sprite(t, pos),

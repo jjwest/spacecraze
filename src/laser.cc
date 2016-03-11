@@ -1,4 +1,4 @@
-#include "../include/laser.h"
+#include "laser.h"
 
 #include <algorithm>
 #include <cmath>
@@ -6,8 +6,8 @@
 #include <math.h>
 #include <SDL2/SDL.h>
 
-#include "../include/asset_manager.h"
-#include "../include/constants.h"
+#include "asset_manager.h"
+#include "constants.h"
 
 Laser::Laser(Texture* t, const Point& pos, const Point& destination,
              double dmg, double sp)
