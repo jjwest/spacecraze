@@ -10,8 +10,10 @@ class Texture
 public:
     Texture(SDL_Renderer* renderer, const std::string& path, float scale);
     Texture(const Texture&) = delete;
+    Texture(Texture&&) = default;
+    Texture& operator=(Texture&&) = default;
+    Texture& operator=(const Texture&) = delete;
     ~Texture();
-    Texture& operator=(Texture&) = delete;
     SDL_Texture* getTexture() const;
     int getWidth() const;
     int getHeight() const;

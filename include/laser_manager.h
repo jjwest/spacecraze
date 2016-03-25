@@ -20,12 +20,11 @@ public:
     const laser::vec& getPlayerLasers() const;
     void addEnemyLaser(const Point& pos, const Point& dest);
     void addPlayerLaser(const Point& pos);
-    laser::vec::const_iterator removeEnemyLaser(laser::vec::const_iterator it);
-    laser::vec::const_iterator removePlayerLaser(laser::vec::const_iterator it);
+    void removeDeadLasers();
 
 private:
-    std::vector<std::unique_ptr<Laser>> enemy_lasers;
-    std::vector<std::unique_ptr<Laser>> player_lasers;
+    laser::vec enemy_lasers;
+    laser::vec player_lasers;
 };
 
 

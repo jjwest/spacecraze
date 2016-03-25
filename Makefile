@@ -1,22 +1,32 @@
-CXX      = g++-5
-CXXFLAGS = -I/home/jonve547/projects/spacecraze/include -std=c++14 -Wall -Wextra -Wold-style-cast -Woverloaded-virtual -pedantic -g
-LDLIBS   = -lSDL2 -lSDL2main -lSDL2_image -lSDL2_ttf -lSDL2_mixer
-VPATH    = src:include:build
-SOURCES  = $(notdir $(wildcard src/*.cc))
-OBJS     = $(addprefix build/, $(patsubst %.cc, %.o, ${SOURCES}))
-EXEC = a
+EXEC      = spacecraze
+
+CXX       = g++-5
+CXXFLAGS  = -Iinclude -std=c++14 -Wall -Wextra -Wold-style-cast -Woverloaded-virtual -pedantic -g
+LDLIBS    = -lSDL2 -lSDL2main -lSDL2_image -lSDL2_ttf -lSDL2_mixer
+BUILD_DIR = build/
+INCL_DIR  = include/
+SRC_DIR   = src/
+
+
+
+
+
+
+VPATH     = ${SRC_DIR}:${INCL_DIR}:${BUILD_DIR}
+SOURCES   = $(notdir $(wildcard ${SRC_DIR}*.cc))
+OBJS      = $(addprefix ${BUILD_DIR}, $(patsubst %.cc, %.o, ${SOURCES}))
 
 all: ${EXEC}
 
 ${EXEC}: ${OBJS}
 	${CXX} ${CXXFLAGS} -o $@ $^ ${LDLIBS}
 
-build/%.o: %.cc %.h
+${BUILD_DIR}%.o: %.cc %.h
 	${CXX} ${CXXFLAGS} -c -o $@ $< ${LDLIBS}
 
-build/%.o: %.cc 
+${BUILD_DIR}%.o: %.cc 
 	${CXX} ${CXXFLAGS} -c -o $@ $< ${LDLIBS}
 
 clean:
-	rm -rf build/*.o
+	rm -rf build/*.o ${EXEC}
 

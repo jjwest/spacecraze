@@ -10,6 +10,7 @@
 
 namespace
 {
+    // Player gets slightly smaller hitbox
     SDL_Rect shrinkRect(const SDL_Rect& rect)
     {
         SDL_Rect shrunk_rect = rect;
@@ -23,10 +24,9 @@ namespace
 }
 
 Player::Player(const Point& pos)
-    :  GameObject( AssetManager::getInstance().getTexture("player"), pos, 1), 
-       has_singularity{true}, damage{2}, x_pos{static_cast<double>(rect.x)},
-       y_pos{static_cast<double>(rect.y)}, speed{4.5}, shoot_cooldown{80},
-       last_shot{0} {}
+    :  GameObject(AssetManager::getInstance().getTexture("player"), pos, 1), 
+       x_pos{ double(rect.x) },
+       y_pos{ double(rect.y) } {}
 
 Point Player::getPos() const 
 {
@@ -40,8 +40,7 @@ void Player::update(LaserManager& laser_manager)
 {
     move();
     shoot(laser_manager);
-    auto collision_rect = shrinkRect(rect);
-    updateAABB(collision_rect);
+    updateAABB(shrinkRect(rect));
 }
 
 void Player::addSingularity() 
@@ -52,13 +51,12 @@ void Player::addSingularity()
 void Player::shoot(LaserManager& laser_manager)
 {
     auto current_time = SDL_GetTicks();
-    SDL_GetMouseState(NULL, NULL);
     
     if (readyToShoot()) 
     {
         int center_x = rect.x + rect.h / 2;
         int center_y = rect.y + rect.w / 2;
-        Point current_pos{center_x, center_y};
+        Point current_pos{ center_x, center_y };
 
         laser_manager.addPlayerLaser(current_pos);
         last_shot = current_time;
@@ -98,7 +96,7 @@ void Player::setAngle()
      int center_x, center_y;
      float ang;
      
-     SDL_GetMouseState(&x,&y);
+     SDL_GetMouseState(&x, &y);
      
      center_x = rect.x + (rect.h / 2);
      center_y = rect.y + (rect.w / 2);
@@ -106,7 +104,7 @@ void Player::setAngle()
      ang = atan2(center_y - y, center_x - x);
      ang = ang * 180 / M_PI;
      
-     angle = (static_cast<int> (ang) - 90) % 360;
+     angle = (int(ang) - 90) % 360;
 }
 
 bool Player::readyToShoot() const

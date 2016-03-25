@@ -4,14 +4,12 @@
 
 int main()
 {
-    try
-    {
+    try {
         Game game;
         game.run();        
     }
-    catch (std::string& s)
-    {
-        std::cerr << s << std::endl;
+    catch (std::exception& e) {
+        std::cerr << e.what() << std::endl;
     }
     
     return 0;

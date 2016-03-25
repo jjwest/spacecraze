@@ -6,17 +6,14 @@
 #include "asset_manager.h"
 #include "constants.h"
 
-using namespace std;
-
 Asteroid::Asteroid(const Point& pos) 
-    : Enemy(AssetManager::getInstance().getTexture("asteroid"),
-            pos, 50, 0), speed{1.5}, move_x{0}, move_y{0}
+    : Enemy(AssetManager::getInstance().getTexture("asteroid"), pos, 50, 0) 
 {
     Point exit = calculateExitPoint();
     calculateDirection(exit);
 }
 
-void Asteroid::update(const Point&)
+void Asteroid::update(const Point&, LaserManager&)
 {
     move();
     updateAABB(rect);
@@ -25,9 +22,9 @@ void Asteroid::update(const Point&)
 
 Point Asteroid::calculateExitPoint() 
 {
-    random_device rd;
-    uniform_int_distribution<int> random_x(50, 1100);
-    uniform_int_distribution<int> random_y(30, 700);
+    std::random_device rd;
+    std::uniform_int_distribution<int> random_x(50, 1100);
+    std::uniform_int_distribution<int> random_y(30, 700);
 
     Point exit;
     if (rect.y < 0) 
@@ -68,11 +65,11 @@ void Asteroid::calculateDirection(const Point& exit)
     double center_asteroid_y = rect.y + (rect.w / 2);    
     double x_dist = exit.x - center_asteroid_x;
     double y_dist = exit.y - center_asteroid_y;
-    double longest = max( abs(x_dist), abs(y_dist) );
+    double longest = std::max( abs(x_dist), abs(y_dist) );
     double delta_x = x_dist / longest;
     double delta_y = y_dist / longest;
-    move_x = static_cast<int>(round(delta_x * speed));
-    move_y = static_cast<int>(round(delta_y * speed));
+    move_x = int( round(delta_x * speed) );
+    move_y = int( round(delta_y * speed) );
 }
 
 void Asteroid::killIfOutsideScreen()

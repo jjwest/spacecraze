@@ -7,11 +7,15 @@
 
 #include "asset_manager.h"
 
-using namespace std;
-
 Drone::Drone(const Point& pos)
-    : Enemy(AssetManager::getInstance().getTexture("drone"),
-            pos, 6, 10), speed{2} {}
+    : Enemy(AssetManager::getInstance().getTexture("drone"), pos, 6, 10)
+{}
+
+void Drone::update(const Point& player_pos, LaserManager&)
+{
+    move(player_pos);
+    updateAABB(rect);
+}
 
 void Drone::move(const Point& player_pos)
 {
@@ -23,7 +27,7 @@ void Drone::move(const Point& player_pos)
 
     double x_dist = dest_x - center_drone_x;
     double y_dist = dest_y - center_drone_y;
-    double longest = max(abs(x_dist), abs(y_dist));
+    double longest = std::max(abs(x_dist), abs(y_dist));
 
     double delta_x = x_dist / longest;
     double delta_y = y_dist /longest;
@@ -39,13 +43,3 @@ void Drone::move(const Point& player_pos)
     
     angle = (static_cast<int> (angle_to_player)+90)%360;
 }
-
-void Drone::update(const Point& player_pos)
-{
-    move(player_pos);
-    updateAABB(rect);
-}
-
-
-
-

@@ -17,10 +17,12 @@ class AssetManager
 {
 public:
     AssetManager(const AssetManager&) = delete;
+    AssetManager(AssetManager&&) = delete;
     void operator=(const AssetManager&) = delete;
+    void operator=(AssetManager&&) = delete;
     static AssetManager& getInstance();
     static void destroyInstance();
-
+    
     Mix_Music* getMusic(const std::string& name) const;
     Texture* getTexture(const std::string& name) const;
     TTF_Font* getFont(const std::string& name) const;
@@ -30,7 +32,7 @@ public:
     void loadFont(const std::string& name, const std::string& path, int size);
 
 private:
-    AssetManager();
+    AssetManager() = default;
     static AssetManager* instance;
     std::map<std::string, std::unique_ptr<Texture>> textures;
     std::map<std::string, std::unique_ptr<Music>> music;

@@ -2,6 +2,7 @@
 #include "object_factory.h"
 
 #include <SDL2/SDL.h>
+#include <algorithm>
 
 LaserManager::LaserManager() {}
 
@@ -30,12 +31,15 @@ void LaserManager::addPlayerLaser(const Point& pos)
     player_lasers.push_back(factory.createLaser("player", pos, destination));
 }
 
-laser::vec::const_iterator LaserManager::removeEnemyLaser(laser::vec::const_iterator it)
+void LaserManager::removeDeadLasers()
 {
-    return enemy_lasers.erase(it);
-}
-
-laser::vec::const_iterator LaserManager::removePlayerLaser(laser::vec::const_iterator it)
-{
-    return player_lasers.erase(it);
+    enemy_lasers.erase(std::remove_if(begin(enemy_lasers),
+                                      end(enemy_lasers),
+                                      [] (auto& l) { return l->isDead(); }),
+                       end(enemy_lasers));
+    
+    player_lasers.erase(std::remove_if(begin(player_lasers),
+                                       end(player_lasers),
+                                       [] (auto& l) { return l->isDead(); }),
+                        end(player_lasers));
 }

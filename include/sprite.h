@@ -15,7 +15,7 @@ public:
 
 protected:
     Texture* texture;
-    double angle;
+    double angle = 0;
     SDL_Rect rect;
 };
 

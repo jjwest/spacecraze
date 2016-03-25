@@ -15,19 +15,19 @@
 class Player: public GameObject
 {
 public:
-    Player(const Point& pos);
+    Player(const Point &pos);
     Point getPos() const;
     void update(LaserManager& laser_manager);
     void addSingularity();
 
 private:
-    bool has_singularity;
-    double damage;
+    bool has_singularity = true;
+    double damage = 2;
+    double speed = 4.5;
     double x_pos;
     double y_pos;
-    double speed;
-    Uint32 shoot_cooldown;
-    Uint32 last_shot;
+    Uint32 shoot_cooldown = 80;
+    Uint32 last_shot = SDL_GetTicks();
 
     bool readyToShoot() const;
     void shoot(LaserManager& laser_manager);

@@ -2,7 +2,6 @@
 #define _PLAY_H_
 
 #include <SDL2/SDL.h>
-#include <memory>
 
 #include "gamestate.h"
 #include "enemy_generator.h"
@@ -22,8 +21,6 @@ private:
     GameStates next_state;
     EnemyGenerator enemy_generator;
     std::unique_ptr<GameWorld> world;
-
-    void setNextState(GameStates state);
 };
 
 #endif // _PLAY_H_

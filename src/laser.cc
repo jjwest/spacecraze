@@ -11,7 +11,9 @@
 
 Laser::Laser(Texture* t, const Point& pos, const Point& destination,
              double dmg, double sp)
-    : GameObject(t, pos, 1), damage{dmg}, speed{sp},
+    : GameObject(t, pos, 1),
+      damage{dmg},
+      speed{sp},
       current_x{static_cast<double>(pos.x)},
       current_y{static_cast<double>(pos.y)}
 {

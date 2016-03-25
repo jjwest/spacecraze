@@ -17,11 +17,9 @@ GameStates Play::getNextState() const
 
 void Play::handleEvents()
 {
-    while (SDL_PollEvent(&event) != 0)
-    {
-        if (event.type == SDL_QUIT) 
-        {
-            setNextState(QUIT);
+    while (SDL_PollEvent(&event) != 0) {
+        if (event.type == SDL_QUIT) {
+            next_state = QUIT;
         }
     }
 }
@@ -31,9 +29,8 @@ void Play::update()
     enemy_generator.update(*world);
     world->update();
 
-    if (world->playerDead()) 
-    {
-        setNextState(QUIT);
+    if (world->playerIsDead()) {
+        next_state = MENU;
     }
 }
 
@@ -45,12 +42,4 @@ void Play::render(SDL_Renderer* renderer)
     SDL_RenderCopy(renderer, background, NULL, NULL);
     world->render(renderer);
     SDL_RenderPresent(renderer);
-}
-
-void Play::setNextState(GameStates state)
-{
-    if (next_state != QUIT) 
-    {
-        next_state = state;
-    }
 }

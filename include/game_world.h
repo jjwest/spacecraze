@@ -12,7 +12,7 @@ class GameWorld
 public:
     GameWorld() {};
     virtual ~GameWorld() {};
-    virtual bool playerDead() const = 0;
+    virtual bool playerIsDead() const = 0;
     virtual void addEnemy(std::unique_ptr<Enemy> enemy) = 0;
     virtual void render(SDL_Renderer* renderer) = 0;
     virtual void update() = 0;

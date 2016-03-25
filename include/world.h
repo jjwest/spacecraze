@@ -16,7 +16,7 @@ class World: public GameWorld
 {
 public:
     World();
-    bool playerDead() const;
+    bool playerIsDead() const;
     void addEnemy(std::unique_ptr<Enemy> enemy);
     void render(SDL_Renderer* renderer);
     void update();
@@ -28,8 +28,6 @@ private:
 
     void updateObjects();
     void resolveCollisions();
-    void resolveLaserCollisions(Enemy& enemy);
-    void resolveLaserCollisions(Player& player);
 };
 
 

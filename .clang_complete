@@ -1,4 +1,4 @@
--I/home/jonve547/projects/spacecraze/include
+-Iinclude
 -lSDL2
 -lSDL2main
 -lSDL2_image

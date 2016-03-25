@@ -1,7 +1,10 @@
 #ifndef _ENEMY_H_
 #define _ENEMY_H_
 
+#include <memory>
+
 #include "game_object.h"
+#include "laser_manager.h"
 #include "texture.h"
 #include "aabb.h"
 
@@ -9,9 +12,13 @@ class Enemy: public GameObject
 {
 public:
     Enemy(Texture* t, const Point& pos, double hp, int sc);
+    Enemy(const Enemy &) = default;
+    Enemy(Enemy &&) = default;
+    Enemy& operator=(const Enemy &) = delete;
+    Enemy& operator=(Enemy &&) = default;
     virtual ~Enemy();
+    virtual void update(const Point&, LaserManager&) = 0;
     int getScore() const;
-    virtual void update(const Point& player_pos) = 0;
 private:
     int score; 
 };

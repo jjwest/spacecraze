@@ -24,7 +24,7 @@ struct EnemyType
     int spawn_multiplier;
     int spawns_until_decreased_delay;
     int num_times_spawned = 0;
-    Uint32 last_time_spawned = 0;
+    Uint32 last_time_spawned = SDL_GetTicks();
 };
         
     std::vector<EnemyType> enemy_types;
