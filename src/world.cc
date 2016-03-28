@@ -1,11 +1,13 @@
 #include "world.h"
 
 #include <algorithm>
+#include <iostream>
 
 #include "point.h"
 #include "constants.h"
 #include "asset_manager.h"
 #include "enums.h"
+
 
 World::World()
     : player{ {500, 350} } {}
@@ -15,9 +17,28 @@ bool World::playerIsDead() const
     return player.isDead();
 }
 
+int World::getScore() const
+{
+    return score;
+}
+
 void World::addEnemy(std::unique_ptr<Enemy> enemy)
 {
     enemies.push_back(move(enemy));
+}
+
+void World::usePlayerSpecial()
+{
+    if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT)
+        && player.hasSingularity()) {
+
+        for (const auto& enemy : enemies) {
+            score += enemy->getScore();
+        }
+        
+        enemies.clear();
+        player.setSingularity(false);
+    }
 }
 
 void World::render(SDL_Renderer* renderer)
@@ -45,6 +66,7 @@ void World::render(SDL_Renderer* renderer)
 
 void World::update()
 {
+    usePlayerSpecial();
     updateObjects();
     resolveCollisions();
 }
@@ -92,13 +114,16 @@ void World::resolveCollisions()
             if (laser->collides(enemy->getAABB())) {
                 enemy->reduceHealth(laser->getDamage());
                 laser->reduceHealth(999);
+                if (enemy->isDead()) {
+                    score += enemy->getScore();
+                }
             }
         }
     }
 
+    laser_manager.removeDeadLasers();
+
     enemies.erase(std::remove_if(begin(enemies), end(enemies),
                                  [] (auto& e) { return e->isDead(); }),
                   end(enemies));
-
-    laser_manager.removeDeadLasers();
 }

@@ -25,7 +25,7 @@ EnemyGenerator::EnemyGenerator()
     enemy_types.push_back({ "drone", 2, 3, 2, 4 });
 }
 
-void EnemyGenerator::update(GameWorld& world)
+void EnemyGenerator::update(World& world)
 {
     for (auto& enemy : enemy_types) {
         auto current_time = SDL_GetTicks();
@@ -48,7 +48,7 @@ bool EnemyGenerator::readyToSpawn(const EnemyType& enemy, Uint32 current_time)
     return current_time - enemy.last_time_spawned > enemy.spawn_delay * 1000;
 }
 
-void EnemyGenerator::spawnEnemy(GameWorld& world, const EnemyType& enemy)
+void EnemyGenerator::spawnEnemy(World& world, const EnemyType& enemy)
 {
     auto& factory = ObjectFactory::getInstance();
     for (int i = 0; i < enemy.spawn_amount; ++i) {

@@ -13,7 +13,7 @@ class EnemyGenerator
 {
 public:
     EnemyGenerator();
-    void update(GameWorld& world);
+    void update(World& world);
 
 private:
 struct EnemyType
@@ -30,7 +30,7 @@ struct EnemyType
     std::vector<EnemyType> enemy_types;
 
     bool readyToSpawn(const EnemyType& enemy, Uint32 current_time);
-    void spawnEnemy(GameWorld& world, const EnemyType& enemy);
+    void spawnEnemy(World& world, const EnemyType& enemy);
 };
 
 #endif

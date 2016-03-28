@@ -4,10 +4,10 @@
 #include "texture.h"
 #include "world.h"
 
-Play::Play() : GameState(), next_state{PLAY}
-{
-    world.reset(new World());
-}
+#include <iostream>
+
+Play::Play() :
+    GameState(), next_state{PLAY} {}
       
 
 GameStates Play::getNextState() const
@@ -26,20 +26,20 @@ void Play::handleEvents()
 
 void Play::update()
 {
-    enemy_generator.update(*world);
-    world->update();
+    enemy_generator.update(world);
+    world.update();
 
-    if (world->playerIsDead()) {
+    if (world.playerIsDead()) {
         next_state = MENU;
+        std::cout << world.getScore() << '\n';
     }
 }
 
 void Play::render(SDL_Renderer* renderer)
 {
     SDL_RenderClear(renderer);
-    auto& assets = AssetManager::getInstance();
-    auto background = assets.getTexture("background")->getTexture();
-    SDL_RenderCopy(renderer, background, NULL, NULL);
-    world->render(renderer);
+    auto background = AssetManager::getInstance().getTexture("background");
+    SDL_RenderCopy(renderer, background->getTexture(), NULL, NULL);
+    world.render(renderer);
     SDL_RenderPresent(renderer);
 }

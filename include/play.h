@@ -5,7 +5,7 @@
 
 #include "gamestate.h"
 #include "enemy_generator.h"
-#include "game_world.h"
+#include "world.h"
 
 class Play: public GameState
 {
@@ -17,10 +17,10 @@ public:
     void render(SDL_Renderer* renderer);
 
 private:
-    SDL_Event event;
-    GameStates next_state;
     EnemyGenerator enemy_generator;
-    std::unique_ptr<GameWorld> world;
+    GameStates next_state;
+    SDL_Event event;
+    World world;
 };
 
 #endif // _PLAY_H_
