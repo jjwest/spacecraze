@@ -57,7 +57,7 @@ void Laser::killIfOutsideScreen()
     if ( (rect.x < 0 || rect.x > SCREEN_WIDTH) ||
          (rect.y < 0 || rect.y > SCREEN_HEIGHT) )
     {
-        reduceHealth(500);
+        reduceHealth(999);
     }
 }
 

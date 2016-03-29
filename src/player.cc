@@ -14,7 +14,7 @@ Player::Player(const Point& pos)
 
 bool Player::hasSingularity() const
 {
-    return has_singularity;
+    return has_special;
 }
 
 Point Player::getPos() const 
@@ -32,9 +32,9 @@ void Player::update(LaserManager& laser_manager)
     updateAABB(rect);
 }
 
-void Player::setSingularity(bool state) 
+void Player::setSpecial(bool state)
 {
-    has_singularity = state;
+    has_special = state;
 }
 
 void Player::shoot(LaserManager& laser_manager)

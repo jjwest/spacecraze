@@ -29,8 +29,9 @@ private:
     int score = 0;
 
     void updateObjects();
+    void updateScore();
     void resolveCollisions();
+    void removeDeadObjects();
 };
-
 
 #endif // _WORLD_H_

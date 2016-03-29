@@ -1,7 +1,7 @@
 #include "world.h"
 
 #include <algorithm>
-#include <iostream>
+#include <numeric>
 
 #include "point.h"
 #include "constants.h"
@@ -29,15 +29,12 @@ void World::addEnemy(std::unique_ptr<Enemy> enemy)
 
 void World::usePlayerSpecial()
 {
-    if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT)
-        && player.hasSingularity()) {
-
+    if (player.hasSingularity()) {
         for (const auto& enemy : enemies) {
-            score += enemy->getScore();
+            enemy->reduceHealth(999);
         }
         
-        enemies.clear();
-        player.setSingularity(false);
+        player.setSpecial(false);
     }
 }
 
@@ -66,9 +63,13 @@ void World::render(SDL_Renderer* renderer)
 
 void World::update()
 {
-    usePlayerSpecial();
+    if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT)) {
+        usePlayerSpecial();
+    }
     updateObjects();
     resolveCollisions();
+    updateScore();
+    removeDeadObjects();
 }
 
 void World::updateObjects()
@@ -80,15 +81,24 @@ void World::updateObjects()
         enemy->update(player_pos, laser_manager);
     }
 
-    auto& enemy_lasers = laser_manager.getEnemyLasers();
+    const auto& enemy_lasers = laser_manager.getEnemyLasers();
     for (auto& laser : enemy_lasers) {
         laser->update();
     }
     
-    auto& player_lasers = laser_manager.getPlayerLasers();
+    const auto& player_lasers = laser_manager.getPlayerLasers();
     for (auto& laser : player_lasers) {
         laser->update();
     }
+}
+
+void World::updateScore()
+{
+    score = std::accumulate(begin(enemies), end(enemies), score,
+                            [](int a, const auto& e) {
+                                return e->isDead() ? a += e->getScore() : a;
+                            });
+    
 }
 
 void World::resolveCollisions()
@@ -96,12 +106,12 @@ void World::resolveCollisions()
     auto player_hitbox = player.getAABB();
     
     bool player_collides = std::any_of(begin(enemies), end(enemies),
-                                       [&player_hitbox] (auto& enemy)
+                                       [&player_hitbox] (const auto& enemy)
                                        {return enemy->collides(player_hitbox);});
 
     const auto& enemy_lasers = laser_manager.getEnemyLasers();
     bool player_hit = std::any_of(begin(enemy_lasers), end(enemy_lasers),
-                                  [&player_hitbox] (auto& laser)
+                                  [&player_hitbox] (const auto& laser)
                                   { return laser->collides(player_hitbox); });
 
     if (player_collides || player_hit) {
@@ -114,16 +124,15 @@ void World::resolveCollisions()
             if (laser->collides(enemy->getAABB())) {
                 enemy->reduceHealth(laser->getDamage());
                 laser->reduceHealth(999);
-                if (enemy->isDead()) {
-                    score += enemy->getScore();
-                }
             }
         }
     }
+}
 
+void World::removeDeadObjects()
+{
     laser_manager.removeDeadLasers();
-
     enemies.erase(std::remove_if(begin(enemies), end(enemies),
-                                 [] (auto& e) { return e->isDead(); }),
+                                 [](auto& e) { return e->isDead(); }),
                   end(enemies));
 }

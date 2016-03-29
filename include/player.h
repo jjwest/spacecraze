@@ -19,10 +19,10 @@ public:
     bool hasSingularity() const;
     Point getPos() const;
     void update(LaserManager& laser_manager);
-    void setSingularity(bool state);
+    void setSpecial(bool state);
 
 private:
-    bool has_singularity = true;
+    bool has_special = true;
     double damage = 2;
     double speed = 4.5;
     double x_pos;
