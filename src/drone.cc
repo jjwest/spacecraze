@@ -14,7 +14,7 @@ Drone::Drone(const Point& pos)
 void Drone::update(const Point& player_pos, LaserManager&)
 {
     move(player_pos);
-    updateAABB(rect);
+    updateHitbox(rect);
 }
 
 void Drone::move(const Point& player_pos)

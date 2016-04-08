@@ -8,7 +8,7 @@ class Laser : public GameObject
 {
 public:
     Laser(Texture* t, const Point& pos, const Point& destination,
-          double dmg, double sp);
+          double dmg, double spd, double angl);
     void update();
     int getDamage() const;
     
@@ -24,4 +24,5 @@ private:
     void killIfOutsideScreen();
     void setAngle();
 };
+
 #endif

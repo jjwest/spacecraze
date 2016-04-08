@@ -10,7 +10,7 @@
 class Button
 {
 public:
-    Button(SDL_Renderer* renderer, int x, int y, const std::string& text,
+    Button(SDL_Renderer* renderer, const Point& pos, const std::string& text,
            const GameStates& act);
     Button(const Button&) = delete;
     Button(Button&&) = default;

@@ -11,11 +11,11 @@ class GameObject: public Sprite
 public:
     GameObject(Texture* t, const Point& pos, double hp);
     virtual ~GameObject();
-    AABB getAABB() const;
+    AABB getHitbox() const;
     bool collides(const AABB& other) const;
     bool isDead() const;
     void reduceHealth(double damage);
-    void updateAABB(const SDL_Rect& pos);
+    void updateHitbox(const SDL_Rect& pos);
     
 private:
     AABB this_aabb;

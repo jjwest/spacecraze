@@ -2,8 +2,6 @@
 #define GAME_H
 
 #include <SDL2/SDL.h>
-#include <map>
-#include <iostream>
 #include <memory>
 
 #include "gamestate.h"

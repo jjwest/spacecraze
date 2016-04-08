@@ -16,7 +16,7 @@ Asteroid::Asteroid(const Point& pos)
 void Asteroid::update(const Point&, LaserManager&)
 {
     move();
-    updateAABB(rect);
+    updateHitbox(rect);
     killIfOutsideScreen();
 }
 

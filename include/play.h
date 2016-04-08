@@ -10,7 +10,7 @@
 class Play: public GameState
 {
 public:
-    Play();
+    Play(SDL_Renderer* renderer);
     GameStates getNextState() const;
     void handleEvents();
     void update();

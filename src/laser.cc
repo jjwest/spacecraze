@@ -10,16 +10,16 @@
 #include "constants.h"
 
 Laser::Laser(Texture* t, const Point& pos, const Point& destination,
-             double dmg, double sp)
-    : GameObject(t, pos, 1),
+             double dmg, double spd, double angl)
+    : GameObject(t, {pos.x - t->getWidth() / 2, pos.y - t->getHeight() / 2}, 1),
       damage{dmg},
-      speed{sp},
+      speed{spd},
       current_x{static_cast<double>(pos.x)},
       current_y{static_cast<double>(pos.y)}
 {
     // Calculates movement direction
-    double center_laser_x = rect.x + (rect.h / 2);  
-    double center_laser_y = rect.y + (rect.w / 2);
+    double center_laser_x = rect.x + (rect.w / 2);  
+    double center_laser_y = rect.y + (rect.h / 2);
     
     double x_dist = destination.x - center_laser_x;
     double y_dist = destination.y - center_laser_y;
@@ -29,13 +29,13 @@ Laser::Laser(Texture* t, const Point& pos, const Point& destination,
     delta_x = x_dist / longest * speed;
     delta_y = y_dist / longest * speed;
 
-    setAngle();
+    angle = angl;
 }
 
 void Laser::update() 
 {
     move();
-    updateAABB(rect);
+    updateHitbox(rect);
     killIfOutsideScreen();
 }
 

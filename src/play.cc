@@ -6,8 +6,9 @@
 
 #include <iostream>
 
-Play::Play() :
-    GameState(), next_state{PLAY} {}
+Play::Play(SDL_Renderer* renderer)
+    : GameState(), next_state{PLAY},
+      world{renderer} {}
       
 
 GameStates Play::getNextState() const
@@ -28,7 +29,7 @@ void Play::update()
 {
     enemy_generator.update(world);
     world.update();
-
+    
     if (world.playerIsDead()) {
         next_state = MENU;
         std::cout << world.getScore() << '\n';

@@ -4,12 +4,12 @@
 
 #include "asset_manager.h"
 
-Button::Button(SDL_Renderer* renderer, int x, int y, const std::string& text,
+Button::Button(SDL_Renderer* renderer, const Point& pos, const std::string& text,
                const GameStates& act)
     : action{act}
 {
-    rect.x = x;
-    rect.y = y;
+    rect.x = pos.x;
+    rect.y = pos.y;
     
     auto font = AssetManager::getInstance().getFont("button");
     SDL_Color color_normal = {255, 255, 255, 0};
@@ -46,7 +46,7 @@ void Button::draw(SDL_Renderer* renderer)
     if (mouseOverButton()) {
         SDL_RenderCopy(renderer, hover, NULL, &rect);
     }
-    else  {
+    else {
         SDL_RenderCopy(renderer, normal, NULL, &rect);
     }
 }

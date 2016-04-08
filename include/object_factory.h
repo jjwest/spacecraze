@@ -17,7 +17,8 @@ public:
     std::unique_ptr<Enemy> createEnemy(const std::string& type);
     std::unique_ptr<Laser> createLaser(const std::string& type,
                                        const Point& pos,
-                                       const Point& destination);
+                                       const Point& destination,
+                                       double dmg);
     
 private:
     ObjectFactory() {};

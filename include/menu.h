@@ -7,7 +7,7 @@
 #include "gamestate.h"
 #include "enums.h"
 #include "button.h"
-#include "sprite.h"
+#include "rendered_text.h"
 
 class Menu: public GameState
 {
@@ -19,10 +19,10 @@ public:
     GameStates getNextState() const;
 
 private:
-    bool update_buttons = false;
+    bool check_button_pressed = false;
     GameStates next_state;
     SDL_Event events;
-    std::vector<std::unique_ptr<Sprite>> text; 
+    RenderedText title;
     std::vector<std::unique_ptr<Button>> buttons;
 };
 

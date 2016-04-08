@@ -14,17 +14,16 @@ void Blaster::update(const Point &player_pos, LaserManager& lasers)
     move();
     setAngle(player_pos);
     shoot(player_pos, lasers);
-    updateAABB(rect);
+    updateHitbox(rect);
 }
 
 void Blaster::shoot(const Point &player_pos, LaserManager &lasers)
 {
     Uint32 current_time = SDL_GetTicks();
 
-    if (current_time - last_shot > shoot_cooldown)
-    {
+    if (current_time - last_shot > shoot_cooldown) {
         Point this_pos {rect.x, rect.y};
-        lasers.addEnemyLaser(this_pos, player_pos);
+        lasers.addEnemyLaser(this_pos, player_pos, damage);
         last_shot = current_time;
     }
 }
@@ -35,23 +34,19 @@ void Blaster::changeDirection()
     std::uniform_int_distribution<int> rand_x(0, SCREEN_WIDTH);
     std::uniform_int_distribution<int> rand_y(0, SCREEN_HEIGHT);
 
-    if (rect.y - rect.h <= 0) 
-    {
+    if (rect.y - rect.h <= 0) {
         move_to.x = rand_x(rd);
         move_to.y = SCREEN_HEIGHT;
     }
-    else if (rect.y + rect.h >= SCREEN_HEIGHT) 
-    {
+    else if (rect.y + rect.h >= SCREEN_HEIGHT) {
         move_to.x = rand_x(rd);
         move_to.y = 0;
     }
-    else if (rect.x - rect.w <= 0) 
-    {
+    else if (rect.x - rect.w <= 0) {
         move_to.y = rand_y(rd);
         move_to.x = SCREEN_WIDTH;
     }
-    else if (rect.x + rect.w >= SCREEN_WIDTH) 
-    {
+    else if (rect.x + rect.w >= SCREEN_WIDTH) {
         move_to.y = rand_y(rd);
         move_to.x = 0;
     }
@@ -74,8 +69,8 @@ void Blaster::move()
     double move_x = delta_x * speed;
     double move_y = delta_y * speed;
 
-    rect.x = rect.x + int(round(move_x));
-    rect.y = rect.y + int(round(move_y));
+    rect.x = rect.x + static_cast<int>(round(move_x));
+    rect.y = rect.y + static_cast<int>(round(move_y));
 }
 
 void Blaster::setAngle(const Point &player_pos)
@@ -86,5 +81,5 @@ void Blaster::setAngle(const Point &player_pos)
     float ang = atan2(center_y - player_pos.y, center_x - player_pos.x);
     ang = ang * 180 / M_PI;
      
-    angle = (int(ang) + 90) % 360;
+    angle = (static_cast<int>(ang) + 90) % 360;
 }

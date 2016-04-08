@@ -12,15 +12,15 @@ Player::Player(const Point& pos)
        x_pos{ static_cast<double>(rect.x) },
        y_pos{ static_cast<double>(rect.y) } {}
 
-bool Player::hasSingularity() const
+bool Player::hasSpecial() const
 {
     return has_special;
 }
 
 Point Player::getPos() const 
 {
-    int x = round(rect.x + rect.h / 2);
-    int y = round(rect.y + rect.w / 2);
+    int x = round(rect.x + rect.w / 2);
+    int y = round(rect.y + rect.h / 2);
 
     return {x, y};
 }
@@ -29,7 +29,7 @@ void Player::update(LaserManager& laser_manager)
 {
     move();
     shoot(laser_manager);
-    updateAABB(rect);
+    updateHitbox(rect);
 }
 
 void Player::setSpecial(bool state)
@@ -46,7 +46,7 @@ void Player::shoot(LaserManager& laser_manager)
         int center_y = rect.y + rect.w / 2;
         Point current_pos{ center_x, center_y };
 
-        laser_manager.addPlayerLaser(current_pos);
+        laser_manager.addPlayerLaser(current_pos, damage);
         last_shot = current_time;
     }
 }
@@ -95,7 +95,7 @@ bool Player::readyToShoot() const
 {
     auto current_time = SDL_GetTicks();
     
-    return SDL_GetMouseState(NULL, NULL) &
-        SDL_BUTTON(SDL_BUTTON_LEFT) &&
-        current_time - last_shot > shoot_cooldown;
+    return SDL_GetMouseState(NULL, NULL)
+        & SDL_BUTTON(SDL_BUTTON_LEFT)
+        && current_time - last_shot > shoot_cooldown;
 }

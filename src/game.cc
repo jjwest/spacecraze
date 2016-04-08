@@ -88,6 +88,8 @@ void Game::loadMedia()
     assets.loadMusic("play", "sounds/play_music.mp3");
 
     assets.loadFont("button", "fonts/Akashi.ttf", 36);
+    assets.loadFont("score", "fonts/Akashi.ttf", 24);
+    assets.loadFont("title", "fonts/Akashi.ttf", 60);
 }
 
 void Game::changeState(GameStates next_state_id)
@@ -95,7 +97,7 @@ void Game::changeState(GameStates next_state_id)
     if (next_state_id != current_state_id) {
         switch (next_state_id) {
         case PLAY:
-            current_state.reset(new Play());
+            current_state.reset(new Play(renderer));
             break;
 
         case MENU:

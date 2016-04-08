@@ -16,30 +16,42 @@ const laser::vec& LaserManager::getPlayerLasers() const
     return player_lasers;
 }
 
-void LaserManager::addEnemyLaser(const Point& pos, const Point& dest)
+void LaserManager::addEnemyLaser(const Point& pos, const Point& dest, double dmg)
 {
     auto& factory = ObjectFactory::getInstance();
-    enemy_lasers.push_back(factory.createLaser("enemy", pos, dest));
+    enemy_lasers.push_back(factory.createLaser("enemy", pos, dest, dmg));
 }
 
-void LaserManager::addPlayerLaser(const Point& pos)
+void LaserManager::addPlayerLaser(const Point& pos, double dmg)
 {
     Point destination;
     SDL_GetMouseState(&destination.x, &destination.y);
 
     auto& factory = ObjectFactory::getInstance();
-    player_lasers.push_back(factory.createLaser("player", pos, destination));
+    player_lasers.push_back(factory.createLaser("player", pos, destination, dmg));
 }
 
 void LaserManager::removeDeadLasers()
 {
+    
     enemy_lasers.erase(std::remove_if(begin(enemy_lasers),
                                       end(enemy_lasers),
                                       [] (auto& l) { return l->isDead(); }),
-                       end(enemy_lasers));
+                                      end(enemy_lasers));
     
     player_lasers.erase(std::remove_if(begin(player_lasers),
                                        end(player_lasers),
                                        [] (auto& l) { return l->isDead(); }),
-                        end(player_lasers));
+                                       end(player_lasers));
+}
+
+void update(std::unique_ptr<Laser>& laser)
+{
+    laser->update();
+}
+
+void LaserManager::updateLasers()
+{
+    std::for_each(begin(player_lasers), end(player_lasers), update);
+    std::for_each(begin(enemy_lasers), end(enemy_lasers), update);
 }

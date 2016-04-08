@@ -16,7 +16,7 @@ class Player: public GameObject
 {
 public:
     Player(const Point &pos);
-    bool hasSingularity() const;
+    bool hasSpecial() const;
     Point getPos() const;
     void update(LaserManager& laser_manager);
     void setSpecial(bool state);
