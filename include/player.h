@@ -1,16 +1,10 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "game_object.h"
-
 #include <SDL2/SDL.h>
-#include <string>
-#include <map>
-#include <memory>
 
+#include "game_object.h"
 #include "laser_manager.h"
-#include "texture.h"
-#include "aabb.h"
 
 class Player: public GameObject
 {

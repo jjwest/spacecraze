@@ -2,7 +2,9 @@
 #define _HIGHSCORE_H_
 
 #include <SDL2/SDL.h>
+#include <memory>
 #include <vector>
+#include <string>
 
 #include "gamestate.h"
 #include "rendered_text.h"
@@ -23,9 +25,12 @@ private:
     GameStates next_state = HIGHSCORE;
     Button button_back;
     RenderedText title;
-    std::vector<RenderedText> highscore_entries;
+    std::vector<std::unique_ptr<RenderedText>> highscore_entries;
 
+    std::vector<std::string> parseHighscoreFromFile(const std::string& filename);
     void checkButtonPressed();
+    void createRenderedTextFromEntries(SDL_Renderer* renderer,
+                                       const std::vector<std::string>& entries);
 };
 
 #endif // _HIGHSCORE_H_

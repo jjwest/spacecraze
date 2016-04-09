@@ -1,7 +1,6 @@
 #include "player.h"
 
 #include <utility>
-#include <SDL2/SDL.h>
 #include <string>
 
 #include "asset_manager.h"
