@@ -2,8 +2,7 @@
 
 #include <fstream>
 #include <sstream>
-#include <iostream>
-#include <iomanip>
+#include <cppformat/format.h>
 
 #include "asset_manager.h"
 #include "point.h"
@@ -60,22 +59,25 @@ void Highscore::checkButtonPressed()
 std::vector<std::string> Highscore::parseHighscoreFromFile(
     const std::string& filename)
 {
-    std::ifstream file{filename};
-    if (!file) {
-        std::ofstream new_file{filename};
+    using namespace std;
+
+    ifstream ifs{filename};
+    if (!ifs) {
+        ofstream new_file{filename};
         new_file << "";
         new_file.close();
-        file.clear();
-        file.open(filename);
+        ifs.clear();
+        ifs.open(filename);
     }
 
-    std::vector<std::string> entries; 
-    std::string line;
-    while (std::getline(file, line)) {
-        std::stringstream iss{line};
-        iss << std::setw(15) << line << line;
-        std::string entry;
-        std::getline(iss, entry);
+    vector<string> entries; 
+    string line;
+    while (getline(ifs, line)) {
+        istringstream iss{line};
+        string name, score;
+        iss >> name;
+        iss >> score;
+        string entry = fmt::format("{:<20} {}", name, score);
         entries.push_back(entry);
     }
     return entries;
