@@ -10,7 +10,7 @@ UserInterface::UserInterface(SDL_Renderer* renderer)
 }
 
 void UserInterface::draw(SDL_Renderer* renderer, int new_score,
-                           bool player_has_special)
+                         bool player_has_special)
 {
     if (score != new_score) {
         updateScoreTexture(renderer, new_score);
