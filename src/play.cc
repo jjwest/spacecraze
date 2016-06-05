@@ -7,13 +7,17 @@
 #include <iostream>
 
 Play::Play(SDL_Renderer* renderer)
-    : GameState(), next_state{PLAY},
-      world{renderer} {}
+    : GameState(), world{renderer} {}
       
 
 GameStates Play::getNextState() const
 {
     return next_state;
+}
+
+int Play::getScore() const
+{
+    return world.getScore();
 }
 
 void Play::handleEvents()

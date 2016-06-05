@@ -11,14 +11,15 @@ class Play: public GameState
 {
 public:
     Play(SDL_Renderer* renderer);
-    GameStates getNextState() const;
-    void handleEvents();
-    void update();
-    void render(SDL_Renderer* renderer);
+    GameStates getNextState() const override;
+    int getScore() const override;
+    void handleEvents() override;
+    void update() override;
+    void render(SDL_Renderer* renderer) override;
 
 private:
     EnemyGenerator enemy_generator;
-    GameStates next_state;
+    GameStates next_state = PLAY;
     SDL_Event event;
     World world;
 };

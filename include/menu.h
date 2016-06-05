@@ -13,10 +13,10 @@ class Menu: public GameState
 {
 public:
     Menu(SDL_Renderer* renderer);
-    void handleEvents();
-    void update();
-    void render(SDL_Renderer* renderer);
-    GameStates getNextState() const;
+    GameStates getNextState() const override;
+    void handleEvents() override;
+    void update() override;
+    void render(SDL_Renderer* renderer) override;
 
 private:
     bool check_button_pressed = false;

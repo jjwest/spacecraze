@@ -94,13 +94,15 @@ void World::updateScore()
 
 void World::resolveCollisions()
 {
-    auto player_hitbox = player.getHitbox();
-    auto collides = [&player_hitbox](const auto& obj)
-        { return obj->collides(player_hitbox); };
-    
+    AABB player_hitbox = player.getHitbox();
     const auto& enemy_lasers = laser_manager.getEnemyLasers();
-    bool player_hit = std::any_of(begin(enemy_lasers), end(enemy_lasers), collides);
-    bool player_collides = std::any_of(begin(enemies), end(enemies), collides);
+    bool player_hit = std::any_of(begin(enemy_lasers), end(enemy_lasers),
+				  [&player_hitbox] (auto& laser)
+				  { return laser->collides(player_hitbox); });
+
+    bool player_collides = std::any_of(begin(enemies), end(enemies),
+				       [&player_hitbox] (auto& enemy)
+				       { return enemy->collides(player_hitbox); });
 
     if (player_collides || player_hit) {
         player.reduceHealth(999);

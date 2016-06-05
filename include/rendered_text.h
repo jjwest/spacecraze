@@ -11,9 +11,8 @@ class RenderedText
 {
 public:
     RenderedText(SDL_Renderer* renderer, const std::string& text,
-                 const Point& pos, TTF_Font* font, const SDL_Color& color);
+                 const Point& pos, TTF_Font* font);
     RenderedText(const RenderedText&) = delete;
-    RenderedText(RenderedText&&) = default;
     RenderedText& operator=(const RenderedText&) = delete;
     RenderedText& operator=(RenderedText&&) = default;
     ~RenderedText();

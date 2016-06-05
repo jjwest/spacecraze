@@ -10,10 +10,11 @@ class GameState
 public:
     GameState() {};
     virtual ~GameState() {};
+    virtual GameStates getNextState() const = 0;
+    virtual int getScore() const { return 0; };
     virtual void handleEvents() = 0;
     virtual void update() = 0;
     virtual void render(SDL_Renderer*) = 0;
-    virtual GameStates getNextState() const = 0;
 };
 
 

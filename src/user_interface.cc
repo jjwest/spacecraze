@@ -25,7 +25,10 @@ void UserInterface::draw(SDL_Renderer* renderer, int new_score,
 void UserInterface::updateScoreTexture(SDL_Renderer* renderer, int new_score)
 {
     TTF_Font* font = AssetManager::getInstance().getFont("score");
-    SDL_Color white{ 255, 255, 255, 0};
-    rendered_score.reset(new RenderedText(renderer, std::to_string(new_score),
-                                          {950, 30}, font, white));
+    rendered_score.reset(new RenderedText(
+			     renderer,
+			     std::to_string(new_score),
+			     {950, 30},
+			     font));
+    
 }

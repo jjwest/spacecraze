@@ -10,7 +10,6 @@
 #include "constants.h"
 #include "play.h"
 #include "menu.h"
-#include "highscore.h"
 
 Game::Game()
     : window{nullptr}, renderer{nullptr}, current_state_id{PLAY}
@@ -106,7 +105,6 @@ void Game::changeState(GameStates next_state_id)
             break;
 
         case HIGHSCORE:
-            current_state.reset(new Highscore(renderer));
             break;
 
         case QUIT:

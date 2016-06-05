@@ -7,8 +7,7 @@ Menu::Menu(SDL_Renderer* renderer)
       title{ renderer,
               "SPACECRAZE",
               {450, 150},
-              AssetManager::getInstance().getFont("title"),
-              {255, 255, 255, 255} }
+              AssetManager::getInstance().getFont("title")}
 {
     buttons.emplace_back(
         std::make_unique<Button>(renderer, Point{550, 400}, "PLAY", PLAY));

@@ -76,15 +76,11 @@ void Player::move()
 void Player::setAngle() 
 {
      int x, y;
-     int center_x, center_y;
-     float ang;
-     
      SDL_GetMouseState(&x, &y);
+     int center_x = rect.x + (rect.h / 2);
+     int center_y = rect.y + (rect.w / 2);
      
-     center_x = rect.x + (rect.h / 2);
-     center_y = rect.y + (rect.w / 2);
-     
-     ang = atan2(center_y - y, center_x - x);
+     float ang = atan2(center_y - y, center_x - x);
      ang = ang * 180 / M_PI;
      
      angle = (static_cast<int>(ang) - 90) % 360;
