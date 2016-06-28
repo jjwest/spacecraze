@@ -45,13 +45,12 @@ void LaserManager::removeDeadLasers()
                                        end(player_lasers));
 }
 
-void update(std::unique_ptr<Laser>& laser)
-{
-    laser->update();
-}
-
 void LaserManager::updateLasers()
 {
-    std::for_each(begin(player_lasers), end(player_lasers), update);
-    std::for_each(begin(enemy_lasers), end(enemy_lasers), update);
+    for (auto& laser : player_lasers) {
+	laser->update();
+    }
+    for (auto& laser : enemy_lasers) {
+	laser->update();
+    }
 }

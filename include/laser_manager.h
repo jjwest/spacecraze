@@ -1,5 +1,5 @@
-#ifndef _LASER_MANAGER_H_
-#define _LASER_MANAGER_H_
+#ifndef _PROJECTILE_MANAGER_H
+#define _PROJECTILE_MANAGER_H
 
 #include <vector>
 #include <memory>
@@ -29,4 +29,4 @@ private:
 };
 
 
-#endif // _LASER_MANAGER_H_
+#endif // _PROJECTILE_MANAGER_H

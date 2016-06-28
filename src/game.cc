@@ -3,6 +3,7 @@
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+
 #include <stdexcept>
 
 #include "asset_manager.h"
@@ -10,6 +11,7 @@
 #include "constants.h"
 #include "play.h"
 #include "menu.h"
+#include "highscore.h"
 
 Game::Game()
     : window{nullptr}, renderer{nullptr}, current_state_id{PLAY}
@@ -105,6 +107,7 @@ void Game::changeState(GameStates next_state_id)
             break;
 
         case HIGHSCORE:
+	    current_state.reset(new Highscore(renderer));
             break;
 
         case QUIT:
@@ -114,3 +117,4 @@ void Game::changeState(GameStates next_state_id)
         current_state_id = next_state_id;
     }
 }
+    

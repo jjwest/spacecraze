@@ -36,7 +36,7 @@ void World::addEnemy(std::unique_ptr<Enemy> enemy)
     enemies.push_back(move(enemy));
 }
 
-bool rightMouseButtonPressed()
+bool rightMouseButtonPressed() 
 {
     return SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT);
 }
@@ -47,7 +47,6 @@ void World::usePlayerSpecial()
         for (const auto& enemy : enemies) {
             enemy->reduceHealth(999);
         }
-
         player.setSpecial(false);
     }
 }
@@ -57,7 +56,7 @@ void World::render(SDL_Renderer* renderer)
     auto background = AssetManager::getInstance().getTexture("background");
     SDL_RenderCopy(renderer, background->getTexture(), NULL, NULL);
 
-    auto draw = [&renderer](auto& obj) { obj->draw(renderer); };
+    auto draw = [&renderer](const auto& obj) { obj->draw(renderer); };
     std::for_each(begin(enemies), end(enemies), draw);
     
     auto& enemy_lasers = laser_manager.getEnemyLasers();
@@ -68,6 +67,7 @@ void World::render(SDL_Renderer* renderer)
 
     user_interface.draw(renderer, score, player.hasSpecial());
     player.draw(renderer);
+
     SDL_RenderPresent(renderer);
 }
 
@@ -85,29 +85,43 @@ void World::updateObjects()
 
 void World::updateScore()
 {
-    for (const auto& enemy : enemies) {
-        if (enemy->isDead()) {
-            score += enemy->getScore();
-        }
-    }
+    score = std::accumulate(
+	begin(enemies), end(enemies), score,
+	[] (int sum, const auto& e)
+	{ return e->isDead() ? sum + e->getScore() : sum; }
+    );
 }
 
 void World::resolveCollisions()
 {
+    resolvePlayerCollisions();
+    resolveLaserCollisions();
+}
+
+void World::resolvePlayerCollisions()
+{
     AABB player_hitbox = player.getHitbox();
     const auto& enemy_lasers = laser_manager.getEnemyLasers();
-    bool player_hit = std::any_of(begin(enemy_lasers), end(enemy_lasers),
-				  [&player_hitbox] (auto& laser)
-				  { return laser->collides(player_hitbox); });
 
-    bool player_collides = std::any_of(begin(enemies), end(enemies),
-				       [&player_hitbox] (auto& enemy)
-				       { return enemy->collides(player_hitbox); });
+    bool hit_by_laser = std::any_of(
+	begin(enemy_lasers), end(enemy_lasers),
+	[&player_hitbox] (auto& laser)
+	{ return laser->collides(player_hitbox); }
+    );
 
-    if (player_collides || player_hit) {
+    bool collides_with_enemy = std::any_of(
+	begin(enemies), end(enemies),
+	[&player_hitbox] (auto& enemy)
+	{ return enemy->collides(player_hitbox); }
+    );
+
+    if  (collides_with_enemy || hit_by_laser) {
         player.reduceHealth(999);
     }
+}
 
+void World::resolveLaserCollisions()
+{
     const auto& player_lasers = laser_manager.getPlayerLasers();
     for (auto& laser : player_lasers) {
         for (auto& enemy : enemies) {
@@ -118,7 +132,6 @@ void World::resolveCollisions()
         }
     }
 }
-
 void World::removeDeadObjects()
 {
     laser_manager.removeDeadLasers();
