@@ -10,7 +10,7 @@
 #include "constants.h"
 
 Laser::Laser(Texture* t, const Point& pos, const Point& destination,
-             double dmg, double spd, double angl)
+             double dmg, double spd, double ang)
     : GameObject(t, {pos.x - t->getWidth() / 2, pos.y - t->getHeight() / 2}, 1),
       damage{dmg},
       speed{spd},
@@ -29,7 +29,7 @@ Laser::Laser(Texture* t, const Point& pos, const Point& destination,
     delta_x = x_dist / longest * speed;
     delta_y = y_dist / longest * speed;
 
-    angle = angl;
+    angle = ang;
 }
 
 void Laser::update() 

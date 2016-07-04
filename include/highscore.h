@@ -16,6 +16,9 @@ public:
     void handleEvents() override;
     void update() override;
     void render(SDL_Renderer* renderer) override;
+
+private:
+    
 };
 
 

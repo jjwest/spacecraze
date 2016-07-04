@@ -30,3 +30,6 @@ ${BUILD_DIR}%.o: %.cc
 
 clean:
 	rm -f ${BUILD_DIR}*.o ${EXEC}
+
+run:
+	./${EXEC}

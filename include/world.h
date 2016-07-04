@@ -32,7 +32,7 @@ private:
 
     void updateScore();
     void updateObjects();
-    void resolveCollisions(); 
+    void resolveCollisions();
     void resolveLaserCollisions();
     void resolvePlayerCollisions();
     void removeDeadObjects();

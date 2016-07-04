@@ -34,11 +34,7 @@ Button::~Button()
 
 GameStates Button::update(const GameStates& current_state)
 {
-    if (mouseOverButton()) {
-        return action;
-    }
-
-    return current_state;
+    return mouseOverButton() ? action : current_state;
 }
 
 void Button::draw(SDL_Renderer* renderer)

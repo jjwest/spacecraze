@@ -36,7 +36,7 @@ void World::addEnemy(std::unique_ptr<Enemy> enemy)
     enemies.push_back(move(enemy));
 }
 
-bool rightMouseButtonPressed() 
+bool rightMouseButtonPressed()
 {
     return SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT);
 }
@@ -56,12 +56,12 @@ void World::render(SDL_Renderer* renderer)
     auto background = AssetManager::getInstance().getTexture("background");
     SDL_RenderCopy(renderer, background->getTexture(), NULL, NULL);
 
-    auto draw = [&renderer](const auto& obj) { obj->draw(renderer); };
+    auto draw = [&renderer] (auto& obj) { obj->draw(renderer); };
     std::for_each(begin(enemies), end(enemies), draw);
-    
+
     auto& enemy_lasers = laser_manager.getEnemyLasers();
     std::for_each(begin(enemy_lasers), end(enemy_lasers), draw);
-    
+
     auto& player_lasers = laser_manager.getPlayerLasers();
     std::for_each(begin(player_lasers), end(player_lasers), draw);
 

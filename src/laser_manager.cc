@@ -33,12 +33,12 @@ void LaserManager::addPlayerLaser(const Point& pos, double dmg)
 
 void LaserManager::removeDeadLasers()
 {
-    
+
     enemy_lasers.erase(std::remove_if(begin(enemy_lasers),
                                       end(enemy_lasers),
                                       [] (auto& l) { return l->isDead(); }),
                                       end(enemy_lasers));
-    
+
     player_lasers.erase(std::remove_if(begin(player_lasers),
                                        end(player_lasers),
                                        [] (auto& l) { return l->isDead(); }),
@@ -47,10 +47,6 @@ void LaserManager::removeDeadLasers()
 
 void LaserManager::updateLasers()
 {
-    for (auto& laser : player_lasers) {
-	laser->update();
-    }
-    for (auto& laser : enemy_lasers) {
-	laser->update();
-    }
+    for (auto& laser : player_lasers) { laser->update(); }
+    for (auto& laser : enemy_lasers) { laser->update(); }
 }

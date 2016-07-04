@@ -2,7 +2,7 @@
 
 Highscore::Highscore(SDL_Renderer* renderer)
 {
-    
+   
 }
 
 GameStates Highscore::getNextState() const

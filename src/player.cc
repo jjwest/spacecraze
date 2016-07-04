@@ -16,7 +16,7 @@ bool Player::hasSpecial() const
     return has_special;
 }
 
-Point Player::getPos() const 
+Point Player::getPos() const
 {
     int x = round(rect.x + rect.w / 2);
     int y = round(rect.y + rect.h / 2);
@@ -39,7 +39,7 @@ void Player::setSpecial(bool state)
 void Player::shoot(LaserManager& laser_manager)
 {
     auto current_time = SDL_GetTicks();
-    
+
     if (readyToShoot()) {
         int center_x = rect.x + rect.h / 2;
         int center_y = rect.y + rect.w / 2;
@@ -52,7 +52,7 @@ void Player::shoot(LaserManager& laser_manager)
 void Player::move()
 {
     auto state = SDL_GetKeyboardState(NULL);
-    
+
     if (state[SDL_SCANCODE_D] && rect.x + rect.w + speed <= SCREEN_WIDTH) {
         x_pos += speed;
         rect.x = round(x_pos);
@@ -73,23 +73,23 @@ void Player::move()
     setAngle();
 }
 
-void Player::setAngle() 
+void Player::setAngle()
 {
      int x, y;
      SDL_GetMouseState(&x, &y);
      int center_x = rect.x + (rect.h / 2);
      int center_y = rect.y + (rect.w / 2);
-     
+
      float ang = atan2(center_y - y, center_x - x);
      ang = ang * 180 / M_PI;
-     
+
      angle = (static_cast<int>(ang) - 90) % 360;
 }
 
 bool Player::readyToShoot() const
 {
     auto current_time = SDL_GetTicks();
-    
+
     return SDL_GetMouseState(NULL, NULL)
         & SDL_BUTTON(SDL_BUTTON_LEFT)
         && current_time - last_shot > shoot_cooldown;
