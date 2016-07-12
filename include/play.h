@@ -3,7 +3,7 @@
 
 #include <SDL2/SDL.h>
 
-#include "gamestate.h"
+#include "game_state.h"
 #include "enemy_generator.h"
 #include "world.h"
 
@@ -11,15 +11,14 @@ class Play: public GameState
 {
 public:
     Play(SDL_Renderer* renderer);
-    GameStates getNextState() const override;
-    int getScore() const override;
+    State getNextState() const override;
     void handleEvents() override;
     void update() override;
-    void render(SDL_Renderer* renderer) override;
+    void draw(SDL_Renderer* renderer) override;
 
 private:
     EnemyGenerator enemy_generator;
-    GameStates next_state = PLAY;
+    State next_state = PLAY;
     SDL_Event event;
     World world;
 };

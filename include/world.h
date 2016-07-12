@@ -21,7 +21,7 @@ public:
     void update();
     void addEnemy(std::unique_ptr<Enemy> enemy);
     void usePlayerSpecial();
-    void render(SDL_Renderer* renderer);
+    void draw(SDL_Renderer* renderer);
 
 private:
     Player player;

@@ -3,7 +3,7 @@
 #include <stdexcept>
 #include <string>
 
-AssetManager& AssetManager::getInstance() 
+AssetManager& AssetManager::getInstance()
 {
     return *instance;
 }
@@ -16,17 +16,17 @@ void AssetManager::destroyInstance()
 
 AssetManager* AssetManager::instance(new AssetManager);
 
-Texture* AssetManager::getTexture(const std::string& name) const 
+Texture* AssetManager::getTexture(const std::string& name) const
 {
     try {
-        return &*textures.at(name);        
+        return &*textures.at(name);
     }
     catch (std::exception& e) {
         throw std::invalid_argument("Tried to fetch non-loaded texture " + name);
     }
 }
 
-Mix_Music* AssetManager::getMusic(const std::string& name) const 
+Mix_Music* AssetManager::getMusic(const std::string& name) const
 {
     try {
         return music.at(name)->getMusic();
@@ -36,10 +36,10 @@ Mix_Music* AssetManager::getMusic(const std::string& name) const
     }
 }
 
-TTF_Font* AssetManager::getFont(const std::string& name) const 
+TTF_Font* AssetManager::getFont(const std::string& name) const
 {
     try {
-        return fonts.at(name)->getFont();        
+        return fonts.at(name)->getFont();
     }
     catch (std::exception& e) {
         throw std::invalid_argument("Tried to fetch non-loaded font " + name);
@@ -49,14 +49,14 @@ TTF_Font* AssetManager::getFont(const std::string& name) const
 void AssetManager::loadTexture(const std::string& name,
 			       const std::string& path,
 			       float scale,
-                               SDL_Renderer* renderer) 
-{   
+                               SDL_Renderer* renderer)
+{
     textures.insert(make_pair(name, std::make_unique<Texture>(renderer,
                                                                path,
                                                                scale)));
 }
 
-void AssetManager::loadMusic(const std::string& name, const std::string& path) 
+void AssetManager::loadMusic(const std::string& name, const std::string& path)
 {
     music.insert(make_pair(name, std::make_unique<Music>(path)));
 }

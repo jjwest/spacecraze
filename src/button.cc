@@ -5,7 +5,7 @@
 #include "asset_manager.h"
 
 Button::Button(SDL_Renderer* renderer, const Point& pos, const std::string& text,
-               const GameStates& act)
+               const State& act)
     : action{act}
 {
     rect.x = pos.x;
@@ -32,7 +32,7 @@ Button::~Button()
     SDL_DestroyTexture(hover);
 }
 
-GameStates Button::update(const GameStates& current_state)
+State Button::update(const State& current_state)
 {
     return mouseOverButton() ? action : current_state;
 }

@@ -16,11 +16,12 @@ public:
     Enemy(Enemy &&) = default;
     Enemy& operator=(const Enemy &) = delete;
     Enemy& operator=(Enemy &&) = default;
+
     virtual ~Enemy();
     virtual void update(const Point&, LaserManager&) = 0;
     int getScore() const;
 private:
-    int score; 
+    int score;
 };
 
 

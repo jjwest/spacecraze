@@ -13,7 +13,7 @@
 #include "font.h"
 #include "music.h"
 
-class AssetManager 
+class AssetManager
 {
 public:
     AssetManager(const AssetManager&) = delete;
@@ -22,13 +22,13 @@ public:
     void operator=(AssetManager&&) = delete;
     static AssetManager& getInstance();
     static void destroyInstance();
-    
+
     Mix_Music* getMusic(const std::string& name) const;
     Texture* getTexture(const std::string& name) const;
     TTF_Font* getFont(const std::string& name) const;
     void loadTexture(const std::string& name, const std::string& path,
                      float scale, SDL_Renderer*);
-    void loadMusic(const std::string& name, const std::string& path);    
+    void loadMusic(const std::string& name, const std::string& path);
     void loadFont(const std::string& name, const std::string& path, int size);
 
 private:

@@ -16,7 +16,7 @@ public:
     RenderedText& operator=(const RenderedText&) = delete;
     RenderedText& operator=(RenderedText&&) = default;
     ~RenderedText();
-    
+
     void draw(SDL_Renderer* renderer);
 
 private:

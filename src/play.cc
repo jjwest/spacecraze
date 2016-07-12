@@ -8,17 +8,13 @@
 
 Play::Play(SDL_Renderer* renderer)
     : GameState(), world{renderer} {}
-      
 
-GameStates Play::getNextState() const
+
+State Play::getNextState() const
 {
     return next_state;
 }
 
-int Play::getScore() const
-{
-    return world.getScore();
-}
 
 void Play::handleEvents()
 {
@@ -33,7 +29,7 @@ void Play::update()
 {
     enemy_generator.update(world);
     world.update();
-    
+
     if (world.playerIsDead()) {
         next_state = MENU;
         std::cout << world.getScore() << '\n';

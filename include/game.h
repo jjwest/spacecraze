@@ -4,9 +4,9 @@
 #include <SDL2/SDL.h>
 #include <memory>
 
-#include "gamestate.h"
+#include "game_state.h"
 
-class Game 
+class Game
 {
 public:
     Game();
@@ -17,12 +17,12 @@ private:
     SDL_Window* window;
     SDL_Renderer* renderer;
     std::unique_ptr<GameState> current_state;
-    GameStates current_state_id;
+    State current_state_id;
 
     void initSDL();
     void selectMusic();
     void loadMedia();
-    void changeState(GameStates next_state_id);
+    void changeState(State next_state_id);
 };
 
 #endif

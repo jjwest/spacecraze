@@ -8,8 +8,8 @@ class FileManager
 {
 public:
     FileManager();
-    static std::vector<std::string> readHighscoreFromFile(const std::string& path);
-    static void writeHighscoreToFile(const std::vector<std::string>& scores,
+    static std::vector<std::string> readHighscore(const std::string& path);
+    static void writeHighscore(const std::vector<std::string>& scores,
 				     const std::string& path);
 };
 

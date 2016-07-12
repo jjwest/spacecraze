@@ -8,7 +8,7 @@ Texture::Texture(SDL_Renderer* renderer, const std::string& path, float scale)
 {
     SDL_Surface* surface = IMG_Load(path.c_str());
 
-    if (surface == NULL) 
+    if (surface == NULL)
     {
         throw "Could not find texture " + path;
     }

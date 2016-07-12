@@ -5,8 +5,7 @@
 
 #include "cppformat/format.h"
 
-std::vector<std::string> FileManager::readHighscoreFromFile(
-    const std::string& path)
+std::vector<std::string> FileManager::readHighscore(const std::string& path)
 {
     using namespace std;
 
@@ -19,7 +18,7 @@ std::vector<std::string> FileManager::readHighscoreFromFile(
         ifs.open(path);
     }
 
-    vector<string> entries; 
+    vector<string> entries;
     string line;
     while (getline(ifs, line)) {
         istringstream iss{line};
@@ -32,7 +31,7 @@ std::vector<std::string> FileManager::readHighscoreFromFile(
     return entries;
 }
 
-void FileManager::writeHighscoreToFile(const std::vector<std::string>& scores,
+void FileManager::writeHighscore(const std::vector<std::string>& scores,
 				       const std::string& path)
 {
     std::ofstream file{path};

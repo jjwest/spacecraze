@@ -11,7 +11,6 @@
 #include "constants.h"
 #include "play.h"
 #include "menu.h"
-#include "highscore.h"
 
 Game::Game()
     : window{nullptr}, renderer{nullptr}, current_state_id{PLAY}
@@ -20,7 +19,7 @@ Game::Game()
     loadMedia();
 }
 
-Game::~Game()  
+Game::~Game()
 {
     AssetManager::destroyInstance();
     SDL_DestroyRenderer(renderer);
@@ -31,11 +30,11 @@ Game::~Game()
     SDL_Quit();
 }
 
-void Game::run() 
+void Game::run()
 {
-    GameStates next_state_id;
+    State next_state_id;
     current_state.reset(new Menu(renderer));
-    
+
     while (current_state_id != QUIT) {
         current_state->handleEvents();
         current_state->update();
@@ -46,14 +45,14 @@ void Game::run()
     }
 }
 
-void Game::initSDL() 
+void Game::initSDL()
 {
     if ( SDL_Init(SDL_INIT_VIDEO) != 0 || SDL_Init(SDL_INIT_AUDIO) != 0 )  {
         throw std::runtime_error("Error initializing SDL");
     }
     if ( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 ) {
         throw std::runtime_error("Error initializing SDL_Mixer");
-    }    
+    }
     if ( IMG_Init(0) != 0 ) {
         throw std::runtime_error("Error initializing SDL_Image");
     }
@@ -61,8 +60,8 @@ void Game::initSDL()
         throw std::runtime_error("Error initializing TTF_init");
     }
 
-    window = SDL_CreateWindow("SPACECRAZE", SDL_WINDOWPOS_UNDEFINED, 
-                                          SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, 
+    window = SDL_CreateWindow("SPACECRAZE", SDL_WINDOWPOS_UNDEFINED,
+                                          SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH,
                                           SCREEN_HEIGHT, SDL_WINDOW_RESIZABLE);
 
     renderer = SDL_CreateRenderer(window, -1, 0);
@@ -73,7 +72,7 @@ void Game::initSDL()
 void Game::selectMusic() {}
 
 
-void Game::loadMedia() 
+void Game::loadMedia()
 {
     auto& assets = AssetManager::getInstance();
 
@@ -94,7 +93,7 @@ void Game::loadMedia()
     assets.loadFont("title", "fonts/Akashi.ttf", 60);
 }
 
-void Game::changeState(GameStates next_state_id)
+void Game::changeState(State next_state_id)
 {
     if (next_state_id != current_state_id) {
         switch (next_state_id) {
@@ -107,14 +106,12 @@ void Game::changeState(GameStates next_state_id)
             break;
 
         case HIGHSCORE:
-	    current_state.reset(new Highscore(renderer));
             break;
 
         case QUIT:
             break;
         }
-        
+
         current_state_id = next_state_id;
     }
 }
-    
