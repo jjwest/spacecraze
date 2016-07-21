@@ -7,8 +7,8 @@ class Blaster: public Enemy
 {
 public:
     Blaster(const Point &pos);
-    void update(const Point& player_pos, LaserManager& lasers) override;
-    
+    void update(const Point& player_pos, World* lasers) override;
+
 private:
     double damage = 1;
     double speed = 1;
@@ -17,7 +17,7 @@ private:
     Uint32 shoot_cooldown = 700;
 
     void move();
-    void shoot(const Point& player_pos, LaserManager& lasers);
+    void shoot(const Point& player_pos, World* lasers);
     void setAngle(const Point& player_pos);
     void changeDirection();
 };

@@ -2,19 +2,17 @@
 
 #include <utility>
 #include <string>
+#include <iostream>
 
 #include "asset_manager.h"
 #include "constants.h"
+#include "world.h"
 
 Player::Player(const Point& pos)
-    :  GameObject(AssetManager::getInstance().getTexture("player"), pos, 1), 
+    :  GameObject(AssetManager::getInstance().getTexture("player"), pos, 1),
        x_pos{ static_cast<double>(rect.x) },
        y_pos{ static_cast<double>(rect.y) } {}
 
-bool Player::hasSpecial() const
-{
-    return has_special;
-}
 
 Point Player::getPos() const
 {
@@ -24,19 +22,16 @@ Point Player::getPos() const
     return {x, y};
 }
 
-void Player::update(LaserManager& laser_manager)
+void Player::update(World* world)
 {
     move();
-    shoot(laser_manager);
+    useSpecial(world);
+    shoot(world);
     updateHitbox(rect);
 }
 
-void Player::setSpecial(bool state)
-{
-    has_special = state;
-}
 
-void Player::shoot(LaserManager& laser_manager)
+void Player::shoot(World* world)
 {
     auto current_time = SDL_GetTicks();
 
@@ -45,7 +40,7 @@ void Player::shoot(LaserManager& laser_manager)
         int center_y = rect.y + rect.w / 2;
         Point current_pos{ center_x, center_y };
 
-        laser_manager.addPlayerLaser(current_pos, damage);
+        world->addPlayerLaser(current_pos, damage);
         last_shot = current_time;
     }
 }
@@ -73,6 +68,28 @@ void Player::move()
     setAngle();
 }
 
+bool Player::readyToShoot() const
+{
+    auto current_time = SDL_GetTicks();
+
+    return SDL_GetMouseState(NULL, NULL)
+        & SDL_BUTTON(SDL_BUTTON_LEFT)
+        && current_time - last_shot > shoot_cooldown;
+}
+
+bool rightMouseButtonPressed()
+{
+    return SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT);
+}
+
+void Player::useSpecial(World* world)
+{
+    if (has_special && rightMouseButtonPressed()) {
+	world->killAllEnemies();
+	has_special = false;
+    }
+}
+
 void Player::setAngle()
 {
      int x, y;
@@ -84,13 +101,4 @@ void Player::setAngle()
      ang = ang * 180 / M_PI;
 
      angle = (static_cast<int>(ang) - 90) % 360;
-}
-
-bool Player::readyToShoot() const
-{
-    auto current_time = SDL_GetTicks();
-
-    return SDL_GetMouseState(NULL, NULL)
-        & SDL_BUTTON(SDL_BUTTON_LEFT)
-        && current_time - last_shot > shoot_cooldown;
 }

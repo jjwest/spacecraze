@@ -9,22 +9,24 @@ AABB::AABB(int t, int l, int b, int r)
   : top{min(t, b)}, left{min(l, r)}, bottom{max(b, t)}, right{max(r, l)}{}
 
 AABB::AABB(const Point & a, const Point & b) :
-  top{min(a.y, b.y)}, left{min(a.x, b.x)}, 
-  bottom {max(a.y, b.y)}, right{max(a.x, b.x)}{}
+  top{ min(a.y, b.y) },
+  left{ min(a.x, b.x) },
+  bottom { max(a.y, b.y) },
+  right{ max(a.x, b.x) } {}
 
 bool AABB::contain(int x, int y) const
 {
-  return (x <= right && 
-          x >= left && 
-          y <= bottom && 
+  return (x <= right &&
+          x >= left &&
+          y <= bottom &&
           y >= top);
 }
 
 bool AABB::contain(const Point & a) const
 {
-  return (a.x <= right && 
-          a.x >= left && 
-          a.y <= bottom && 
+  return (a.x <= right &&
+          a.x >= left &&
+          a.y <= bottom &&
           a.y >= top);
 }
 
@@ -38,15 +40,15 @@ bool AABB::intersect(const AABB & a) const
 
 bool AABB::will_not_collide(const AABB & from, const Point & to) const
 {
-  AABB destination(to.y, to.x, 
-                   to.y + from.get_height(), 
+  AABB destination(to.y, to.x,
+                   to.y + from.get_height(),
 		   to.x + from.get_width());
   AABB collision_area = from.min_bounding_box(destination);
- 
+
   return !intersect(collision_area);
 }
 
-bool AABB::collision_point(const AABB & from, const Point & to, 
+bool AABB::collision_point(const AABB & from, const Point & to,
                            Point & where) const
 {
   float current_x{static_cast<float>(from.get_left())};
@@ -64,9 +66,9 @@ bool AABB::collision_point(const AABB & from, const Point & to,
       current_y += dy;
       int rounded_x{static_cast<int>(round(current_x))};
       int rounded_y{static_cast<int>(round(current_y))};
-      
-      AABB this_pos(rounded_y, rounded_x, 
-                    rounded_y + from.get_height(), 
+
+      AABB this_pos(rounded_y, rounded_x,
+                    rounded_y + from.get_height(),
                     rounded_x + from.get_width());
 
       if (intersect(this_pos))

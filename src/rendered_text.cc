@@ -12,7 +12,6 @@ RenderedText::RenderedText(SDL_Renderer* renderer, const std::string& text,
     rect.w = surface->w;
     rect.h = surface->h;
     SDL_FreeSurface(surface);
-    
 }
 
 RenderedText::~RenderedText()

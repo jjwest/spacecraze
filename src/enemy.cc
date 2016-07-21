@@ -11,4 +11,3 @@ int Enemy::getScore() const
 {
     return score;
 }
-

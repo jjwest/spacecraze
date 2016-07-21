@@ -13,7 +13,7 @@ public:
     virtual State getNextState() const = 0;
     virtual void handleEvents() = 0;
     virtual void update() = 0;
-    virtual void render(SDL_Renderer* renderer) = 0;
+    virtual void draw(SDL_Renderer* renderer) = 0;
 };
 
 

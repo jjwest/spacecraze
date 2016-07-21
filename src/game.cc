@@ -13,7 +13,7 @@
 #include "menu.h"
 
 Game::Game()
-    : window{nullptr}, renderer{nullptr}, current_state_id{PLAY}
+    : window{nullptr}, renderer{nullptr}, current_state_id{State_Play}
 {
     initSDL();
     loadMedia();
@@ -35,10 +35,10 @@ void Game::run()
     State next_state_id;
     current_state.reset(new Menu(renderer));
 
-    while (current_state_id != QUIT) {
+    while (current_state_id != State_Quit) {
         current_state->handleEvents();
         current_state->update();
-        current_state->render(renderer);
+        current_state->draw(renderer);
         next_state_id = current_state->getNextState();
         changeState(next_state_id);
         SDL_Delay(10);
@@ -97,18 +97,21 @@ void Game::changeState(State next_state_id)
 {
     if (next_state_id != current_state_id) {
         switch (next_state_id) {
-        case PLAY:
+        case State_Play:
             current_state.reset(new Play(renderer));
             break;
 
-        case MENU:
+        case State_Menu:
             current_state.reset(new Menu(renderer));
             break;
 
-        case HIGHSCORE:
+        case State_ViewHighscore:
             break;
 
-        case QUIT:
+	case State_EnterHighscore:
+	    break;
+
+        case State_Quit:
             break;
         }
 

@@ -8,29 +8,29 @@
 #include "enemy.h"
 #include "player.h"
 #include "laser.h"
-#include "laser_manager.h"
 #include "user_interface.h"
 #include "enums.h"
+#include "score_keeper.h"
 
 class World
 {
 public:
-    World(SDL_Renderer* renderer);
+    World();
     bool playerIsDead() const;
-    int getScore() const;
-    void update();
     void addEnemy(std::unique_ptr<Enemy> enemy);
-    void usePlayerSpecial();
+    void addEnemyLaser(const Point& pos, const Point& dest, double dmg);
+    void addPlayerLaser(const Point& pos, double dmg);
+    void killAllEnemies();
+    void update(ScoreKeeper& score);
     void draw(SDL_Renderer* renderer);
 
 private:
     Player player;
-    LaserManager laser_manager;
-    UserInterface user_interface;
     std::vector<std::unique_ptr<Enemy>> enemies;
-    int score = 0;
+    std::vector<std::unique_ptr<Laser>> enemy_lasers;
+    std::vector<std::unique_ptr<Laser>> player_lasers;
 
-    void updateScore();
+    void updateScore(ScoreKeeper& s);
     void updateObjects();
     void resolveCollisions();
     void resolveLaserCollisions();

@@ -5,6 +5,8 @@
 
 #include "game_state.h"
 #include "enemy_generator.h"
+#include "user_interface.h"
+#include "score_keeper.h"
 #include "world.h"
 
 class Play: public GameState
@@ -18,8 +20,10 @@ public:
 
 private:
     EnemyGenerator enemy_generator;
-    State next_state = PLAY;
+    State next_state = State_Play;
     SDL_Event event;
+    UserInterface user_interface;
+    ScoreKeeper current_score;
     World world;
 };
 

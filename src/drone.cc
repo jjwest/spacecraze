@@ -11,7 +11,7 @@ Drone::Drone(const Point& pos)
     : Enemy(AssetManager::getInstance().getTexture("drone"), pos, 6, 10)
 {}
 
-void Drone::update(const Point& player_pos, LaserManager&)
+void Drone::update(const Point& player_pos, World*)
 {
     move(player_pos);
     updateHitbox(rect);
@@ -22,7 +22,7 @@ void Drone::move(const Point& player_pos)
     float angle_to_player;
     double dest_x = player_pos.x;
     double dest_y = player_pos.y;
-    double center_drone_x = rect.x + (rect.h / 2);  
+    double center_drone_x = rect.x + (rect.h / 2);
     double center_drone_y = rect.y + (rect.w / 2);
 
     double x_dist = dest_x - center_drone_x;
@@ -40,6 +40,6 @@ void Drone::move(const Point& player_pos)
 
     angle_to_player = atan2(center_drone_y - dest_y, center_drone_x - dest_x);
     angle_to_player = angle_to_player * 180 / M_PI;
-    
+
     angle = (static_cast<int> (angle_to_player)+90)%360;
 }

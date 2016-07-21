@@ -7,7 +7,7 @@
 #include <iostream>
 
 Play::Play(SDL_Renderer* renderer)
-    : GameState(), world{renderer} {}
+    : GameState(), user_interface{renderer} {}
 
 
 State Play::getNextState() const
@@ -20,7 +20,7 @@ void Play::handleEvents()
 {
     while (SDL_PollEvent(&event) != 0) {
         if (event.type == SDL_QUIT) {
-            next_state = QUIT;
+            next_state = State_Quit;
         }
     }
 }
@@ -28,19 +28,19 @@ void Play::handleEvents()
 void Play::update()
 {
     enemy_generator.update(world);
-    world.update();
+    world.update(current_score);
 
     if (world.playerIsDead()) {
-        next_state = MENU;
-        std::cout << world.getScore() << '\n';
+        next_state = State_Menu;
+        std::cout << current_score.getScore() << std::endl;
     }
 }
 
-void Play::render(SDL_Renderer* renderer)
+void Play::draw(SDL_Renderer* renderer)
 {
     SDL_RenderClear(renderer);
     auto background = AssetManager::getInstance().getTexture("background");
     SDL_RenderCopy(renderer, background->getTexture(), NULL, NULL);
-    world.render(renderer);
+    world.draw(renderer);
     SDL_RenderPresent(renderer);
 }

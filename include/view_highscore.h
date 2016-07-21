@@ -24,6 +24,7 @@ private:
     Button back;
     RenderedText title;
     std::vector<RenderedText> scores;
+    State next_state = State_ViewHighscore;
 };
 
 

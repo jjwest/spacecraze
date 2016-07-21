@@ -4,15 +4,14 @@
 #include <SDL2/SDL.h>
 
 #include "game_object.h"
-#include "laser_manager.h"
 
 class Player: public GameObject
 {
 public:
-    Player(const Point &pos);
+    Player(const Point& pos);
     bool hasSpecial() const;
     Point getPos() const;
-    void update(LaserManager& laser_manager);
+    void update(World* world);
     void setSpecial(bool state);
 
 private:
@@ -25,8 +24,9 @@ private:
     Uint32 last_shot = 0;
 
     bool readyToShoot() const;
-    void shoot(LaserManager& laser_manager);
+    void shoot(World* world);
     void move();
+    void useSpecial(World* world);
     void setAngle();
 };
 

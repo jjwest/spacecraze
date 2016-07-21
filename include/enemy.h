@@ -4,7 +4,6 @@
 #include <memory>
 
 #include "game_object.h"
-#include "laser_manager.h"
 #include "texture.h"
 #include "aabb.h"
 
@@ -18,7 +17,7 @@ public:
     Enemy& operator=(Enemy &&) = default;
 
     virtual ~Enemy();
-    virtual void update(const Point&, LaserManager&) = 0;
+    virtual void update(const Point& player_pos, World* world) = 0;
     int getScore() const;
 private:
     int score;

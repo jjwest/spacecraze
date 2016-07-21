@@ -7,27 +7,21 @@
 #include "constants.h"
 #include "asset_manager.h"
 #include "enums.h"
+#include "object_factory.h"
 
-World::World(SDL_Renderer* renderer)
-    : player{ {500, 350} },
-      user_interface{renderer}{}
+World::World()
+    : player{ {500, 350} }{}
 
 bool World::playerIsDead() const
 {
     return player.isDead();
 }
 
-int World::getScore() const
+void World::update(ScoreKeeper& score)
 {
-    return score;
-}
-
-void World::update()
-{
-    usePlayerSpecial();
     updateObjects();
     resolveCollisions();
-    updateScore();
+    updateScore(score);
     removeDeadObjects();
 }
 
@@ -36,36 +30,39 @@ void World::addEnemy(std::unique_ptr<Enemy> enemy)
     enemies.push_back(move(enemy));
 }
 
-bool rightMouseButtonPressed()
+void World::addPlayerLaser(const Point& pos, double dmg)
 {
-    return SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT);
+    Point destination;
+    SDL_GetMouseState(&destination.x, &destination.y);
+
+    auto& factory = ObjectFactory::getInstance();
+    player_lasers.push_back(factory.createLaser("player", pos, destination, dmg));
 }
 
-void World::usePlayerSpecial()
+void World::addEnemyLaser(const Point& pos, const Point& dest, double dmg)
 {
-    if (rightMouseButtonPressed() && player.hasSpecial()) {
-        for (const auto& enemy : enemies) {
-            enemy->reduceHealth(999);
-        }
-        player.setSpecial(false);
+    auto& factory = ObjectFactory::getInstance();
+    enemy_lasers.push_back(factory.createLaser("enemy", pos, dest, dmg));
+}
+
+
+void World::killAllEnemies()
+{
+    for (const auto& enemy : enemies) {
+	enemy->reduceHealth(999);
     }
 }
 
-void World::render(SDL_Renderer* renderer)
+void World::draw(SDL_Renderer* renderer)
 {
     auto background = AssetManager::getInstance().getTexture("background");
     SDL_RenderCopy(renderer, background->getTexture(), NULL, NULL);
 
     auto draw = [&renderer] (auto& obj) { obj->draw(renderer); };
     std::for_each(begin(enemies), end(enemies), draw);
-
-    auto& enemy_lasers = laser_manager.getEnemyLasers();
     std::for_each(begin(enemy_lasers), end(enemy_lasers), draw);
-
-    auto& player_lasers = laser_manager.getPlayerLasers();
     std::for_each(begin(player_lasers), end(player_lasers), draw);
 
-    user_interface.draw(renderer, score, player.hasSpecial());
     player.draw(renderer);
 
     SDL_RenderPresent(renderer);
@@ -73,22 +70,30 @@ void World::render(SDL_Renderer* renderer)
 
 void World::updateObjects()
 {
-    player.update(laser_manager);
+    player.update(this);
 
     auto player_pos = player.getPos();
     for (auto& enemy : enemies) {
-        enemy->update(player_pos, laser_manager);
+        enemy->update(player_pos, this);
     }
 
-    laser_manager.updateLasers();
+    for (const auto& laser : player_lasers) {
+	laser->update();
+    }
+
+    for (const auto& laser : enemy_lasers) {
+	laser->update();
+    }
 }
 
-void World::updateScore()
+void World::updateScore(ScoreKeeper& s)
 {
-    score = std::accumulate(
-	begin(enemies), end(enemies), score,
-	[] (int sum, const auto& e)
-	{ return e->isDead() ? sum + e->getScore() : sum; }
+    s.setScore(
+	std::accumulate(
+	    begin(enemies), end(enemies), s.getScore(),
+	    [] (int sum, const auto& e)
+	    { return e->isDead() ? sum + e->getScore() : sum; }
+	)
     );
 }
 
@@ -101,7 +106,6 @@ void World::resolveCollisions()
 void World::resolvePlayerCollisions()
 {
     AABB player_hitbox = player.getHitbox();
-    const auto& enemy_lasers = laser_manager.getEnemyLasers();
 
     bool hit_by_laser = std::any_of(
 	begin(enemy_lasers), end(enemy_lasers),
@@ -122,7 +126,6 @@ void World::resolvePlayerCollisions()
 
 void World::resolveLaserCollisions()
 {
-    const auto& player_lasers = laser_manager.getPlayerLasers();
     for (auto& laser : player_lasers) {
         for (auto& enemy : enemies) {
             if (laser->collides(enemy->getHitbox())) {
@@ -134,8 +137,16 @@ void World::resolveLaserCollisions()
 }
 void World::removeDeadObjects()
 {
-    laser_manager.removeDeadLasers();
-    enemies.erase(std::remove_if(begin(enemies), end(enemies),
-                                 [](auto& e) { return e->isDead(); }),
-                  end(enemies));
+    auto isDead = [] (auto& obj) { return obj->isDead(); };
+
+    enemies.erase(std::remove_if(begin(enemies), end(enemies), isDead),
+		  end(enemies));
+
+    player_lasers.erase(std::remove_if(begin(player_lasers), end(player_lasers),
+				       isDead),
+			end(player_lasers));
+
+    enemy_lasers.erase(std::remove_if(begin(enemy_lasers), end(enemy_lasers),
+				      isDead),
+		       end(enemy_lasers));
 }
