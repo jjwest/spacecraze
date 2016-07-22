@@ -10,7 +10,7 @@ Play::Play(SDL_Renderer* renderer)
     : GameState(), user_interface{renderer} {}
 
 
-State Play::getNextState() const
+States Play::getNextState() const
 {
     return next_state;
 }

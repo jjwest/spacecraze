@@ -14,17 +14,17 @@ class ViewHighscore: public GameState
 {
 public:
     ViewHighscore(SDL_Renderer* renderer);
-    State getNextState() const;
+    States getNextState() const;
     void handleEvents();
     void update();
     void draw(SDL_Renderer* renderer);
 
 private:
-    SDL_Event events;
-    Button back;
+    SDL_Event event;
+    Button button_back;
     RenderedText title;
     std::vector<RenderedText> scores;
-    State next_state = State_ViewHighscore;
+    States next_state = State_ViewHighscore;
 };
 
 

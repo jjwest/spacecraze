@@ -6,7 +6,7 @@
 #include "point.h"
 #include "aabb.h"
 
-// We must forward declare an empty World class so game objects
+// We must forward declare a World class so game objects
 // can get a pointer to the world that contains them, since
 // two class definitions cannot directly include each other.
 class World;
@@ -19,6 +19,7 @@ public:
     AABB getHitbox() const;
     bool collides(const AABB& other) const;
     bool isDead() const;
+    void kill();
     void reduceHealth(double damage);
     void updateHitbox(const SDL_Rect& pos);
 

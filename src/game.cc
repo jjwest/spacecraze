@@ -4,6 +4,7 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 
+#include <iostream>
 #include <stdexcept>
 
 #include "asset_manager.h"
@@ -11,6 +12,7 @@
 #include "constants.h"
 #include "play.h"
 #include "menu.h"
+#include "view_highscore.h"
 
 Game::Game()
     : window{nullptr}, renderer{nullptr}, current_state_id{State_Play}
@@ -32,32 +34,36 @@ Game::~Game()
 
 void Game::run()
 {
-    State next_state_id;
+    States next_state_id;
     current_state.reset(new Menu(renderer));
 
     while (current_state_id != State_Quit) {
+	auto frame_start = SDL_GetTicks();
+
         current_state->handleEvents();
         current_state->update();
         current_state->draw(renderer);
         next_state_id = current_state->getNextState();
         changeState(next_state_id);
-        SDL_Delay(10);
+
+	auto frame_end = SDL_GetTicks();
+        SDL_Delay(10 - (frame_start - frame_end));
     }
 }
 
 void Game::initSDL()
 {
     if ( SDL_Init(SDL_INIT_VIDEO) != 0 || SDL_Init(SDL_INIT_AUDIO) != 0 )  {
-        throw std::runtime_error("Error initializing SDL");
+        throw std::runtime_error("Failed to initialize SDL");
     }
     if ( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 ) {
-        throw std::runtime_error("Error initializing SDL_Mixer");
+        throw std::runtime_error("Failed to initialize SDL_Mixer");
     }
     if ( IMG_Init(0) != 0 ) {
-        throw std::runtime_error("Error initializing SDL_Image");
+        throw std::runtime_error("Failed to initialize SDL_Image");
     }
     if ( TTF_Init() != 0 ) {
-        throw std::runtime_error("Error initializing TTF_init");
+        throw std::runtime_error("Failed to initialize TTF_init");
     }
 
     window = SDL_CreateWindow("SPACECRAZE", SDL_WINDOWPOS_UNDEFINED,
@@ -93,7 +99,7 @@ void Game::loadMedia()
     assets.loadFont("title", "fonts/Akashi.ttf", 60);
 }
 
-void Game::changeState(State next_state_id)
+void Game::changeState(States next_state_id)
 {
     if (next_state_id != current_state_id) {
         switch (next_state_id) {
@@ -106,6 +112,7 @@ void Game::changeState(State next_state_id)
             break;
 
         case State_ViewHighscore:
+	    current_state.reset(new ViewHighscore(renderer));
             break;
 
 	case State_EnterHighscore:

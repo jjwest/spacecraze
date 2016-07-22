@@ -53,7 +53,7 @@ void Menu::draw(SDL_Renderer *renderer)
     SDL_RenderPresent(renderer);
 }
 
-State Menu::getNextState() const
+States Menu::getNextState() const
 {
     return next_state;
 }

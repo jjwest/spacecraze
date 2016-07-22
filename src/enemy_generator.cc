@@ -33,15 +33,14 @@ void EnemyGenerator::update(World& world)
 
 bool EnemyGenerator::readyToSpawn(const EnemyType& enemy)
 {
-    auto current_time = SDL_GetTicks();
+    Uint32 current_time = SDL_GetTicks();
     return current_time - enemy.last_time_spawned > enemy.spawn_delay * 1000;
 }
 
 void EnemyGenerator::updateEnemyType(EnemyType& enemy)
 {
-    auto current_time = SDL_GetTicks();
     enemy.times_spawned += 1;
-    enemy.last_time_spawned = current_time;
+    enemy.last_time_spawned = SDL_GetTicks();
 
     if (isMultiple(enemy.times_spawned, enemy.spawns_until_decreased_delay)) {
         enemy.spawn_delay *= 0.90;
@@ -51,6 +50,7 @@ void EnemyGenerator::updateEnemyType(EnemyType& enemy)
 void EnemyGenerator::spawnEnemy(World& world, const EnemyType& enemy)
 {
     auto& factory = ObjectFactory::getInstance();
+
     for (int i = 0; i < enemy.spawn_amount; ++i) {
         world.addEnemy(factory.createEnemy(enemy.name));
     }

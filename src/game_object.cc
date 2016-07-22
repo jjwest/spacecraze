@@ -22,6 +22,11 @@ bool GameObject::isDead() const
     return health <= 0;
 }
 
+void GameObject::kill()
+{
+    health = 0;
+}
+
 void GameObject::reduceHealth(double damage)
 {
     health -= damage;

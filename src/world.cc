@@ -49,7 +49,7 @@ void World::addEnemyLaser(const Point& pos, const Point& dest, double dmg)
 void World::killAllEnemies()
 {
     for (const auto& enemy : enemies) {
-	enemy->reduceHealth(999);
+	enemy->kill();
     }
 }
 
@@ -88,9 +88,9 @@ void World::updateObjects()
 
 void World::updateScore(ScoreKeeper& s)
 {
-    s.setScore(
+    s.increaseScore(
 	std::accumulate(
-	    begin(enemies), end(enemies), s.getScore(),
+	    begin(enemies), end(enemies), 0,
 	    [] (int sum, const auto& e)
 	    { return e->isDead() ? sum + e->getScore() : sum; }
 	)
@@ -106,21 +106,17 @@ void World::resolveCollisions()
 void World::resolvePlayerCollisions()
 {
     AABB player_hitbox = player.getHitbox();
+    auto collides = [&player_hitbox] (auto& obj) {
+	return obj->collides(player_hitbox);
+    };
 
     bool hit_by_laser = std::any_of(
-	begin(enemy_lasers), end(enemy_lasers),
-	[&player_hitbox] (auto& laser)
-	{ return laser->collides(player_hitbox); }
-    );
+	begin(enemy_lasers), end(enemy_lasers), collides);
 
-    bool collides_with_enemy = std::any_of(
-	begin(enemies), end(enemies),
-	[&player_hitbox] (auto& enemy)
-	{ return enemy->collides(player_hitbox); }
-    );
+    bool collides_with_enemy = std::any_of(begin(enemies), end(enemies), collides);
 
-    if  (collides_with_enemy || hit_by_laser) {
-        player.reduceHealth(999);
+    if (collides_with_enemy || hit_by_laser) {
+        player.kill();
     }
 }
 
@@ -130,11 +126,12 @@ void World::resolveLaserCollisions()
         for (auto& enemy : enemies) {
             if (laser->collides(enemy->getHitbox())) {
                 enemy->reduceHealth(laser->getDamage());
-                laser->reduceHealth(999);
+                laser->kill();
             }
         }
     }
 }
+
 void World::removeDeadObjects()
 {
     auto isDead = [] (auto& obj) { return obj->isDead(); };

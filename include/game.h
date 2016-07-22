@@ -17,12 +17,12 @@ private:
     SDL_Window* window;
     SDL_Renderer* renderer;
     std::unique_ptr<GameState> current_state;
-    State current_state_id;
+    States current_state_id;
 
     void initSDL();
     void selectMusic();
     void loadMedia();
-    void changeState(State next_state_id);
+    void changeState(States next_state_id);
 };
 
 #endif
