@@ -3,6 +3,7 @@
 
 #include <SDL2/SDL.h>
 
+#include <memory>
 #include <vector>
 
 #include "game_state.h"
@@ -20,11 +21,15 @@ public:
     void draw(SDL_Renderer* renderer);
 
 private:
-    SDL_Event event;
+    bool update_buttons = false;
     Button button_back;
+    SDL_Event event;
     RenderedText title;
-    std::vector<RenderedText> scores;
     States next_state = State_ViewHighscore;
+    std::vector<std::unique_ptr<RenderedText>> highscores;
+
+    void createHighscoreText(SDL_Renderer* renderer,
+			     const std::vector<std::string>& scores);
 };
 
 

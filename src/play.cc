@@ -18,8 +18,10 @@ States Play::getNextState() const
 
 void Play::handleEvents()
 {
-    while (SDL_PollEvent(&event) != 0) {
-        if (event.type == SDL_QUIT) {
+    while (SDL_PollEvent(&event) != 0)
+    {
+        if (event.type == SDL_QUIT)
+	{
             next_state = State_Quit;
         }
     }
@@ -30,7 +32,8 @@ void Play::update()
     enemy_generator.update(world);
     world.update(current_score);
 
-    if (world.playerIsDead()) {
+    if (world.playerIsDead())
+    {
         next_state = State_Menu;
         std::cout << current_score.getScore() << std::endl;
     }

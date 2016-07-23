@@ -35,7 +35,8 @@ void Player::shoot(World* world)
 {
     auto current_time = SDL_GetTicks();
 
-    if (readyToShoot()) {
+    if (readyToShoot())
+    {
         int center_x = rect.x + rect.h / 2;
         int center_y = rect.y + rect.w / 2;
         Point current_pos{ center_x, center_y };
@@ -48,19 +49,23 @@ void Player::move()
 {
     auto state = SDL_GetKeyboardState(NULL);
 
-    if (state[SDL_SCANCODE_D] && rect.x + rect.w + speed <= SCREEN_WIDTH) {
+    if (state[SDL_SCANCODE_D] && rect.x + rect.w + speed <= SCREEN_WIDTH)
+    {
         x_pos += speed;
         rect.x = round(x_pos);
     }
-    if (state[SDL_SCANCODE_A] && rect.x - speed >= 0) {
+    if (state[SDL_SCANCODE_A] && rect.x - speed >= 0)
+    {
         x_pos -= speed;
         rect.x = round(x_pos);
     }
-    if (state[SDL_SCANCODE_W] && rect.y - speed >= 0) {
+    if (state[SDL_SCANCODE_W] && rect.y - speed >= 0)
+    {
         y_pos -= speed;
         rect.y = round(y_pos);
     }
-    if (state[SDL_SCANCODE_S] && rect.y + rect.h + speed <= SCREEN_HEIGHT) {
+    if (state[SDL_SCANCODE_S] && rect.y + rect.h + speed <= SCREEN_HEIGHT)
+    {
         y_pos += speed;
         rect.y = round(y_pos);
     }
@@ -84,7 +89,8 @@ bool rightMouseButtonPressed()
 
 void Player::useSpecial(World* world)
 {
-    if (has_special && rightMouseButtonPressed()) {
+    if (has_special && rightMouseButtonPressed())
+    {
 	world->killAllEnemies();
 	has_special = false;
     }

@@ -19,7 +19,7 @@ public:
                                        const Point& pos,
                                        const Point& destination,
                                        double dmg);
-    
+
 private:
     ObjectFactory() {};
 };

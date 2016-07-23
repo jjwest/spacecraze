@@ -22,7 +22,8 @@ void Blaster::shoot(const Point &player_pos, World* world)
 {
     Uint32 current_time = SDL_GetTicks();
 
-    if (current_time - last_shot > shoot_cooldown) {
+    if (current_time - last_shot > shoot_cooldown)
+    {
         Point this_pos {rect.x, rect.y};
         world->addEnemyLaser(this_pos, player_pos, damage);
         last_shot = current_time;
@@ -35,19 +36,23 @@ void Blaster::changeDirection()
     std::uniform_int_distribution<int> rand_x(0, SCREEN_WIDTH);
     std::uniform_int_distribution<int> rand_y(0, SCREEN_HEIGHT);
 
-    if (rect.y - rect.h <= 0) {
+    if (rect.y - rect.h <= 0)
+    {
         move_to.x = rand_x(rd);
         move_to.y = SCREEN_HEIGHT;
     }
-    else if (rect.y + rect.h >= SCREEN_HEIGHT) {
+    else if (rect.y + rect.h >= SCREEN_HEIGHT)
+    {
         move_to.x = rand_x(rd);
         move_to.y = 0;
     }
-    else if (rect.x - rect.w <= 0) {
+    else if (rect.x - rect.w <= 0)
+    {
         move_to.y = rand_y(rd);
         move_to.x = SCREEN_WIDTH;
     }
-    else if (rect.x + rect.w >= SCREEN_WIDTH) {
+    else if (rect.x + rect.w >= SCREEN_WIDTH)
+    {
         move_to.y = rand_y(rd);
         move_to.x = 0;
     }

@@ -37,7 +37,8 @@ void Game::run()
     States next_state_id;
     current_state.reset(new Menu(renderer));
 
-    while (current_state_id != State_Quit) {
+    while (current_state_id != State_Quit)
+    {
 	auto frame_start = SDL_GetTicks();
 
         current_state->handleEvents();
@@ -53,16 +54,20 @@ void Game::run()
 
 void Game::initSDL()
 {
-    if ( SDL_Init(SDL_INIT_VIDEO) != 0 || SDL_Init(SDL_INIT_AUDIO) != 0 )  {
+    if ( SDL_Init(SDL_INIT_VIDEO) != 0 || SDL_Init(SDL_INIT_AUDIO) != 0 )
+    {
         throw std::runtime_error("Failed to initialize SDL");
     }
-    if ( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 ) {
+    if ( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
+    {
         throw std::runtime_error("Failed to initialize SDL_Mixer");
     }
-    if ( IMG_Init(0) != 0 ) {
+    if ( IMG_Init(0) != 0 )
+    {
         throw std::runtime_error("Failed to initialize SDL_Image");
     }
-    if ( TTF_Init() != 0 ) {
+    if ( TTF_Init() != 0 )
+    {
         throw std::runtime_error("Failed to initialize TTF_init");
     }
 
@@ -94,14 +99,14 @@ void Game::loadMedia()
     assets.loadMusic("menu", "sounds/menu_music.mp3");
     assets.loadMusic("play", "sounds/play_music.mp3");
 
-    assets.loadFont("button", "fonts/Akashi.ttf", 36);
-    assets.loadFont("score", "fonts/Akashi.ttf", 24);
+    assets.loadFont("text", "fonts/Akashi.ttf", 36);
     assets.loadFont("title", "fonts/Akashi.ttf", 60);
 }
 
 void Game::changeState(States next_state_id)
 {
-    if (next_state_id != current_state_id) {
+    if (next_state_id != current_state_id)
+    {
         switch (next_state_id) {
         case State_Play:
             current_state.reset(new Play(renderer));

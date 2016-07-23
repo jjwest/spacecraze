@@ -48,7 +48,8 @@ void World::addEnemyLaser(const Point& pos, const Point& dest, double dmg)
 
 void World::killAllEnemies()
 {
-    for (const auto& enemy : enemies) {
+    for (const auto& enemy : enemies)
+    {
 	enemy->kill();
     }
 }
@@ -73,15 +74,18 @@ void World::updateObjects()
     player.update(this);
 
     auto player_pos = player.getPos();
-    for (auto& enemy : enemies) {
+    for (auto& enemy : enemies)
+    {
         enemy->update(player_pos, this);
     }
 
-    for (const auto& laser : player_lasers) {
+    for (const auto& laser : player_lasers)
+    {
 	laser->update();
     }
 
-    for (const auto& laser : enemy_lasers) {
+    for (const auto& laser : enemy_lasers)
+    {
 	laser->update();
     }
 }
@@ -115,16 +119,20 @@ void World::resolvePlayerCollisions()
 
     bool collides_with_enemy = std::any_of(begin(enemies), end(enemies), collides);
 
-    if (collides_with_enemy || hit_by_laser) {
+    if (collides_with_enemy || hit_by_laser)
+    {
         player.kill();
     }
 }
 
 void World::resolveLaserCollisions()
 {
-    for (auto& laser : player_lasers) {
-        for (auto& enemy : enemies) {
-            if (laser->collides(enemy->getHitbox())) {
+    for (auto& laser : player_lasers)
+    {
+        for (auto& enemy : enemies)
+	{
+            if (laser->collides(enemy->getHitbox()))
+	    {
                 enemy->reduceHealth(laser->getDamage());
                 laser->kill();
             }

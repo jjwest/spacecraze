@@ -18,30 +18,36 @@ AssetManager* AssetManager::instance(new AssetManager);
 
 Texture* AssetManager::getTexture(const std::string& name) const
 {
-    try {
+    try
+    {
         return &*textures.at(name);
     }
-    catch (std::exception& e) {
+    catch (std::exception& e)
+    {
         throw std::invalid_argument("Tried to fetch non-loaded texture " + name);
     }
 }
 
 Mix_Music* AssetManager::getMusic(const std::string& name) const
 {
-    try {
+    try
+    {
         return music.at(name)->getMusic();
     }
-    catch (std::exception& e) {
+    catch (std::exception& e)
+    {
         throw std::invalid_argument("Tried to fetch non-loaded music " + name);
     }
 }
 
 TTF_Font* AssetManager::getFont(const std::string& name) const
 {
-    try {
+    try
+    {
         return fonts.at(name)->getFont();
     }
-    catch (std::exception& e) {
+    catch (std::exception& e)
+    {
         throw std::invalid_argument("Tried to fetch non-loaded font " + name);
     }
 }

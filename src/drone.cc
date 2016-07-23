@@ -19,7 +19,6 @@ void Drone::update(const Point& player_pos, World*)
 
 void Drone::move(const Point& player_pos)
 {
-    float angle_to_player;
     double dest_x = player_pos.x;
     double dest_y = player_pos.y;
     double center_drone_x = rect.x + (rect.h / 2);
@@ -38,8 +37,8 @@ void Drone::move(const Point& player_pos)
     rect.x = rect.x + static_cast<int>(round(move_x));
     rect.y = rect.y + static_cast<int>(round(move_y));
 
-    angle_to_player = atan2(center_drone_y - dest_y, center_drone_x - dest_x);
+    float angle_to_player = atan2(center_drone_y - dest_y, center_drone_x - dest_x);
     angle_to_player = angle_to_player * 180 / M_PI;
 
-    angle = (static_cast<int> (angle_to_player)+90)%360;
+    angle = (static_cast<int>(angle_to_player) + 90) % 360;
 }

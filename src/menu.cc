@@ -20,11 +20,14 @@ Menu::Menu(SDL_Renderer* renderer)
 
 void Menu::handleEvents()
 {
-    while (SDL_PollEvent(&events) != 0) {
-        if (events.type == SDL_QUIT) {
+    while (SDL_PollEvent(&events) != 0)
+    {
+        if (events.type == SDL_QUIT)
+	{
             next_state = State_Quit;
         }
-        else if (events.type == SDL_MOUSEBUTTONDOWN) {
+        else if (events.type == SDL_MOUSEBUTTONDOWN)
+	{
             check_button_pressed = true;
         }
     }
@@ -32,8 +35,10 @@ void Menu::handleEvents()
 
 void Menu::update()
 {
-    if (check_button_pressed) {
-        for (const auto& button : buttons) {
+    if (check_button_pressed)
+    {
+        for (const auto& button : buttons)
+	{
             next_state = button->update(next_state);
         }
         check_button_pressed = false;
@@ -46,7 +51,8 @@ void Menu::draw(SDL_Renderer *renderer)
     SDL_RenderCopy(renderer, background->getTexture(), NULL, NULL);
     title.draw(renderer);
 
-    for (auto& button : buttons) {
+    for (auto& button : buttons)
+    {
         button->draw(renderer);
     }
 

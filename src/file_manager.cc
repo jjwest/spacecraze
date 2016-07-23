@@ -10,7 +10,8 @@ std::vector<std::string> FileManager::readHighscore(const std::string& path)
     using namespace std;
 
     ifstream ifs{path};
-    if (!ifs) {
+    if (!ifs)
+    {
         ofstream new_file{path};
         new_file << "";
         new_file.close();
@@ -20,7 +21,8 @@ std::vector<std::string> FileManager::readHighscore(const std::string& path)
 
     vector<string> entries;
     string line;
-    while (getline(ifs, line)) {
+    while (getline(ifs, line))
+    {
         istringstream iss{line};
         string name, score;
         iss >> name;
@@ -28,6 +30,7 @@ std::vector<std::string> FileManager::readHighscore(const std::string& path)
         string entry = fmt::format("{:<20} {}", name, score);
         entries.push_back(entry);
     }
+
     return entries;
 }
 
@@ -35,7 +38,8 @@ void FileManager::writeHighscore(const std::vector<std::string>& scores,
 				       const std::string& path)
 {
     std::ofstream file{path};
-    for (const auto& score : scores) {
+    for (const auto& score : scores)
+    {
 	file << score << '\n';
     }
 }

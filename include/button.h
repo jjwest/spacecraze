@@ -23,8 +23,8 @@ public:
 
 private:
     SDL_Rect rect;
-    SDL_Texture* normal;
-    SDL_Texture* hover;
+    SDL_Texture* texture_normal;
+    SDL_Texture* texture_hover;
     States action;
 
     bool mouseOverButton() const;

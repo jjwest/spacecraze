@@ -23,8 +23,10 @@ EnemyGenerator::EnemyGenerator()
 
 void EnemyGenerator::update(World& world)
 {
-    for (auto& enemy : enemy_types) {
-        if (readyToSpawn(enemy)) {
+    for (auto& enemy : enemy_types)
+    {
+        if (readyToSpawn(enemy))
+	{
             spawnEnemy(world, enemy);
             updateEnemyType(enemy);
         }
@@ -42,7 +44,8 @@ void EnemyGenerator::updateEnemyType(EnemyType& enemy)
     enemy.times_spawned += 1;
     enemy.last_time_spawned = SDL_GetTicks();
 
-    if (isMultiple(enemy.times_spawned, enemy.spawns_until_decreased_delay)) {
+    if (isMultiple(enemy.times_spawned, enemy.spawns_until_decreased_delay))
+    {
         enemy.spawn_delay *= 0.90;
     }
 }
@@ -51,7 +54,8 @@ void EnemyGenerator::spawnEnemy(World& world, const EnemyType& enemy)
 {
     auto& factory = ObjectFactory::getInstance();
 
-    for (int i = 0; i < enemy.spawn_amount; ++i) {
+    for (int i = 0; i < enemy.spawn_amount; ++i)
+    {
         world.addEnemy(factory.createEnemy(enemy.name));
     }
 }
