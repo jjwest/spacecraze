@@ -4,13 +4,17 @@
 #include <vector>
 #include <string>
 
+namespace {
+    using score_vec = std::vector<std::pair<std::string, int>>;
+}
+
 class FileManager
 {
 public:
     FileManager();
-    static std::vector<std::string> readHighscore(const std::string& path);
-    static void writeHighscore(const std::vector<std::string>& scores,
-				     const std::string& path);
+    static score_vec readHighscore(const std::string& path);
+    static void writeHighscore(const score_vec& scores,
+			       const std::string& path);
 };
 
 

@@ -11,7 +11,7 @@ public:
     Player(const Point& pos);
     bool hasSpecial() const;
     Point getPos() const;
-    void update(World* world);
+    void update(World& world);
     void setSpecial(bool state);
 
 private:
@@ -24,9 +24,9 @@ private:
     Uint32 last_shot = 0;
 
     bool readyToShoot() const;
-    void shoot(World* world);
+    void shoot(World& world);
     void move();
-    void useSpecial(World* world);
+    void useSpecial(World& world);
     void setAngle();
 };
 

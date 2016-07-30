@@ -85,6 +85,11 @@
         "file": "/home/jonas/projects/spacecraze/src/aabb.cc"
     },
     {
+        "command": "c++ -c -std=c++14 -Wall -Wextra -Wold-style-cast -Woverloaded-virtual -pedantic -g -I/home/jonas/projects/spacecraze/include -o build/enter_highscore.o /home/jonas/projects/spacecraze/src/enter_highscore.cc",
+        "directory": "/home/jonas/projects/spacecraze",
+        "file": "/home/jonas/projects/spacecraze/src/enter_highscore.cc"
+    },
+    {
         "command": "c++ -c -std=c++14 -Wall -Wextra -Wold-style-cast -Woverloaded-virtual -pedantic -g -I/home/jonas/projects/spacecraze/include -o build/user_interface.o /home/jonas/projects/spacecraze/src/user_interface.cc",
         "directory": "/home/jonas/projects/spacecraze",
         "file": "/home/jonas/projects/spacecraze/src/user_interface.cc"

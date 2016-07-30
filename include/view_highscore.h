@@ -11,6 +11,10 @@
 #include "enums.h"
 #include "rendered_text.h"
 
+namespace {
+    using scores = std::vector<std::pair<std::string, int>>;
+}
+
 class ViewHighscore: public GameState
 {
 public:
@@ -21,15 +25,14 @@ public:
     void draw(SDL_Renderer* renderer);
 
 private:
-    bool update_buttons = false;
+    bool left_mouse_key_pressed = false;
     Button button_back;
     SDL_Event event;
     RenderedText title;
     States next_state = State_ViewHighscore;
     std::vector<std::unique_ptr<RenderedText>> highscores;
 
-    void createHighscoreText(SDL_Renderer* renderer,
-			     const std::vector<std::string>& scores);
+    void createHighscoreText(SDL_Renderer* renderer, const scores& scores);
 };
 
 

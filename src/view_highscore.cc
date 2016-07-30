@@ -1,4 +1,5 @@
 #include "view_highscore.h"
+
 #include "constants.h"
 #include "enums.h"
 #include "asset_manager.h"
@@ -34,14 +35,14 @@ void ViewHighscore::handleEvents()
 	else if (event.type == SDL_MOUSEBUTTONDOWN &&
 		   SDL_BUTTON(SDL_BUTTON_LEFT))
 	{
-	    update_buttons = true;
+	    left_mouse_key_pressed = true;
 	}
     }
 }
 
 void ViewHighscore::update()
 {
-    if (update_buttons)
+    if (left_mouse_key_pressed)
     {
 	next_state = button_back.update(next_state);
     }
@@ -65,15 +66,22 @@ void ViewHighscore::draw(SDL_Renderer* renderer)
 }
 
 void ViewHighscore::createHighscoreText(SDL_Renderer* renderer,
-					const std::vector<std::string>& scores)
+					const scores& scores)
 {
-    int score_y_pos = 400;
+    int row_y_pos = 400;
+    int name_offset = 170;
+    int score_offset = 100;
+
     for (const auto& score : scores)
     {
 	highscores.emplace_back(std::make_unique<RenderedText>(
-				    renderer, score,
-				    Point{SCREEN_WIDTH / 2 - 170, score_y_pos},
+				    renderer, score.first,
+				    Point{SCREEN_WIDTH / 2 - name_offset, row_y_pos},
 				    AssetManager::getInstance().getFont("text")));
-	score_y_pos += 50;
+	highscores.emplace_back(std::make_unique<RenderedText>(
+				    renderer, std::to_string(score.second),
+				    Point{SCREEN_WIDTH / 2 + score_offset, row_y_pos},
+				    AssetManager::getInstance().getFont("text")));
+	row_y_pos += 50;
     }
 }

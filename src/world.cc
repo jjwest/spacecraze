@@ -63,7 +63,6 @@ void World::draw(SDL_Renderer* renderer)
     std::for_each(begin(enemies), end(enemies), draw);
     std::for_each(begin(enemy_lasers), end(enemy_lasers), draw);
     std::for_each(begin(player_lasers), end(player_lasers), draw);
-
     player.draw(renderer);
 
     SDL_RenderPresent(renderer);
@@ -71,7 +70,7 @@ void World::draw(SDL_Renderer* renderer)
 
 void World::updateObjects()
 {
-    player.update(this);
+    player.update(*this);
 
     auto player_pos = player.getPos();
     for (auto& enemy : enemies)

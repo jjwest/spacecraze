@@ -3,13 +3,12 @@
 #include <fstream>
 #include <sstream>
 
-#include "cppformat/format.h"
-
-std::vector<std::string> FileManager::readHighscore(const std::string& path)
+score_vec FileManager::readHighscore(const std::string& path)
 {
     using namespace std;
 
     ifstream ifs{path};
+    // Create highscore file if non-existing
     if (!ifs)
     {
         ofstream new_file{path};
@@ -19,27 +18,27 @@ std::vector<std::string> FileManager::readHighscore(const std::string& path)
         ifs.open(path);
     }
 
-    vector<string> entries;
+    score_vec entries;
     string line;
     while (getline(ifs, line))
     {
         istringstream iss{line};
-        string name, score;
+        string name;
         iss >> name;
+	int score;
         iss >> score;
-        string entry = fmt::format("{:<20} {}", name, score);
-        entries.push_back(entry);
+        entries.push_back(make_pair(name, score));
     }
 
     return entries;
 }
 
-void FileManager::writeHighscore(const std::vector<std::string>& scores,
-				       const std::string& path)
+void FileManager::writeHighscore(const score_vec& scores,
+				 const std::string& path)
 {
     std::ofstream file{path};
     for (const auto& score : scores)
     {
-	file << score << '\n';
+	file << score.first << " " << score.second << '\n';
     }
 }
