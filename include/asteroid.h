@@ -7,7 +7,7 @@ class Asteroid: public Enemy
 {
 public:
     Asteroid(const Point& pos);
-    void update(const Point&, World*) override;
+    void update(const Point&, World&) override;
 
 private:
     double speed = 1.5;

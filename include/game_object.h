@@ -6,8 +6,8 @@
 #include "point.h"
 #include "aabb.h"
 
-// We must forward declare a World class so game objects
-// can get a pointer to the world that contains them, since
+// We must forward declare an non-defined  World class so game objects
+// can get a reference to the world that contains them, since
 // two class definitions cannot directly include each other.
 class World;
 

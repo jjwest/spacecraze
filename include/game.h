@@ -14,15 +14,20 @@ public:
     void run();
 
 private:
-    SDL_Window* window;
-    SDL_Renderer* renderer;
+    SDL_Window* window = nullptr;
+    SDL_Renderer* renderer = nullptr;
     std::unique_ptr<GameState> current_state;
-    States current_state_id;
+    States current_state_id = State_Menu;
 
     void initSDL();
-    void selectMusic();
-    void loadMedia();
-    void changeState(States next_state_id);
+    void createWindowAndRenderer();
+    void loadAssets();
+    void freeLoadedAssets();
+    void shutdownSDL();
+    bool stillPlaying() const;
+    void sleepIfFrameTooFast(Uint32 time_elapsed) const;
+    void setInitialStateToMenu();
+    void switchCurrentStateIfChanged(States next_state_id);
 };
 
 #endif

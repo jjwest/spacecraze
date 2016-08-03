@@ -10,22 +10,22 @@ Blaster::Blaster(const Point &pos)
     : Enemy(AssetManager::getInstance().getTexture("blaster"), pos, 15, 40)
 {}
 
-void Blaster::update(const Point &player_pos, World* lasers)
+void Blaster::update(const Point &player_pos, World& world)
 {
     move();
     setAngle(player_pos);
-    shoot(player_pos, lasers);
+    shoot(player_pos, world);
     updateHitbox(rect);
 }
 
-void Blaster::shoot(const Point &player_pos, World* world)
+void Blaster::shoot(const Point &player_pos, World& world)
 {
     Uint32 current_time = SDL_GetTicks();
 
     if (current_time - last_shot > shoot_cooldown)
     {
         Point this_pos {rect.x, rect.y};
-        world->addEnemyLaser(this_pos, player_pos, damage);
+        world.addEnemyLaser(this_pos, player_pos, damage);
         last_shot = current_time;
     }
 }

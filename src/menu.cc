@@ -47,6 +47,8 @@ void Menu::update()
 
 void Menu::draw(SDL_Renderer *renderer)
 {
+    SDL_RenderClear(renderer);
+
     auto background = AssetManager::getInstance().getTexture("background");
     SDL_RenderCopy(renderer, background->getTexture(), NULL, NULL);
     title.draw(renderer);

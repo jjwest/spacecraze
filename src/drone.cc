@@ -11,7 +11,7 @@ Drone::Drone(const Point& pos)
     : Enemy(AssetManager::getInstance().getTexture("drone"), pos, 6, 10)
 {}
 
-void Drone::update(const Point& player_pos, World*)
+void Drone::update(const Point& player_pos, World&)
 {
     move(player_pos);
     updateHitbox(rect);
@@ -29,7 +29,7 @@ void Drone::move(const Point& player_pos)
     double longest = std::max(abs(x_dist), abs(y_dist));
 
     double delta_x = x_dist / longest;
-    double delta_y = y_dist /longest;
+    double delta_y = y_dist / longest;
 
     double move_x = delta_x * speed;
     double move_y = delta_y * speed;

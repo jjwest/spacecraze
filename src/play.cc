@@ -35,7 +35,6 @@ void Play::update()
     if (world.playerIsDead())
     {
         next_state = State_Menu;
-        std::cout << current_score.getScore() << std::endl;
     }
 }
 

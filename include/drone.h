@@ -8,7 +8,7 @@ class Drone: public Enemy
 {
 public:
     Drone(const Point& pos);
-    void update(const Point& player_pos, World*) override;
+    void update(const Point& player_pos, World&) override;
 
 private:
     double speed = 2;

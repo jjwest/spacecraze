@@ -56,6 +56,8 @@ void World::killAllEnemies()
 
 void World::draw(SDL_Renderer* renderer)
 {
+    SDL_RenderClear(renderer);
+
     auto background = AssetManager::getInstance().getTexture("background");
     SDL_RenderCopy(renderer, background->getTexture(), NULL, NULL);
 
@@ -75,7 +77,7 @@ void World::updateObjects()
     auto player_pos = player.getPos();
     for (auto& enemy : enemies)
     {
-        enemy->update(player_pos, this);
+        enemy->update(player_pos, *this);
     }
 
     for (const auto& laser : player_lasers)
@@ -94,8 +96,8 @@ void World::updateScore(ScoreKeeper& s)
     s.increaseScore(
 	std::accumulate(
 	    begin(enemies), end(enemies), 0,
-	    [] (int sum, const auto& e)
-	    { return e->isDead() ? sum + e->getScore() : sum; }
+	    [] (int sum, const auto& enemy)
+	    { return enemy->isDead() ? sum + enemy->getScore() : sum; }
 	)
     );
 }

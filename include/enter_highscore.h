@@ -4,6 +4,7 @@
 #include <SDL2/SDL.h>
 #include <vector>
 
+#include "button.h"
 #include "game_state.h"
 #include "enums.h"
 
@@ -16,7 +17,10 @@ public:
     void update() override;
     void draw(SDL_Renderer* renderer) override;
 private:
-
+    bool update_buttons = false;
+    Button button_back;
+    SDL_Event event;
+    States next_state = State_EnterHighscore;
 };
 
 

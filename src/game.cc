@@ -15,15 +15,26 @@
 #include "view_highscore.h"
 
 Game::Game()
-    : window{nullptr}, renderer{nullptr}, current_state_id{State_Play}
 {
     initSDL();
-    loadMedia();
+    createWindowAndRenderer();
+    loadAssets();
+    setInitialStateToMenu();
 }
 
 Game::~Game()
 {
+    freeLoadedAssets();
+    shutdownSDL();
+}
+
+void Game::freeLoadedAssets()
+{
     AssetManager::destroyInstance();
+}
+
+void Game::shutdownSDL()
+{
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     Mix_CloseAudio();
@@ -34,22 +45,36 @@ Game::~Game()
 
 void Game::run()
 {
-    States next_state_id;
-    current_state.reset(new Menu(renderer));
-
-    while (current_state_id != State_Quit)
+    while (stillPlaying())
     {
-	auto frame_start = SDL_GetTicks();
+	auto frame_start_time = SDL_GetTicks();
 
         current_state->handleEvents();
         current_state->update();
         current_state->draw(renderer);
-        next_state_id = current_state->getNextState();
-        changeState(next_state_id);
+        auto next_state = current_state->getNextState();
+        switchCurrentStateIfChanged(next_state);
 
-	auto frame_end = SDL_GetTicks();
-        SDL_Delay(10 - (frame_start - frame_end));
+	auto frame_end_time = SDL_GetTicks();
+	Uint32 time_elapsed = frame_end_time - frame_start_time;
+	sleepIfFrameTooFast(time_elapsed);
     }
+}
+
+bool Game::stillPlaying() const
+{
+    return current_state_id != State_Quit;
+}
+
+void Game::sleepIfFrameTooFast(Uint32 time_elapsed) const
+{
+    const int FRAME_INTENDED_DURATION = 10;
+    SDL_Delay(FRAME_INTENDED_DURATION - time_elapsed);
+}
+
+void Game::setInitialStateToMenu()
+{
+    current_state.reset(new Menu(renderer));
 }
 
 void Game::initSDL()
@@ -71,6 +96,10 @@ void Game::initSDL()
         throw std::runtime_error("Failed to initialize TTF_init");
     }
 
+}
+
+void Game::createWindowAndRenderer()
+{
     window = SDL_CreateWindow("SPACECRAZE", SDL_WINDOWPOS_UNDEFINED,
                                           SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH,
                                           SCREEN_HEIGHT, SDL_WINDOW_RESIZABLE);
@@ -80,30 +109,24 @@ void Game::initSDL()
     SDL_RenderSetLogicalSize(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
 }
 
-void Game::selectMusic() {}
-
-
-void Game::loadMedia()
+void Game::loadAssets()
 {
     auto& assets = AssetManager::getInstance();
 
-    assets.loadTexture("asteroid", "sprites/meteor.png", 1, renderer);
-    assets.loadTexture("background", "sprites/background.jpg", 1, renderer);
-    assets.loadTexture("blaster", "sprites/blaster.png", 1, renderer);
-    assets.loadTexture("drone", "sprites/drone.png", 0.5, renderer);
-    assets.loadTexture("player", "sprites/playership.png", 0.60, renderer);
-    assets.loadTexture("player_laser", "sprites/playerlaser.png", 0.5, renderer);
-    assets.loadTexture("enemy_laser", "sprites/enemylaser.png", 0.75, renderer);
-    assets.loadTexture("singularity", "sprites/singularity.png", 1, renderer);
-
-    assets.loadMusic("menu", "sounds/menu_music.mp3");
-    assets.loadMusic("play", "sounds/play_music.mp3");
+    assets.loadTexture("asteroid", "sprites/meteor.png", renderer);
+    assets.loadTexture("background", "sprites/background.jpg", renderer);
+    assets.loadTexture("blaster", "sprites/blaster.png", renderer);
+    assets.loadTexture("drone", "sprites/drone.png", renderer);
+    assets.loadTexture("player", "sprites/playership.png", renderer);
+    assets.loadTexture("player_laser", "sprites/playerlaser.png", renderer);
+    assets.loadTexture("enemy_laser", "sprites/enemylaser.png", renderer);
+    assets.loadTexture("singularity", "sprites/singularity.png", renderer);
 
     assets.loadFont("text", "fonts/Akashi.ttf", 36);
     assets.loadFont("title", "fonts/Akashi.ttf", 60);
 }
 
-void Game::changeState(States next_state_id)
+void Game::switchCurrentStateIfChanged(States next_state_id)
 {
     if (next_state_id != current_state_id)
     {
@@ -127,6 +150,6 @@ void Game::changeState(States next_state_id)
             break;
         }
 
-        current_state_id = next_state_id;
     }
+    current_state_id = next_state_id;
 }

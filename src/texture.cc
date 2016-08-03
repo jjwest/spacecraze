@@ -3,7 +3,7 @@
 #include <SDL2/SDL_image.h>
 #include <iostream>
 
-Texture::Texture(SDL_Renderer* renderer, const std::string& path, float scale)
+Texture::Texture(SDL_Renderer* renderer, const std::string& path)
     : texture{nullptr}, width{0}, height{0}
 {
     SDL_Surface* surface = IMG_Load(path.c_str());
@@ -13,8 +13,6 @@ Texture::Texture(SDL_Renderer* renderer, const std::string& path, float scale)
         throw "Could not find texture " + path;
     }
     texture = SDL_CreateTextureFromSurface(renderer, surface);
-    width = surface->w * scale;
-    height = surface->h * scale;;
     SDL_FreeSurface(surface);
 }
 

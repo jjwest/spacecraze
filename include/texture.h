@@ -8,7 +8,7 @@
 class Texture
 {
 public:
-    Texture(SDL_Renderer* renderer, const std::string& path, float scale);
+    Texture(SDL_Renderer* renderer, const std::string& path);
     Texture(const Texture&) = delete;
     Texture(Texture&&) = default;
     Texture& operator=(Texture&&) = default;
@@ -17,7 +17,6 @@ public:
     SDL_Texture* getTexture() const;
     int getWidth() const;
     int getHeight() const;
-    void setScale(float scale);
 
 private:
     SDL_Texture* texture;

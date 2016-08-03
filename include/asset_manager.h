@@ -27,7 +27,7 @@ public:
     Texture* getTexture(const std::string& name) const;
     TTF_Font* getFont(const std::string& name) const;
     void loadTexture(const std::string& name, const std::string& path,
-                     float scale, SDL_Renderer*);
+                     SDL_Renderer* renderer);
     void loadMusic(const std::string& name, const std::string& path);
     void loadFont(const std::string& name, const std::string& path, int size);
 

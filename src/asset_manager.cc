@@ -54,12 +54,9 @@ TTF_Font* AssetManager::getFont(const std::string& name) const
 
 void AssetManager::loadTexture(const std::string& name,
 			       const std::string& path,
-			       float scale,
                                SDL_Renderer* renderer)
 {
-    textures.insert(make_pair(name, std::make_unique<Texture>(renderer,
-                                                               path,
-                                                               scale)));
+    textures.insert(make_pair(name, std::make_unique<Texture>(renderer, path)));
 }
 
 void AssetManager::loadMusic(const std::string& name, const std::string& path)

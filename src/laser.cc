@@ -54,8 +54,8 @@ void Laser::move()
 
 void Laser::killIfOutsideScreen()
 {
-    if ( (rect.x < 0 || rect.x > SCREEN_WIDTH) ||
-         (rect.y < 0 || rect.y > SCREEN_HEIGHT) )
+    if ( rect.x < 0 || rect.x > SCREEN_WIDTH ||
+         rect.y < 0 || rect.y > SCREEN_HEIGHT )
     {
         kill();
     }
@@ -64,15 +64,12 @@ void Laser::killIfOutsideScreen()
 void Laser::setAngle()
 {
      int x, y;
-     int center_x, center_y;
-     float ang;
-
      SDL_GetMouseState(&x,&y);
 
-     center_x = rect.x + (rect.h / 2);
-     center_y = rect.y + (rect.w / 2);
+     float center_x = rect.x + (rect.h / 2);
+     float center_y = rect.y + (rect.w / 2);
 
-     ang = atan2(center_y - y, center_x - x);
+     float ang = atan2(center_y - y, center_x - x);
      ang = ang * 180 / M_PI;
 
      angle = (static_cast<int> (ang) - 90) % 360;

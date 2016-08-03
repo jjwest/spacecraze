@@ -13,7 +13,7 @@ Asteroid::Asteroid(const Point& pos)
     calculateDirection(exit);
 }
 
-void Asteroid::update(const Point&, World*)
+void Asteroid::update(const Point&, World&)
 {
     move();
     updateHitbox(rect);
