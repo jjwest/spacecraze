@@ -21,13 +21,14 @@ private:
 
     void initSDL();
     void createWindowAndRenderer();
+    void destroyWindowAndRenderer();
     void loadAssets();
     void freeLoadedAssets();
     void shutdownSDL();
     bool stillPlaying() const;
     void sleepIfFrameTooFast(Uint32 time_elapsed) const;
     void setInitialStateToMenu();
-    void switchCurrentStateIfChanged(States next_state_id);
+    void changeCurrentStateIfNew(States next_state_id);
 };
 
 #endif

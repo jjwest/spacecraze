@@ -9,10 +9,8 @@ class Player: public GameObject
 {
 public:
     Player(const Point& pos);
-    bool hasSpecial() const;
     Point getPos() const;
     void update(World& world);
-    void setSpecial(bool state);
 
 private:
     bool has_special = true;
@@ -23,11 +21,19 @@ private:
     Uint32 shoot_cooldown = 80;
     Uint32 last_shot = 0;
 
-    bool readyToShoot() const;
-    void shoot(World& world);
     void move();
-    void useSpecial(World& world);
+    bool canMoveLeft() const;
+    bool canMoveRight() const;
+    bool canMoveUp() const;
+    bool canMoveDown() const;
+    void moveLeft();
+    void moveRight();
+    void moveUp();
+    void moveDown();
     void setAngle();
+    void shoot(World& world);
+    bool readyToShoot() const;
+    void useSpecial(World& world);
 };
 
 #endif

@@ -25,6 +25,7 @@ Game::Game()
 Game::~Game()
 {
     freeLoadedAssets();
+    destroyWindowAndRenderer();
     shutdownSDL();
 }
 
@@ -35,8 +36,6 @@ void Game::freeLoadedAssets()
 
 void Game::shutdownSDL()
 {
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
     Mix_CloseAudio();
     IMG_Quit();
     TTF_Quit();
@@ -53,7 +52,7 @@ void Game::run()
         current_state->update();
         current_state->draw(renderer);
         auto next_state = current_state->getNextState();
-        switchCurrentStateIfChanged(next_state);
+        changeCurrentStateIfNew(next_state);
 
 	auto frame_end_time = SDL_GetTicks();
 	Uint32 time_elapsed = frame_end_time - frame_start_time;
@@ -109,6 +108,12 @@ void Game::createWindowAndRenderer()
     SDL_RenderSetLogicalSize(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
 }
 
+void Game::destroyWindowAndRenderer()
+{
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+}
+
 void Game::loadAssets()
 {
     auto& assets = AssetManager::getInstance();
@@ -126,7 +131,7 @@ void Game::loadAssets()
     assets.loadFont("title", "fonts/Akashi.ttf", 60);
 }
 
-void Game::switchCurrentStateIfChanged(States next_state_id)
+void Game::changeCurrentStateIfNew(States next_state_id)
 {
     if (next_state_id != current_state_id)
     {

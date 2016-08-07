@@ -6,7 +6,7 @@
 #include "texture.h"
 #include "point.h"
 
-class Sprite 
+class Sprite
 {
 public:
     Sprite(Texture* t, const Point& pos);
