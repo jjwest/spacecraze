@@ -94,25 +94,20 @@ std::unique_ptr<Enemy> ObjectFactory::createEnemy(const std::string& type)
     }
 }
 
-std::unique_ptr<Laser> ObjectFactory::createLaser(const std::string& type,
-                                                  const Point& pos,
-                                                  const Point& destination,
-                                                  double dmg)
+std::unique_ptr<Laser> ObjectFactory::createEnemyLaser(const Point& origin,
+						       const Point& destination,
+						       double damage)
 {
-    if (type == "player")
-    {
-        auto texture = AssetManager::getInstance().getTexture("player_laser");
-        double angle = getLaserAngle(pos, texture->getWidth(), texture->getHeight());
-        return std::make_unique<Laser>(texture, pos, destination, dmg, 7, angle);
-    }
-    else if (type == "enemy")
-    {
-        auto texture = AssetManager::getInstance().getTexture("enemy_laser");
-        double angle = getLaserAngle(pos, texture->getWidth(), texture->getHeight());
-        return std::make_unique<Laser>(texture, pos, destination, dmg, 2.5, angle);
-    }
-    else
-    {
-        throw std::invalid_argument("Tried to create non-existing laser type " + type);
-    }
+    auto texture = AssetManager::getInstance().getTexture("enemy_laser");
+    double angle = getLaserAngle(origin, texture->getWidth(), texture->getHeight());
+    return std::make_unique<Laser>(texture, origin, destination, damage, 2.5, angle);
+}
+
+std::unique_ptr<Laser> ObjectFactory::createPlayerLaser(const Point& origin,
+							const Point& destination,
+							double damage)
+{
+    auto texture = AssetManager::getInstance().getTexture("player_laser");
+    double angle = getLaserAngle(origin, texture->getWidth(), texture->getHeight());
+    return std::make_unique<Laser>(texture, origin, destination, damage, 7, angle);
 }

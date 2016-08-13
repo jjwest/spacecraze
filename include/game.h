@@ -19,15 +19,15 @@ private:
     std::unique_ptr<GameState> current_state;
     States current_state_id = State_Menu;
 
+    bool stillPlaying() const;
     void initSDL();
     void createWindowAndRenderer();
     void destroyWindowAndRenderer();
     void loadAssets();
     void freeLoadedAssets();
     void shutdownSDL();
-    bool stillPlaying() const;
     void sleepIfFrameTooFast(Uint32 time_elapsed) const;
-    void setInitialStateToMenu();
+    void setStateToMenu();
     void changeCurrentStateIfNew(States next_state_id);
 };
 

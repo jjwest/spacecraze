@@ -1,1 +1,3 @@
--/build/*.o
+-/build/*
+-/sprites/*
+-/sounds/*

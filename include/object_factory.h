@@ -15,10 +15,12 @@ public:
     ObjectFactory& operator=(const ObjectFactory&) = delete;
     static ObjectFactory& getInstance();
     std::unique_ptr<Enemy> createEnemy(const std::string& type);
-    std::unique_ptr<Laser> createLaser(const std::string& type,
-                                       const Point& pos,
-                                       const Point& destination,
-                                       double dmg);
+    std::unique_ptr<Laser> createEnemyLaser(const Point& origin,
+					    const Point& destination,
+					    double damage);
+    std::unique_ptr<Laser> createPlayerLaser(const Point& origin,
+					     const Point& destination,
+					     double damage);
 
 private:
     ObjectFactory() {};

@@ -33,7 +33,7 @@ private:
     void setAngle();
     void shoot(World& world);
     bool readyToShoot() const;
-    void useSpecial(World& world);
+    void useSpecialWeapon(World& world);
 };
 
 #endif

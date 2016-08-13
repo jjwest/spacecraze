@@ -19,7 +19,6 @@ Game::Game()
     initSDL();
     createWindowAndRenderer();
     loadAssets();
-    setInitialStateToMenu();
 }
 
 Game::~Game()
@@ -44,6 +43,8 @@ void Game::shutdownSDL()
 
 void Game::run()
 {
+    setStateToMenu();
+
     while (stillPlaying())
     {
 	auto frame_start_time = SDL_GetTicks();
@@ -60,10 +61,6 @@ void Game::run()
     }
 }
 
-bool Game::stillPlaying() const
-{
-    return current_state_id != State_Quit;
-}
 
 void Game::sleepIfFrameTooFast(Uint32 time_elapsed) const
 {
@@ -71,9 +68,14 @@ void Game::sleepIfFrameTooFast(Uint32 time_elapsed) const
     SDL_Delay(FRAME_INTENDED_DURATION - time_elapsed);
 }
 
-void Game::setInitialStateToMenu()
+void Game::setStateToMenu()
 {
     current_state.reset(new Menu(renderer));
+}
+
+bool Game::stillPlaying() const
+{
+    return current_state_id != State_Quit;
 }
 
 void Game::initSDL()

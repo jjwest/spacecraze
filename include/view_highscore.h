@@ -19,10 +19,10 @@ class ViewHighscore: public GameState
 {
 public:
     ViewHighscore(SDL_Renderer* renderer);
-    States getNextState() const;
-    void handleEvents();
-    void update();
-    void draw(SDL_Renderer* renderer);
+    States getNextState() const override;
+    void handleEvents() override;
+    void update() override;
+    void draw(SDL_Renderer* renderer) override;
 
 private:
     bool left_mouse_key_pressed = false;

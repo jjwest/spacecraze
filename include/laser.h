@@ -11,7 +11,8 @@ public:
           double dmg, double spd, double angl);
     void update();
     int getDamage() const;
-    
+
+
 private:
     double damage;
     double speed;

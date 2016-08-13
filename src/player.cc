@@ -25,7 +25,7 @@ Point Player::getPos() const
 void Player::update(World& world)
 {
     move();
-    useSpecial(world);
+    useSpecialWeapon(world);
     shoot(world);
     updateHitbox(rect);
 }
@@ -111,8 +111,6 @@ void Player::setAngle()
 
 void Player::shoot(World& world)
 {
-    auto current_time = SDL_GetTicks();
-
     if (readyToShoot())
     {
         int center_x = rect.x + (rect.w / 2);
@@ -120,7 +118,7 @@ void Player::shoot(World& world)
         Point current_pos{ center_x, center_y };
 
         world.addPlayerLaser(current_pos, damage);
-        last_shot = current_time;
+        last_shot = SDL_GetTicks();
     }
 }
 
@@ -138,7 +136,7 @@ bool rightMouseButtonPressed()
     return SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT);
 }
 
-void Player::useSpecial(World& world)
+void Player::useSpecialWeapon(World& world)
 {
     if (has_special && rightMouseButtonPressed())
     {

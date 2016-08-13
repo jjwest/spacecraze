@@ -11,7 +11,7 @@ class Sprite
 public:
     Sprite(Texture* t, const Point& pos);
     virtual ~Sprite();
-    void draw(SDL_Renderer*);
+    void draw(SDL_Renderer*) const;
 
 protected:
     Texture* texture;

@@ -30,25 +30,25 @@ void World::addEnemy(std::unique_ptr<Enemy> enemy)
     enemies.push_back(move(enemy));
 }
 
-void World::addPlayerLaser(const Point& pos, double dmg)
+void World::addPlayerLaser(const Point& origin, double damage)
 {
     Point destination;
     SDL_GetMouseState(&destination.x, &destination.y);
 
     auto& factory = ObjectFactory::getInstance();
-    player_lasers.push_back(factory.createLaser("player", pos, destination, dmg));
+    player_lasers.push_back(factory.createPlayerLaser(origin, destination, damage));
 }
 
-void World::addEnemyLaser(const Point& pos, const Point& dest, double dmg)
+void World::addEnemyLaser(const Point& origin, const Point& destination, double damage)
 {
     auto& factory = ObjectFactory::getInstance();
-    enemy_lasers.push_back(factory.createLaser("enemy", pos, dest, dmg));
+    enemy_lasers.push_back(factory.createEnemyLaser(origin, destination, damage));
 }
 
 
 void World::killAllEnemies()
 {
-    for (const auto& enemy : enemies)
+    for (auto& enemy : enemies)
     {
 	enemy->kill();
     }
