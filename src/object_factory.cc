@@ -5,43 +5,43 @@
 
 #include "asset_manager.h"
 #include "constants.h"
+#include "enums.h"
 #include "point.h"
 #include "texture.h"
 
-enum SpawnSections{UP, DOWN, LEFT, RIGHT};
-std::vector<std::pair<SpawnSections, int>> spawn_sections
-{
-    {UP, SCREEN_WIDTH},
-    {DOWN, SCREEN_WIDTH},
-    {LEFT, SCREEN_HEIGHT},
-    {RIGHT, SCREEN_HEIGHT}
-};
 
 Point getSpawnPoint(Texture* texture)
 {
+    static std::vector<std::pair<Sections, int>> spawn_sections
+    {
+	{Section_Up, SCREEN_WIDTH},
+	{Section_Down, SCREEN_WIDTH},
+	{Section_Left, SCREEN_HEIGHT},
+	{Section_Right, SCREEN_HEIGHT}
+    };
+
     std::uniform_int_distribution<int> index(0,3);
-    std::random_device rd;
+    std::random_device random;
 
-    std::pair<SpawnSections, int> section{ spawn_sections.at( index(rd) ) };
+    std::pair<Sections, int> section{ spawn_sections.at( index(random) ) };
+    std::uniform_int_distribution<int> spawn_range(0, section.second);
+
     Point spawn_point;
-
-    std::uniform_int_distribution<int> dist(0, section.second);
-
     switch (section.first) {
-    case UP:
-        spawn_point = {dist(rd), 0 - texture->getHeight()};
+    case Section_Up:
+        spawn_point = {spawn_range(random), 0 - texture->getHeight()};
         break;
 
-    case LEFT:
-        spawn_point = {0 - texture->getWidth(), dist(rd)};
+    case Section_Left:
+        spawn_point = {0 - texture->getWidth(), spawn_range(random)};
         break;
 
-    case DOWN:
-        spawn_point = {dist(rd), SCREEN_HEIGHT};
+    case Section_Down:
+        spawn_point = {spawn_range(random), SCREEN_HEIGHT};
         break;
 
-    case RIGHT:
-        spawn_point = {SCREEN_WIDTH, dist(rd)};
+    case Section_Right:
+        spawn_point = {SCREEN_WIDTH, spawn_range(random)};
         break;
     }
 
