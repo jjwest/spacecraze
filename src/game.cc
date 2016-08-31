@@ -12,6 +12,7 @@
 #include "constants.h"
 #include "play.h"
 #include "menu.h"
+#include "enter_highscore.h"
 #include "view_highscore.h"
 
 Game::Game()
@@ -44,6 +45,8 @@ void Game::shutdownSDL()
 void Game::run()
 {
     setStateToMenu();
+    current_state_id = State_EnterHighscore;
+    current_state.reset(new EnterHighscore(renderer, 1000));
 
     while (stillPlaying())
     {
@@ -151,6 +154,7 @@ void Game::changeCurrentStateIfNew(States next_state_id)
             break;
 
 	case State_EnterHighscore:
+	    current_state.reset(new EnterHighscore(renderer, 0));
 	    break;
 
         case State_Quit:

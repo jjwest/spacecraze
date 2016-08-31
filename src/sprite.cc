@@ -6,7 +6,7 @@ Sprite::Sprite(Texture* t, const Point& pos)
 
 Sprite::~Sprite() {}
 
-void Sprite::draw(SDL_Renderer* renderer) const
+void Sprite::draw(SDL_Renderer* renderer)
 {
     SDL_RenderCopyEx(renderer, texture->getTexture(), NULL,
                      &rect, angle, NULL, SDL_FLIP_NONE);

@@ -11,9 +11,9 @@ namespace {
 class FileManager
 {
 public:
-    FileManager();
-    static score_vec readHighscore(const std::string& path);
-    static void writeHighscore(const score_vec& scores,
+    FileManager() = default;
+    score_vec readHighscoreFromFile(const std::string& path);
+    void writeHighscoreToFile(const score_vec& scores,
 			       const std::string& path);
 };
 

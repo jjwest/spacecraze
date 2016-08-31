@@ -17,11 +17,11 @@ class World
 public:
     World();
     bool playerIsDead() const;
+    int update();
     void addEnemy(std::unique_ptr<Enemy> enemy);
     void addEnemyLaser(const Point& pos, const Point& dest, double dmg);
     void addPlayerLaser(const Point& pos, double dmg);
     void killAllEnemies();
-    void update(ScoreKeeper& score);
     void draw(SDL_Renderer* renderer);
 
 private:
@@ -30,7 +30,7 @@ private:
     std::vector<std::unique_ptr<Laser>> enemy_lasers;
     std::vector<std::unique_ptr<Laser>> player_lasers;
 
-    void updateScore(ScoreKeeper& s);
+    int updateScore();
     void updateObjects();
     void resolveCollisions();
     void resolveLaserCollisions();

@@ -15,7 +15,8 @@ ViewHighscore::ViewHighscore(SDL_Renderer* renderer)
 	    {SCREEN_WIDTH / 2 - 150, 150},
 	    AssetManager::getInstance().getFont("title")}
 {
-    auto scores = FileManager::readHighscore("highscore.txt");
+    FileManager f;
+    auto scores = f.readHighscoreFromFile(HIGHSCORE_FILE_PATH);
     createHighscoreText(renderer, scores);
 }
 

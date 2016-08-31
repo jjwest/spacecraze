@@ -30,7 +30,7 @@ void Play::handleEvents()
 void Play::update()
 {
     enemy_generator.update(world);
-    world.update(current_score);
+    current_score += world.update();
 
     if (world.playerIsDead())
     {

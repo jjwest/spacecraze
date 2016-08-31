@@ -29,7 +29,7 @@ ${BUILD_DIR}%.o: %.cc
 	${CXX} ${CXXFLAGS} ${INCLUDES} -c -o $@ $< ${LIBS}
 
 clean:
-	rm -f ${BUILD_DIR}*.o ${EXEC}
+	rm ${BUILD_DIR}*.o ${EXEC}
 
 run:
 	./${EXEC}

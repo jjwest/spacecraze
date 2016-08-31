@@ -9,7 +9,7 @@ class Player: public GameObject
 {
 public:
     Player(const Point& pos);
-    Point getPos() const;
+    Point getPosition() const;
     void update(World& world);
 
 private:
@@ -30,7 +30,7 @@ private:
     void moveRight();
     void moveUp();
     void moveDown();
-    void setAngle();
+    void adjustAngle();
     void shoot(World& world);
     bool readyToShoot() const;
     void useSpecialWeapon(World& world);

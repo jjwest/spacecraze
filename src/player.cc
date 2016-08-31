@@ -9,24 +9,25 @@
 #include "world.h"
 
 Player::Player(const Point& pos)
-    :  GameObject(AssetManager::getInstance().getTexture("player"), pos, 1),
+    :  GameObject(AssetManager::getInstance().getTexture("player"), pos, 1.0),
        x_pos{ static_cast<double>(rect.x) },
        y_pos{ static_cast<double>(rect.y) } {}
 
 
-Point Player::getPos() const
+Point Player::getPosition() const
 {
-    int x = round( rect.x + (rect.w / 2) );
-    int y = round( rect.y + (rect.h / 2) );
+    int center_x = round( rect.x + (rect.w / 2) );
+    int center_y = round( rect.y + (rect.h / 2) );
 
-    return {x, y};
+    return {center_x, center_y};
 }
 
 void Player::update(World& world)
 {
     move();
-    useSpecialWeapon(world);
+    adjustAngle();
     shoot(world);
+    useSpecialWeapon(world);
     updateHitbox(rect);
 }
 
@@ -51,8 +52,6 @@ void Player::move()
     {
 	moveDown();
     }
-
-    setAngle();
 }
 
 bool Player::canMoveLeft() const
@@ -97,7 +96,7 @@ void Player::moveDown()
     rect.y = round(y_pos);
 }
 
-void Player::setAngle()
+void Player::adjustAngle()
 {
      int x, y;
      SDL_GetMouseState(&x, &y);

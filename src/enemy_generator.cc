@@ -53,7 +53,6 @@ void EnemyGenerator::updateEnemyType(EnemyType& enemy)
 void EnemyGenerator::spawnEnemy(World& world, const EnemyType& enemy)
 {
     auto& factory = ObjectFactory::getInstance();
-
     for (int i = 0; i < enemy.spawn_amount; ++i)
     {
         world.addEnemy(factory.createEnemy(enemy.name));

@@ -17,12 +17,14 @@ bool World::playerIsDead() const
     return player.isDead();
 }
 
-void World::update(ScoreKeeper& score)
+int World::update()
 {
     updateObjects();
     resolveCollisions();
-    updateScore(score);
+    int accumulated_score = updateScore();
     removeDeadObjects();
+
+    return accumulated_score;
 }
 
 void World::addEnemy(std::unique_ptr<Enemy> enemy)
@@ -61,7 +63,7 @@ void World::draw(SDL_Renderer* renderer)
     auto background = AssetManager::getInstance().getTexture("background");
     SDL_RenderCopy(renderer, background->getTexture(), NULL, NULL);
 
-    auto draw = [&renderer] (auto& obj) { obj->draw(renderer); };
+    auto draw = [&renderer] (auto& object) { object->draw(renderer); };
     std::for_each(begin(enemies), end(enemies), draw);
     std::for_each(begin(enemy_lasers), end(enemy_lasers), draw);
     std::for_each(begin(player_lasers), end(player_lasers), draw);
@@ -74,7 +76,7 @@ void World::updateObjects()
 {
     player.update(*this);
 
-    auto player_pos = player.getPos();
+    auto player_pos = player.getPosition();
     for (auto& enemy : enemies)
     {
         enemy->update(player_pos, *this);
@@ -91,15 +93,13 @@ void World::updateObjects()
     }
 }
 
-void World::updateScore(ScoreKeeper& s)
+int World::updateScore()
 {
-    s.increaseScore(
-	std::accumulate(
-	    begin(enemies), end(enemies), 0,
-	    [] (int sum, const auto& enemy)
-	    { return enemy->isDead() ? sum + enemy->getScore() : sum; }
-	)
-    );
+    return std::accumulate(
+	begin(enemies), end(enemies), 0,
+	[] (int sum, const auto& enemy)
+	{ return enemy->isDead() ? sum + enemy->getScore() : sum; }
+	);
 }
 
 void World::resolveCollisions()
@@ -111,8 +111,8 @@ void World::resolveCollisions()
 void World::resolvePlayerCollisions()
 {
     AABB player_hitbox = player.getHitbox();
-    auto collides = [&player_hitbox] (auto& obj) {
-	return obj->collides(player_hitbox);
+    auto collides = [&player_hitbox] (auto& object) {
+	return object->collides(player_hitbox);
     };
 
     bool hit_by_laser = std::any_of(
@@ -143,7 +143,7 @@ void World::resolveLaserCollisions()
 
 void World::removeDeadObjects()
 {
-    auto isDead = [] (auto& obj) { return obj->isDead(); };
+    auto isDead = [] (auto& object) { return object->isDead(); };
 
     enemies.erase(std::remove_if(begin(enemies), end(enemies), isDead),
 		  end(enemies));

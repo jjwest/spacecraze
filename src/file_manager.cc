@@ -3,7 +3,7 @@
 #include <fstream>
 #include <sstream>
 
-score_vec FileManager::readHighscore(const std::string& path)
+score_vec FileManager::readHighscoreFromFile(const std::string& path)
 {
     using namespace std;
 
@@ -33,8 +33,8 @@ score_vec FileManager::readHighscore(const std::string& path)
     return entries;
 }
 
-void FileManager::writeHighscore(const score_vec& scores,
-				 const std::string& path)
+void FileManager::writeHighscoreToFile(const score_vec& scores,
+				       const std::string& path)
 {
     std::ofstream file{path};
     for (const auto& score : scores)
