@@ -7,6 +7,7 @@ public:
     ScoreKeeper() = default;
     int getScore() const;
     void increaseScore(int incremement);
+    void reset();
 
 private:
     int score = 0;

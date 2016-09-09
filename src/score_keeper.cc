@@ -9,3 +9,8 @@ void ScoreKeeper::increaseScore(int increment)
 {
     score += increment;
 }
+
+void ScoreKeeper::reset()
+{
+    score = 0;
+}

@@ -1,5 +1,5 @@
 Hej 5000
 Helu 1000
-Helui 1000
-adasd 1000
-sihjdsaidh 1000
+IGEN 30
+Test 20
+AAA 10

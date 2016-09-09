@@ -10,22 +10,23 @@
 #include "game_state.h"
 #include "enums.h"
 #include "rendered_text.h"
+#include "score_keeper.h"
 
 class EnterHighscore: public GameState
 {
 public:
-    EnterHighscore(SDL_Renderer* renderer, int score);
+    EnterHighscore(SDL_Renderer* renderer, const ScoreKeeper& score);
     ~EnterHighscore();
     States getNextState() const override;
     void handleEvents() override;
     void update() override;
     void draw(SDL_Renderer* renderer) override;
 private:
-    int player_score;
-    std::string player_name;
     Button back_button;
+    int player_score;
     SDL_Event event;
     States next_state = State_EnterHighscore;
+    std::string player_name;
     std::unique_ptr<RenderedText> rendered_player_name;
 
     void renderUserInput(SDL_Renderer* renderer);

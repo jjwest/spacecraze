@@ -12,7 +12,7 @@
 #include "rendered_text.h"
 
 namespace {
-    using scores = std::vector<std::pair<std::string, int>>;
+    using score_vec = std::vector<std::pair<std::string, int>>;
 }
 
 class ViewHighscore: public GameState
@@ -32,7 +32,7 @@ private:
     States next_state = State_ViewHighscore;
     std::vector<std::unique_ptr<RenderedText>> highscores;
 
-    void createHighscoreText(SDL_Renderer* renderer, const scores& scores);
+    void createHighscoreText(SDL_Renderer* renderer, const score_vec& scores);
 };
 
 

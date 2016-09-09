@@ -4,16 +4,11 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 
-#include <iostream>
 #include <stdexcept>
 
 #include "assets.h"
-#include "enums.h"
 #include "constants.h"
-#include "play.h"
-#include "menu.h"
-#include "enter_highscore.h"
-#include "view_highscore.h"
+#include "state_manager.h"
 
 Game::Game()
 {
@@ -44,20 +39,11 @@ void Game::shutdownSDL()
 
 void Game::run()
 {
-    setStateToMenu();
-    current_state_id = State_EnterHighscore;
-    current_state.reset(new EnterHighscore(renderer, 1000));
-
-    while (stillPlaying())
+    StateManager state(renderer);
+    while (state.stillPlaying())
     {
 	auto frame_start_time = SDL_GetTicks();
-
-        current_state->handleEvents();
-        current_state->update();
-        current_state->draw(renderer);
-        auto next_state = current_state->getNextState();
-        changeCurrentStateIfNew(next_state);
-
+	state.update();
 	auto frame_end_time = SDL_GetTicks();
 	Uint32 time_elapsed = frame_end_time - frame_start_time;
 	sleepIfFrameTooFast(time_elapsed);
@@ -67,18 +53,8 @@ void Game::run()
 
 void Game::sleepIfFrameTooFast(Uint32 time_elapsed) const
 {
-    const int FRAME_INTENDED_DURATION = 10;
-    SDL_Delay(FRAME_INTENDED_DURATION - time_elapsed);
-}
-
-void Game::setStateToMenu()
-{
-    current_state.reset(new Menu(renderer));
-}
-
-bool Game::stillPlaying() const
-{
-    return current_state_id != State_Quit;
+    const int INTENDED_DURATION = 10;
+    SDL_Delay(INTENDED_DURATION - time_elapsed);
 }
 
 void Game::initSDL()
@@ -134,33 +110,4 @@ void Game::loadAssets()
 
     assets.loadFont("text", "fonts/Akashi.ttf", 36);
     assets.loadFont("title", "fonts/Akashi.ttf", 60);
-}
-
-void Game::changeCurrentStateIfNew(States next_state_id)
-{
-    if (next_state_id != current_state_id)
-    {
-        switch (next_state_id) {
-        case State_Play:
-            current_state.reset(new Play(renderer));
-            break;
-
-        case State_Menu:
-            current_state.reset(new Menu(renderer));
-            break;
-
-        case State_ViewHighscore:
-	    current_state.reset(new ViewHighscore(renderer));
-            break;
-
-	case State_EnterHighscore:
-	    current_state.reset(new EnterHighscore(renderer, 0));
-	    break;
-
-        case State_Quit:
-            break;
-        }
-
-    }
-    current_state_id = next_state_id;
 }

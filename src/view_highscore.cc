@@ -66,7 +66,7 @@ void ViewHighscore::draw(SDL_Renderer* renderer)
 }
 
 void ViewHighscore::createHighscoreText(SDL_Renderer* renderer,
-					const scores& scores)
+					const score_vec& scores)
 {
     int row_y_pos = 400;
     int name_offset = 170;

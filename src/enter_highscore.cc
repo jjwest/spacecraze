@@ -9,10 +9,9 @@
 
 const Point button_position = {SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT - 150};
 
-EnterHighscore::EnterHighscore(SDL_Renderer* renderer, int score)
-    : player_score{score},
-      back_button {renderer, button_position, "BACK", State_Menu},
-      rendered_player_name{}
+EnterHighscore::EnterHighscore(SDL_Renderer* renderer, const ScoreKeeper& score)
+    : back_button {renderer, button_position, "BACK", State_Menu},
+      player_score{score.getScore()}
 {
     // Always prepare to receive input
     SDL_StartTextInput();
@@ -105,7 +104,7 @@ void EnterHighscore::renderUserInput(SDL_Renderer* renderer)
 bool EnterHighscore::goodEnoughForHighscore(int score) const
 {
     auto highscores = HighscoreFile::read();
-    return highscores.size() < 5 || score > highscores.back().second;
+    return score > 0 && (highscores.size() < 5 || score > highscores.back().second);
 }
 
 
@@ -135,10 +134,15 @@ void EnterHighscore::updateHighscoreFile() const
 
     highscores.push_back( {player_name, player_score} );
     std::sort(begin(highscores), end(highscores),
-	      [] (const auto& p1, const auto& p2)
+	      [] (const auto& a, const auto& b)
 	      {
-		  return p1.first < p2.first;
+		  return a.second > b.second;
 	      });
+
+    for (const auto& score : highscores)
+    {
+	std::cout << score.second << '\n';
+    }
     HighscoreFile::write(highscores);
 }
 

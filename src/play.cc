@@ -6,8 +6,8 @@
 
 #include <iostream>
 
-Play::Play(SDL_Renderer* renderer)
-    : GameState(), user_interface{renderer} {}
+Play::Play(SDL_Renderer* renderer, ScoreKeeper& s)
+    : GameState(), user_interface{renderer}, score{s} {}
 
 
 States Play::getNextState() const
@@ -30,11 +30,12 @@ void Play::handleEvents()
 void Play::update()
 {
     enemy_generator.update(world);
-    current_score += world.update();
+    int score_increment = world.update();
+    score.increaseScore(score_increment);
 
     if (world.playerIsDead())
     {
-        next_state = State_Menu;
+        next_state = State_EnterHighscore;
     }
 }
 
