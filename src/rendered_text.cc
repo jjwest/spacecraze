@@ -1,5 +1,5 @@
 #include "rendered_text.h"
-#include "asset_manager.h"
+#include "assets.h"
 
 RenderedText::RenderedText(SDL_Renderer* renderer, const std::string& text,
                            const Point& pos, TTF_Font* font)

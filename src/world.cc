@@ -5,7 +5,7 @@
 
 #include "point.h"
 #include "constants.h"
-#include "asset_manager.h"
+#include "assets.h"
 #include "enums.h"
 #include "object_factory.h"
 
@@ -60,7 +60,7 @@ void World::draw(SDL_Renderer* renderer)
 {
     SDL_RenderClear(renderer);
 
-    auto background = AssetManager::getInstance().getTexture("background");
+    auto background = Assets::getInstance().getTexture("background");
     SDL_RenderCopy(renderer, background->getTexture(), NULL, NULL);
 
     auto draw = [&renderer] (auto& object) { object->draw(renderer); };

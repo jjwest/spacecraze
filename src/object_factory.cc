@@ -3,7 +3,7 @@
 #include <random>
 #include <stdexcept>
 
-#include "asset_manager.h"
+#include "assets.h"
 #include "constants.h"
 #include "enums.h"
 #include "point.h"
@@ -58,19 +58,19 @@ std::unique_ptr<Enemy> ObjectFactory::createEnemy(const std::string& type)
 {
     if (type == "asteroid")
     {
-        auto texture = AssetManager::getInstance().getTexture("asteroid");
+        auto texture = Assets::getInstance().getTexture("asteroid");
         auto spawn_point = getSpawnPoint(texture);
         return std::make_unique<Asteroid>(Asteroid(spawn_point));
     }
     else if (type == "blaster")
     {
-        auto texture = AssetManager::getInstance().getTexture("blaster");
+        auto texture = Assets::getInstance().getTexture("blaster");
         auto spawn_point = getSpawnPoint(texture);
         return std::make_unique<Blaster>(Blaster(spawn_point));
     }
     else if (type == "drone")
     {
-        auto texture = AssetManager::getInstance().getTexture("drone");
+        auto texture = Assets::getInstance().getTexture("drone");
         auto spawn_point = getSpawnPoint(texture);
         return std::make_unique<Drone>(Drone(spawn_point));
     }
@@ -98,7 +98,7 @@ std::unique_ptr<Laser> ObjectFactory::createEnemyLaser(const Point& origin,
 						       const Point& destination,
 						       double damage)
 {
-    auto texture = AssetManager::getInstance().getTexture("enemy_laser");
+    auto texture = Assets::getInstance().getTexture("enemy_laser");
     double angle = getLaserAngle(origin, texture->getWidth(), texture->getHeight());
     return std::make_unique<Laser>(texture, origin, destination, damage, 2.5, angle);
 }
@@ -107,7 +107,7 @@ std::unique_ptr<Laser> ObjectFactory::createPlayerLaser(const Point& origin,
 							const Point& destination,
 							double damage)
 {
-    auto texture = AssetManager::getInstance().getTexture("player_laser");
+    auto texture = Assets::getInstance().getTexture("player_laser");
     double angle = getLaserAngle(origin, texture->getWidth(), texture->getHeight());
     return std::make_unique<Laser>(texture, origin, destination, damage, 7, angle);
 }

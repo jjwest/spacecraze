@@ -1,5 +1,5 @@
 #include "menu.h"
-#include "asset_manager.h"
+#include "assets.h"
 #include "point.h"
 
 Menu::Menu(SDL_Renderer* renderer)
@@ -7,7 +7,7 @@ Menu::Menu(SDL_Renderer* renderer)
       title{ renderer,
               "SPACECRAZE",
               {450, 150},
-              AssetManager::getInstance().getFont("title")}
+              Assets::getInstance().getFont("title")}
 {
     buttons.emplace_back(
         std::make_unique<Button>(renderer, Point{550, 400}, "PLAY", State_Play));
@@ -49,7 +49,7 @@ void Menu::draw(SDL_Renderer *renderer)
 {
     SDL_RenderClear(renderer);
 
-    auto background = AssetManager::getInstance().getTexture("background");
+    auto background = Assets::getInstance().getTexture("background");
     SDL_RenderCopy(renderer, background->getTexture(), NULL, NULL);
     title.draw(renderer);
 

@@ -6,7 +6,7 @@
 #include <math.h>
 #include <SDL2/SDL.h>
 
-#include "asset_manager.h"
+#include "assets.h"
 #include "constants.h"
 
 Laser::Laser(Texture* t, const Point& pos, const Point& destination,

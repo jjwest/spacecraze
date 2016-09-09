@@ -1,6 +1,6 @@
 #include "play.h"
 
-#include "asset_manager.h"
+#include "assets.h"
 #include "texture.h"
 #include "world.h"
 
@@ -41,7 +41,7 @@ void Play::update()
 void Play::draw(SDL_Renderer* renderer)
 {
     SDL_RenderClear(renderer);
-    auto background = AssetManager::getInstance().getTexture("background");
+    auto background = Assets::getInstance().getTexture("background");
     SDL_RenderCopy(renderer, background->getTexture(), NULL, NULL);
     world.draw(renderer);
     SDL_RenderPresent(renderer);

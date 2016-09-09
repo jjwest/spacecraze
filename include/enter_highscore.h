@@ -21,22 +21,22 @@ public:
     void update() override;
     void draw(SDL_Renderer* renderer) override;
 private:
-    bool update_buttons = false;
-    bool user_input_updated = false;
-    Button button_back;
+    int player_score;
+    std::string player_name;
+    Button back_button;
     SDL_Event event;
     States next_state = State_EnterHighscore;
-    std::string user_input_text;
-    std::unique_ptr<RenderedText> rendered_user_input;
+    std::unique_ptr<RenderedText> rendered_player_name;
 
-    void renderNewUserInput(SDL_Renderer* renderer);
+    void renderUserInput(SDL_Renderer* renderer);
     bool goodEnoughForHighscore(int score) const;
     bool leftMouseButtonPressed() const;
-    bool keyIsPressed() const;
+    bool specialKeyPressed() const;
     bool backspaceIsPressed() const;
     bool returnIsPressed() const;
-    bool playerIsEnteringName() const;
-
+    void updateHighscoreFile() const;
+    bool enteringName() const;
+    bool containsSpace(const std::string& input) const;
 };
 
 

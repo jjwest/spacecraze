@@ -7,7 +7,7 @@
 #include <iostream>
 #include <stdexcept>
 
-#include "asset_manager.h"
+#include "assets.h"
 #include "enums.h"
 #include "constants.h"
 #include "play.h"
@@ -31,7 +31,7 @@ Game::~Game()
 
 void Game::freeLoadedAssets()
 {
-    AssetManager::destroyInstance();
+    Assets::destroyInstance();
 }
 
 void Game::shutdownSDL()
@@ -121,7 +121,7 @@ void Game::destroyWindowAndRenderer()
 
 void Game::loadAssets()
 {
-    auto& assets = AssetManager::getInstance();
+    auto& assets = Assets::getInstance();
 
     assets.loadTexture("asteroid", "sprites/meteor.png", renderer);
     assets.loadTexture("background", "sprites/background.jpg", renderer);

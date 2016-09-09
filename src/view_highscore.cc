@@ -2,8 +2,8 @@
 
 #include "constants.h"
 #include "enums.h"
-#include "asset_manager.h"
-#include "file_manager.h"
+#include "assets.h"
+#include "highscore_file.h"
 #include "point.h"
 
 ViewHighscore::ViewHighscore(SDL_Renderer* renderer)
@@ -13,10 +13,9 @@ ViewHighscore::ViewHighscore(SDL_Renderer* renderer)
     title{renderer,
 	    "HIGHSCORE",
 	    {SCREEN_WIDTH / 2 - 150, 150},
-	    AssetManager::getInstance().getFont("title")}
+	    Assets::getInstance().getFont("title")}
 {
-    FileManager f;
-    auto scores = f.readHighscoreFromFile(HIGHSCORE_FILE_PATH);
+    auto scores = HighscoreFile::read();
     createHighscoreText(renderer, scores);
 }
 
@@ -53,7 +52,7 @@ void ViewHighscore::draw(SDL_Renderer* renderer)
 {
     SDL_RenderClear(renderer);
 
-    auto background = AssetManager::getInstance().getTexture("background");
+    auto background = Assets::getInstance().getTexture("background");
     SDL_RenderCopy(renderer, background->getTexture(), NULL, NULL);
     title.draw(renderer);
     button_back.draw(renderer);
@@ -78,11 +77,11 @@ void ViewHighscore::createHighscoreText(SDL_Renderer* renderer,
 	highscores.emplace_back(std::make_unique<RenderedText>(
 				    renderer, score.first,
 				    Point{SCREEN_WIDTH / 2 - name_offset, row_y_pos},
-				    AssetManager::getInstance().getFont("text")));
+				    Assets::getInstance().getFont("text")));
 	highscores.emplace_back(std::make_unique<RenderedText>(
 				    renderer, std::to_string(score.second),
 				    Point{SCREEN_WIDTH / 2 + score_offset, row_y_pos},
-				    AssetManager::getInstance().getFont("text")));
+				    Assets::getInstance().getFont("text")));
 	row_y_pos += 50;
     }
 }

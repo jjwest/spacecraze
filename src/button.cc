@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "asset_manager.h"
+#include "assets.h"
 
 Button::Button(SDL_Renderer* renderer, const Point& pos, const std::string& text,
                const States& act)
@@ -11,7 +11,7 @@ Button::Button(SDL_Renderer* renderer, const Point& pos, const std::string& text
     rect.x = pos.x;
     rect.y = pos.y;
 
-    auto font = AssetManager::getInstance().getFont("text");
+    auto font = Assets::getInstance().getFont("text");
     SDL_Color color_normal = {255, 255, 255, 0};
     SDL_Color color_hover = {0, 255, 0, 0};
 

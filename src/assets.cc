@@ -1,22 +1,22 @@
-#include "asset_manager.h"
+#include "assets.h"
 
 #include <stdexcept>
 #include <string>
 
-AssetManager& AssetManager::getInstance()
+Assets& Assets::getInstance()
 {
     return *instance;
 }
 
-void AssetManager::destroyInstance()
+void Assets::destroyInstance()
 {
     delete instance;
     instance = nullptr;
 }
 
-AssetManager* AssetManager::instance(new AssetManager);
+Assets* Assets::instance(new Assets);
 
-Texture* AssetManager::getTexture(const std::string& name) const
+Texture* Assets::getTexture(const std::string& name) const
 {
     try
     {
@@ -28,7 +28,7 @@ Texture* AssetManager::getTexture(const std::string& name) const
     }
 }
 
-Mix_Music* AssetManager::getMusic(const std::string& name) const
+Mix_Music* Assets::getMusic(const std::string& name) const
 {
     try
     {
@@ -40,7 +40,7 @@ Mix_Music* AssetManager::getMusic(const std::string& name) const
     }
 }
 
-TTF_Font* AssetManager::getFont(const std::string& name) const
+TTF_Font* Assets::getFont(const std::string& name) const
 {
     try
     {
@@ -52,19 +52,19 @@ TTF_Font* AssetManager::getFont(const std::string& name) const
     }
 }
 
-void AssetManager::loadTexture(const std::string& name,
+void Assets::loadTexture(const std::string& name,
 			       const std::string& path,
                                SDL_Renderer* renderer)
 {
     textures.insert(make_pair(name, std::make_unique<Texture>(renderer, path)));
 }
 
-void AssetManager::loadMusic(const std::string& name, const std::string& path)
+void Assets::loadMusic(const std::string& name, const std::string& path)
 {
     music.insert(make_pair(name, std::make_unique<Music>(path)));
 }
 
-void AssetManager::loadFont(const std::string& name, const std::string& path, int size)
+void Assets::loadFont(const std::string& name, const std::string& path, int size)
 {
     fonts.insert(make_pair(name, std::make_unique<Font>(path, size)));
 }

@@ -3,11 +3,11 @@
 #include <random>
 
 #include "constants.h"
-#include "asset_manager.h"
+#include "assets.h"
 #include "world.h"
 
 Blaster::Blaster(const Point &pos)
-    : Enemy(AssetManager::getInstance().getTexture("blaster"), pos, 15, 40)
+    : Enemy(Assets::getInstance().getTexture("blaster"), pos, 15, 40)
 {}
 
 void Blaster::update(const Point &player_pos, World& world)

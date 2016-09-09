@@ -1,9 +1,9 @@
 #include "user_interface.h"
-#include "asset_manager.h"
+#include "assets.h"
 #include "point.h"
 
 UserInterface::UserInterface(SDL_Renderer* renderer)
-    : singularity{ AssetManager::getInstance().getTexture("singularity"),
+    : singularity{ Assets::getInstance().getTexture("singularity"),
         Point{ 950, 50 } }
 {
     updateScoreTexture(renderer, 0);
@@ -26,7 +26,7 @@ void UserInterface::draw(SDL_Renderer* renderer, int new_score,
 
 void UserInterface::updateScoreTexture(SDL_Renderer* renderer, int new_score)
 {
-    TTF_Font* font = AssetManager::getInstance().getFont("text");
+    TTF_Font* font = Assets::getInstance().getFont("text");
     rendered_score.reset(new RenderedText(
 			     renderer,
 			     std::to_string(new_score),

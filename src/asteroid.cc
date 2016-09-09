@@ -3,11 +3,11 @@
 #include <utility>
 #include <random>
 
-#include "asset_manager.h"
+#include "assets.h"
 #include "constants.h"
 
 Asteroid::Asteroid(const Point& pos)
-    : Enemy(AssetManager::getInstance().getTexture("asteroid"), pos, 50, 0)
+    : Enemy(Assets::getInstance().getTexture("asteroid"), pos, 50, 0)
 {
     Point exit = calculateExitPoint();
     calculateDirection(exit);

@@ -1,19 +1,23 @@
 #include "enter_highscore.h"
 
-#include "asset_manager.h"
+#include <algorithm>
+#include <iostream>
+
+#include "assets.h"
 #include "constants.h"
-#include "file_manager.h"
+#include "highscore_file.h"
+
+const Point button_position = {SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT - 150};
 
 EnterHighscore::EnterHighscore(SDL_Renderer* renderer, int score)
-    : button_back{renderer,
-    {SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT - 150}, "BACK", State_Menu},
-      rendered_user_input{}
+    : player_score{score},
+      back_button {renderer, button_position, "BACK", State_Menu},
+      rendered_player_name{}
 {
-    if ( goodEnoughForHighscore(score) )
-    {
-	SDL_StartTextInput();
-    }
-    else
+    // Always prepare to receive input
+    SDL_StartTextInput();
+
+    if (!goodEnoughForHighscore(player_score))
     {
 	next_state = State_ViewHighscore;
     }
@@ -21,6 +25,7 @@ EnterHighscore::EnterHighscore(SDL_Renderer* renderer, int score)
 
 EnterHighscore::~EnterHighscore()
 {
+    // Ensure that text input events does not carry over to other game states.
     SDL_StopTextInput();
 }
 
@@ -35,86 +40,71 @@ void EnterHighscore::handleEvents()
     {
         if (event.type == SDL_QUIT)
 	{
-            next_state = State_Quit;
+	    next_state = State_Quit;
         }
 	else if (leftMouseButtonPressed())
 	{
-	    update_buttons = true;
+	    next_state = back_button.update(next_state);
 	}
-	else if (keyIsPressed())
+	else if (backspaceIsPressed() && !player_name.empty())
 	{
-	    if (backspaceIsPressed())
-	    {
-		user_input_text.pop_back();
-		user_input_updated = true;
-	    }
-	    else if (returnIsPressed())
-	    {
-		SDL_StopTextInput();
-	    }
+	    player_name.pop_back();
 	}
-	else if (playerIsEnteringName())
+	else if (returnIsPressed())
 	{
-	    user_input_text += event.text.text;
-	    user_input_updated = true;
+	    updateHighscoreFile();
+	    next_state = State_ViewHighscore;
+	}
+	else if (enteringName())
+	{
+	    std::string input = event.text.text;
+	    if (!containsSpace(input))
+	    {
+		player_name += input;
+	    }
 	}
     }
 }
 
-void EnterHighscore::update()
-{
-    if (update_buttons)
-    {
-	next_state = button_back.update(next_state);
-	update_buttons = false;
-    }
-}
+void EnterHighscore::update() {}
 
 void EnterHighscore::draw(SDL_Renderer* renderer)
 {
     SDL_RenderClear(renderer);
 
-    auto background = AssetManager::getInstance().getTexture("background");
+    auto background = Assets::getInstance().getTexture("background");
     SDL_RenderCopy(renderer, background->getTexture(), NULL, NULL);
-    button_back.draw(renderer);
-
-    if (user_input_updated)
+    back_button.draw(renderer);
+    renderUserInput(renderer);
+    if (rendered_player_name)
     {
-	renderNewUserInput(renderer);
-    }
-    if (rendered_user_input)
-    {
-	rendered_user_input->draw(renderer);
+	rendered_player_name->draw(renderer);
     }
 
     SDL_RenderPresent(renderer);
 }
 
-void EnterHighscore::renderNewUserInput(SDL_Renderer* renderer)
+void EnterHighscore::renderUserInput(SDL_Renderer* renderer)
 {
-    if (user_input_text.length() != 0)
+    if (!player_name.empty())
     {
-	rendered_user_input.reset(
+	rendered_player_name.reset(
 	    new RenderedText(
 		renderer,
-		user_input_text,
-		{550, 700},
-		AssetManager::getInstance().getFont("text"))
+		player_name,
+		Point{550, 700},
+		Assets::getInstance().getFont("text"))
 	    );
     }
     else
     {
-	rendered_user_input.release();
+	rendered_player_name.release();
     }
-
-    user_input_updated = false;
 }
 
 bool EnterHighscore::goodEnoughForHighscore(int score) const
 {
-    FileManager f;
-    auto highscores = f.readHighscoreFromFile(HIGHSCORE_FILE_PATH);
-
+    auto highscores = HighscoreFile::read();
     return highscores.size() < 5 || score > highscores.back().second;
 }
 
@@ -124,23 +114,40 @@ bool EnterHighscore::leftMouseButtonPressed() const
     return event.type == SDL_MOUSEBUTTONDOWN && SDL_BUTTON(SDL_BUTTON_LEFT);
 }
 
-bool EnterHighscore::keyIsPressed() const
-{
-    return event.type == SDL_KEYDOWN;
-}
-
 bool EnterHighscore::backspaceIsPressed() const
 {
-    return event.key.keysym.sym == SDLK_BACKSPACE
-	&& user_input_text.length() > 0;
+    return event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_BACKSPACE;
 }
 
 bool EnterHighscore::returnIsPressed() const
 {
-    return event.key.keysym.sym == SDLK_RETURN;
+    return event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_RETURN;
 }
 
-bool EnterHighscore::playerIsEnteringName() const
+void EnterHighscore::updateHighscoreFile() const
+{
+    auto highscores = HighscoreFile::read();
+
+    if (highscores.size() == 5)
+    {
+	highscores.pop_back();
+    }
+
+    highscores.push_back( {player_name, player_score} );
+    std::sort(begin(highscores), end(highscores),
+	      [] (const auto& p1, const auto& p2)
+	      {
+		  return p1.first < p2.first;
+	      });
+    HighscoreFile::write(highscores);
+}
+
+bool EnterHighscore::enteringName() const
 {
     return event.type == SDL_TEXTINPUT;;
+}
+
+bool EnterHighscore::containsSpace(const std::string& input) const
+{
+    return input.find(' ') != std::string::npos;
 }

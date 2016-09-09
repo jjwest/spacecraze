@@ -5,6 +5,11 @@
         "file": "/home/jonas/projects/spacecraze/src/texture.cc"
     },
     {
+        "command": "c++ -c -std=c++14 -Wall -Wextra -Wold-style-cast -Woverloaded-virtual -pedantic -g -I/home/jonas/projects/spacecraze/include -o build/laser.o /home/jonas/projects/spacecraze/src/laser.cc",
+        "directory": "/home/jonas/projects/spacecraze",
+        "file": "/home/jonas/projects/spacecraze/src/laser.cc"
+    },
+    {
         "command": "c++ -c -std=c++14 -Wall -Wextra -Wold-style-cast -Woverloaded-virtual -pedantic -g -I/home/jonas/projects/spacecraze/include -o build/music.o /home/jonas/projects/spacecraze/src/music.cc",
         "directory": "/home/jonas/projects/spacecraze",
         "file": "/home/jonas/projects/spacecraze/src/music.cc"
@@ -50,11 +55,6 @@
         "file": "/home/jonas/projects/spacecraze/src/font.cc"
     },
     {
-        "command": "c++ -c -std=c++14 -Wall -Wextra -Wold-style-cast -Woverloaded-virtual -pedantic -g -I/home/jonas/projects/spacecraze/include -o build/menu.o /home/jonas/projects/spacecraze/src/menu.cc",
-        "directory": "/home/jonas/projects/spacecraze",
-        "file": "/home/jonas/projects/spacecraze/src/menu.cc"
-    },
-    {
         "command": "c++ -c -std=c++14 -Wall -Wextra -Wold-style-cast -Woverloaded-virtual -pedantic -g -I/home/jonas/projects/spacecraze/include -o build/asteroid.o /home/jonas/projects/spacecraze/src/asteroid.cc",
         "directory": "/home/jonas/projects/spacecraze",
         "file": "/home/jonas/projects/spacecraze/src/asteroid.cc"
@@ -70,9 +70,9 @@
         "file": "/home/jonas/projects/spacecraze/src/play.cc"
     },
     {
-        "command": "c++ -c -std=c++14 -Wall -Wextra -Wold-style-cast -Woverloaded-virtual -pedantic -g -I/home/jonas/projects/spacecraze/include -o build/laser.o /home/jonas/projects/spacecraze/src/laser.cc",
+        "command": "c++ -c -std=c++14 -Wall -Wextra -Wold-style-cast -Woverloaded-virtual -pedantic -g -I/home/jonas/projects/spacecraze/include -o build/object_factory.o /home/jonas/projects/spacecraze/src/object_factory.cc",
         "directory": "/home/jonas/projects/spacecraze",
-        "file": "/home/jonas/projects/spacecraze/src/laser.cc"
+        "file": "/home/jonas/projects/spacecraze/src/object_factory.cc"
     },
     {
         "command": "c++ -c -std=c++14 -Wall -Wextra -Wold-style-cast -Woverloaded-virtual -pedantic -g -I/home/jonas/projects/spacecraze/include -o build/button.o /home/jonas/projects/spacecraze/src/button.cc",
@@ -95,11 +95,6 @@
         "file": "/home/jonas/projects/spacecraze/src/user_interface.cc"
     },
     {
-        "command": "c++ -c -std=c++14 -Wall -Wextra -Wold-style-cast -Woverloaded-virtual -pedantic -g -I/home/jonas/projects/spacecraze/include -o build/sprite.o /home/jonas/projects/spacecraze/src/sprite.cc",
-        "directory": "/home/jonas/projects/spacecraze",
-        "file": "/home/jonas/projects/spacecraze/src/sprite.cc"
-    },
-    {
         "command": "c++ -c -std=c++14 -Wall -Wextra -Wold-style-cast -Woverloaded-virtual -pedantic -g -I/home/jonas/projects/spacecraze/include -o build/game_object.o /home/jonas/projects/spacecraze/src/game_object.cc",
         "directory": "/home/jonas/projects/spacecraze",
         "file": "/home/jonas/projects/spacecraze/src/game_object.cc"
@@ -108,11 +103,6 @@
         "command": "c++ -c -std=c++14 -Wall -Wextra -Wold-style-cast -Woverloaded-virtual -pedantic -g -I/home/jonas/projects/spacecraze/include -o build/enemy.o /home/jonas/projects/spacecraze/src/enemy.cc",
         "directory": "/home/jonas/projects/spacecraze",
         "file": "/home/jonas/projects/spacecraze/src/enemy.cc"
-    },
-    {
-        "command": "c++ -c -std=c++14 -Wall -Wextra -Wold-style-cast -Woverloaded-virtual -pedantic -g -I/home/jonas/projects/spacecraze/include -o build/object_factory.o /home/jonas/projects/spacecraze/src/object_factory.cc",
-        "directory": "/home/jonas/projects/spacecraze",
-        "file": "/home/jonas/projects/spacecraze/src/object_factory.cc"
     },
     {
         "command": "c++ -c -std=c++14 -Wall -Wextra -Wold-style-cast -Woverloaded-virtual -pedantic -g -I/home/jonas/projects/spacecraze/include -o build/rendered_text.o /home/jonas/projects/spacecraze/src/rendered_text.cc",
@@ -125,6 +115,11 @@
         "file": "/home/jonas/projects/spacecraze/src/enemy_generator.cc"
     },
     {
+        "command": "c++ -c -std=c++14 -Wall -Wextra -Wold-style-cast -Woverloaded-virtual -pedantic -g -I/home/jonas/projects/spacecraze/include -o build/menu.o /home/jonas/projects/spacecraze/src/menu.cc",
+        "directory": "/home/jonas/projects/spacecraze",
+        "file": "/home/jonas/projects/spacecraze/src/menu.cc"
+    },
+    {
         "command": "c++ -c -std=c++14 -Wall -Wextra -Wold-style-cast -Woverloaded-virtual -pedantic -g -I/home/jonas/projects/spacecraze/include -o build/file_manager.o /home/jonas/projects/spacecraze/src/file_manager.cc",
         "directory": "/home/jonas/projects/spacecraze",
         "file": "/home/jonas/projects/spacecraze/src/file_manager.cc"
@@ -133,5 +128,10 @@
         "command": "c++ -c -std=c++14 -Wall -Wextra -Wold-style-cast -Woverloaded-virtual -pedantic -g -I/home/jonas/projects/spacecraze/include -o build/blaster.o /home/jonas/projects/spacecraze/src/blaster.cc",
         "directory": "/home/jonas/projects/spacecraze",
         "file": "/home/jonas/projects/spacecraze/src/blaster.cc"
+    },
+    {
+        "command": "c++ -c -std=c++14 -Wall -Wextra -Wold-style-cast -Woverloaded-virtual -pedantic -g -I/home/jonas/projects/spacecraze/include -o build/sprite.o /home/jonas/projects/spacecraze/src/sprite.cc",
+        "directory": "/home/jonas/projects/spacecraze",
+        "file": "/home/jonas/projects/spacecraze/src/sprite.cc"
     }
 ]

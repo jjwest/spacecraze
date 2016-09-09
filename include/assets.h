@@ -1,5 +1,5 @@
-#ifndef _ASSET_MANAGER_H_
-#define _ASSET_MANAGER_H_
+#ifndef _ASSETS_H_
+#define _ASSETS_H_
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -13,14 +13,14 @@
 #include "font.h"
 #include "music.h"
 
-class AssetManager
+class Assets
 {
 public:
-    AssetManager(const AssetManager&) = delete;
-    AssetManager(AssetManager&&) = delete;
-    void operator=(const AssetManager&) = delete;
-    void operator=(AssetManager&&) = delete;
-    static AssetManager& getInstance();
+    Assets(const Assets&) = delete;
+    Assets(Assets&&) = delete;
+    void operator=(const Assets&) = delete;
+    void operator=(Assets&&) = delete;
+    static Assets& getInstance();
     static void destroyInstance();
 
     Mix_Music* getMusic(const std::string& name) const;
@@ -32,11 +32,11 @@ public:
     void loadFont(const std::string& name, const std::string& path, int size);
 
 private:
-    AssetManager() = default;
-    static AssetManager* instance;
+    Assets() = default;
+    static Assets* instance;
     std::map<std::string, std::unique_ptr<Texture>> textures;
     std::map<std::string, std::unique_ptr<Music>> music;
     std::map<std::string, std::unique_ptr<Font>> fonts;
 };
 
-#endif // _ASSET_MANAGER_H_
+#endif // _ASSETS_H_

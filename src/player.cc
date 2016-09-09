@@ -4,12 +4,12 @@
 #include <string>
 #include <iostream>
 
-#include "asset_manager.h"
+#include "assets.h"
 #include "constants.h"
 #include "world.h"
 
 Player::Player(const Point& pos)
-    :  GameObject(AssetManager::getInstance().getTexture("player"), pos, 1.0),
+    :  GameObject(Assets::getInstance().getTexture("player"), pos, 1.0),
        x_pos{ static_cast<double>(rect.x) },
        y_pos{ static_cast<double>(rect.y) } {}
 

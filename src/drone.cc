@@ -5,10 +5,10 @@
 #include <cmath>
 #include <algorithm>
 
-#include "asset_manager.h"
+#include "assets.h"
 
 Drone::Drone(const Point& pos)
-    : Enemy(AssetManager::getInstance().getTexture("drone"), pos, 6, 10)
+    : Enemy(Assets::getInstance().getTexture("drone"), pos, 6, 10)
 {}
 
 void Drone::update(const Point& player_pos, World&)
