@@ -6,7 +6,7 @@
 class Blaster: public Enemy
 {
 public:
-    Blaster(const Point &pos);
+    Blaster(const SDL_Rect& rect);
     void update(const Point& player_pos, World& lasers) override;
 
 private:

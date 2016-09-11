@@ -60,19 +60,38 @@ std::unique_ptr<Enemy> ObjectFactory::createEnemy(const std::string& type)
     {
         auto texture = Assets::getInstance().getTexture("asteroid");
         auto spawn_point = getSpawnPoint(texture);
-        return std::make_unique<Asteroid>(Asteroid(spawn_point));
+	SDL_Rect hitbox {
+	    spawn_point.x,
+		spawn_point.y,
+		texture->getWidth(),
+		texture->getHeight()
+	 };
+        return std::make_unique<Asteroid>(Asteroid(hitbox));
     }
     else if (type == "blaster")
     {
         auto texture = Assets::getInstance().getTexture("blaster");
         auto spawn_point = getSpawnPoint(texture);
-        return std::make_unique<Blaster>(Blaster(spawn_point));
+	SDL_Rect hitbox {
+	    spawn_point.x,
+		spawn_point.y,
+		texture->getWidth(),
+		texture->getHeight()
+	 };
+        return std::make_unique<Blaster>(Blaster(hitbox));
     }
     else if (type == "drone")
     {
+	float scale = 0.5;
         auto texture = Assets::getInstance().getTexture("drone");
         auto spawn_point = getSpawnPoint(texture);
-        return std::make_unique<Drone>(Drone(spawn_point));
+	SDL_Rect hitbox {
+	    spawn_point.x,
+		spawn_point.y,
+		static_cast<int>(texture->getWidth() * scale),
+		static_cast<int>(texture->getHeight() * scale)
+	 };
+        return std::make_unique<Drone>(Drone(hitbox));
     }
     else
     {

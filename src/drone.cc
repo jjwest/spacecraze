@@ -7,9 +7,8 @@
 
 #include "assets.h"
 
-Drone::Drone(const Point& pos)
-    : Enemy(Assets::getInstance().getTexture("drone"), pos, 6, 10)
-{}
+Drone::Drone(const SDL_Rect& rect)
+    : Enemy(Assets::getInstance().getTexture("drone"), rect, 6, 10) {}
 
 void Drone::update(const Point& player_pos, World&)
 {

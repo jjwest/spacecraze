@@ -6,7 +6,7 @@
 #include "point.h"
 #include "aabb.h"
 
-// We must forward declare an non-defined  World class so game objects
+// We must forward declare a non-defined  World class so game objects
 // can get a reference to the world that contains them, since
 // two class definitions cannot directly include each other.
 class World;
@@ -14,7 +14,7 @@ class World;
 class GameObject: public Sprite
 {
 public:
-    GameObject(Texture* t, const Point& pos, double hp);
+    GameObject(Texture* t, const SDL_Rect& rect, double hp);
     virtual ~GameObject();
     AABB getHitbox() const;
     bool collides(const AABB& other) const;

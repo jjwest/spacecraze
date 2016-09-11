@@ -9,7 +9,7 @@
 class Sprite
 {
 public:
-    Sprite(Texture* t, const Point& pos);
+    Sprite(Texture* t, const SDL_Rect& r);
     virtual ~Sprite();
     void draw(SDL_Renderer* renderer);
 

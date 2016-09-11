@@ -6,8 +6,8 @@
 #include "assets.h"
 #include "constants.h"
 
-Asteroid::Asteroid(const Point& pos)
-    : Enemy(Assets::getInstance().getTexture("asteroid"), pos, 50, 0)
+Asteroid::Asteroid(const SDL_Rect& rect)
+    : Enemy(Assets::getInstance().getTexture("asteroid"), rect, 50, 0)
 {
     Point exit = calculateExitPoint();
     calculateDirection(exit);

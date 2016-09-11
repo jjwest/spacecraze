@@ -7,7 +7,7 @@
 class Drone: public Enemy
 {
 public:
-    Drone(const Point& pos);
+    Drone(const SDL_Rect& rect);
     void update(const Point& player_pos, World&) override;
 
 private:

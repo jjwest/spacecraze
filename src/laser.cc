@@ -11,7 +11,7 @@
 
 Laser::Laser(Texture* t, const Point& pos, const Point& destination,
              double dmg, double spd, double ang)
-    : GameObject(t, {pos.x - t->getWidth() / 2, pos.y - t->getHeight() / 2}, 1),
+    : GameObject(t, {pos.x, pos.y, t->getWidth() / 2, t->getHeight() / 2}, 1),
       damage{dmg},
       speed{spd},
       current_x{static_cast<double>(pos.x)},
@@ -54,8 +54,8 @@ void Laser::move()
 
 void Laser::killIfOutsideScreen()
 {
-    if ( rect.x < 0 || rect.x > SCREEN_WIDTH ||
-         rect.y < 0 || rect.y > SCREEN_HEIGHT )
+    if ( rect.x + rect.w < 0 || rect.x > SCREEN_WIDTH ||
+         rect.y + rect.h < 0 || rect.y > SCREEN_HEIGHT )
     {
         kill();
     }

@@ -1,7 +1,7 @@
 #include "game_object.h"
 
-GameObject::GameObject(Texture* t, const Point& pos, double hp)
-    : Sprite(t, pos),
+GameObject::GameObject(Texture* t, const SDL_Rect& rect, double hp)
+    : Sprite(t, rect),
       this_aabb{rect.y, rect.x, rect.y + rect.h, rect.x + rect.w},
       health{hp} {}
 

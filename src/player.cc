@@ -8,8 +8,8 @@
 #include "constants.h"
 #include "world.h"
 
-Player::Player(const Point& pos)
-    :  GameObject(Assets::getInstance().getTexture("player"), pos, 1.0),
+Player::Player(const SDL_Rect& rect)
+    :  GameObject(Assets::getInstance().getTexture("player"), rect, 1.0),
        x_pos{ static_cast<double>(rect.x) },
        y_pos{ static_cast<double>(rect.y) } {}
 

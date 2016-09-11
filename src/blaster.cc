@@ -6,8 +6,8 @@
 #include "assets.h"
 #include "world.h"
 
-Blaster::Blaster(const Point &pos)
-    : Enemy(Assets::getInstance().getTexture("blaster"), pos, 15, 40)
+Blaster::Blaster(const SDL_Rect& rect)
+    : Enemy(Assets::getInstance().getTexture("blaster"), rect, 15, 40)
 {}
 
 void Blaster::update(const Point &player_pos, World& world)

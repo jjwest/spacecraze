@@ -8,7 +8,7 @@
 class Player: public GameObject
 {
 public:
-    Player(const Point& pos);
+    Player(const SDL_Rect& rect);
     Point getPosition() const;
     void update(World& world);
 

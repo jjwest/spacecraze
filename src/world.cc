@@ -10,7 +10,10 @@
 #include "object_factory.h"
 
 World::World()
-    : player{ {500, 350} }{}
+    : player {SDL_Rect{ 500, 350,
+	    static_cast<int>(Assets::getInstance().getTexture("player")->getWidth() * 0.5),
+	    static_cast<int>(Assets::getInstance().getTexture("player")->getHeight() * 0.5) }}
+{}
 
 bool World::playerIsDead() const
 {
@@ -68,8 +71,6 @@ void World::draw(SDL_Renderer* renderer)
     std::for_each(begin(enemy_lasers), end(enemy_lasers), draw);
     std::for_each(begin(player_lasers), end(player_lasers), draw);
     player.draw(renderer);
-
-    SDL_RenderPresent(renderer);
 }
 
 void World::updateObjects()

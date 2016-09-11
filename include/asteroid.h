@@ -6,7 +6,7 @@
 class Asteroid: public Enemy
 {
 public:
-    Asteroid(const Point& pos);
+    Asteroid(const SDL_Rect& rect);
     void update(const Point&, World&) override;
 
 private:

@@ -1,7 +1,7 @@
 #include "enemy.h"
 
-Enemy::Enemy(Texture* t, const Point& pos, double health, int score)
-    : GameObject(t, pos, health),
+Enemy::Enemy(Texture* t, const SDL_Rect& rect, double health, int score)
+    : GameObject(t, rect, health),
       score{score} {}
 
 Enemy::~Enemy() {}

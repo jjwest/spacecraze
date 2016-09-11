@@ -1,8 +1,7 @@
 #include "game_object.h"
 
-Sprite::Sprite(Texture* t, const Point& pos)
-    : texture{t}, rect{pos.x, pos.y, texture->getWidth(),
-                                    texture->getHeight()} {}
+Sprite::Sprite(Texture* t, const SDL_Rect& r)
+    : texture{t}, rect{r} {}
 
 Sprite::~Sprite() {}
 
