@@ -18,16 +18,25 @@ void Blaster::update(const Point &player_pos, World& world)
     updateHitbox(rect);
 }
 
-void Blaster::shoot(const Point &player_pos, World& world)
+void Blaster::move()
 {
-    Uint32 current_time = SDL_GetTicks();
+    changeDirection();
 
-    if (current_time - last_shot > shoot_cooldown)
-    {
-        Point this_pos {rect.x, rect.y};
-        world.addEnemyLaser(this_pos, player_pos, damage);
-        last_shot = current_time;
-    }
+    double center_blaster_x = rect.x + (rect.h / 2);
+    double center_blaster_y = rect.y + (rect.w / 2);
+
+    double x_dist = move_to.x - center_blaster_x;
+    double y_dist = move_to.y - center_blaster_y;
+    double longest = std::max( abs(x_dist), abs(y_dist) );
+
+    double delta_x = x_dist / longest;
+    double delta_y = y_dist /longest;
+
+    double move_x = delta_x * speed;
+    double move_y = delta_y * speed;
+
+    rect.x = rect.x + static_cast<int>(round(move_x));
+    rect.y = rect.y + static_cast<int>(round(move_y));
 }
 
 void Blaster::changeDirection()
@@ -58,27 +67,6 @@ void Blaster::changeDirection()
     }
 }
 
-void Blaster::move()
-{
-    changeDirection();
-
-    double center_blaster_x = rect.x + (rect.h / 2);
-    double center_blaster_y = rect.y + (rect.w / 2);
-
-    double x_dist = move_to.x - center_blaster_x;
-    double y_dist = move_to.y - center_blaster_y;
-    double longest = std::max( abs(x_dist), abs(y_dist) );
-
-    double delta_x = x_dist / longest;
-    double delta_y = y_dist /longest;
-
-    double move_x = delta_x * speed;
-    double move_y = delta_y * speed;
-
-    rect.x = rect.x + static_cast<int>(round(move_x));
-    rect.y = rect.y + static_cast<int>(round(move_y));
-}
-
 void Blaster::setAngle(const Point &player_pos)
 {
     int center_x = rect.x + (rect.h / 2);
@@ -88,4 +76,22 @@ void Blaster::setAngle(const Point &player_pos)
     ang = ang * 180 / M_PI;
 
     angle = (static_cast<int>(ang) + 90) % 360;
+}
+
+
+
+void Blaster::shoot(const Point &player_pos, World& world)
+{
+    if (readyToShoot())
+    {
+        Point this_pos {rect.x, rect.y};
+        world.addEnemyLaser(this_pos, player_pos, damage);
+        last_shot = SDL_GetTicks();
+    }
+}
+
+bool Blaster::readyToShoot() const
+{
+    Uint32 current_time = SDL_GetTicks();
+    return current_time - last_shot > shoot_cooldown;
 }

@@ -5,8 +5,8 @@ class ScoreKeeper
 {
 public:
     ScoreKeeper() = default;
-    int getScore() const;
-    void increaseScore(int incremement);
+    int get() const;
+    void increase(int incremement);
     void reset();
 
 private:

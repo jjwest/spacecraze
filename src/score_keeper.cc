@@ -1,11 +1,11 @@
 #include "score_keeper.h"
 
-int ScoreKeeper::getScore() const
+int ScoreKeeper::get() const
 {
     return score;
 }
 
-void ScoreKeeper::increaseScore(int increment)
+void ScoreKeeper::increase(int increment)
 {
     score += increment;
 }

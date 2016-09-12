@@ -144,16 +144,11 @@ void World::resolveLaserCollisions()
 
 void World::removeDeadObjects()
 {
-    auto isDead = [] (auto& object) { return object->isDead(); };
+    auto isDead = [] (const auto& object) { return object->isDead(); };
 
-    enemies.erase(std::remove_if(begin(enemies), end(enemies), isDead),
-		  end(enemies));
-
+    enemies.erase(std::remove_if(begin(enemies), end(enemies), isDead), end(enemies));
     player_lasers.erase(std::remove_if(begin(player_lasers), end(player_lasers),
-				       isDead),
-			end(player_lasers));
-
-    enemy_lasers.erase(std::remove_if(begin(enemy_lasers), end(enemy_lasers),
-				      isDead),
+				       isDead), end(player_lasers));
+    enemy_lasers.erase(std::remove_if(begin(enemy_lasers), end(enemy_lasers), isDead),
 		       end(enemy_lasers));
 }

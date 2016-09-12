@@ -31,7 +31,7 @@ void Play::handleEvents()
 void Play::update()
 {
     enemy_generator.update(world);
-    score.increaseScore(world.update());
+    score.increase(world.update());
 
     if (world.playerIsDead())
     {
@@ -45,6 +45,6 @@ void Play::draw(SDL_Renderer* renderer)
     auto background = Assets::getInstance().getTexture("background");
     SDL_RenderCopy(renderer, background->getTexture(), NULL, NULL);
     world.draw(renderer);
-    user_interface.draw(renderer, score.getScore());
+    user_interface.draw(renderer, score.get());
     SDL_RenderPresent(renderer);
 }

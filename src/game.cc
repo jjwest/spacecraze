@@ -9,6 +9,7 @@
 #include "assets.h"
 #include "constants.h"
 #include "state_manager.h"
+#include "music_manager.h"
 
 Game::Game()
 {
@@ -40,10 +41,14 @@ void Game::shutdownSDL()
 void Game::run()
 {
     StateManager state(renderer);
+    MusicManager music;
+
     while (state.stillPlaying())
     {
 	auto frame_start_time = SDL_GetTicks();
 	state.update();
+	music.update(state.getCurrent());
+
 	auto frame_end_time = SDL_GetTicks();
 	Uint32 time_elapsed = frame_end_time - frame_start_time;
 	sleepIfFrameTooFast(time_elapsed);
@@ -110,4 +115,7 @@ void Game::loadAssets()
 
     assets.loadFont("text", "fonts/Akashi.ttf", 36);
     assets.loadFont("title", "fonts/Akashi.ttf", 60);
+
+    assets.loadMusic("menu", "sounds/menu_music.mp3");
+    assets.loadMusic("play", "sounds/play_music.mp3");
 }

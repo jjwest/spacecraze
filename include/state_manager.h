@@ -13,6 +13,7 @@ class StateManager
 public:
     StateManager(SDL_Renderer* r);
     bool stillPlaying() const;
+    States getCurrent() const;
     void update();
 
 private:

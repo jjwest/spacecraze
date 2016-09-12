@@ -11,7 +11,7 @@ const Point button_position = {SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT - 150};
 
 EnterHighscore::EnterHighscore(SDL_Renderer* renderer, const ScoreKeeper& score)
     : back_button {renderer, button_position, "BACK", State_Menu},
-      player_score{score.getScore()}
+      player_score{score.get()}
 {
     // Always prepare to receive input
     SDL_StartTextInput();

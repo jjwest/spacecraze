@@ -17,9 +17,10 @@ private:
     Uint32 shoot_cooldown = 700;
 
     void move();
+    void changeDirection();
     void shoot(const Point& player_pos, World& lasers);
     void setAngle(const Point& player_pos);
-    void changeDirection();
+    bool readyToShoot() const;
 };
 
 #endif

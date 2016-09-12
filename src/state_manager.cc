@@ -12,6 +12,11 @@ bool StateManager::stillPlaying() const
     return current_state_id != State_Quit;
 }
 
+States StateManager::getCurrent() const
+{
+    return current_state_id;
+}
+
 void StateManager::update()
 {
     current_state->handleEvents();
