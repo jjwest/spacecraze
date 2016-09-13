@@ -6,14 +6,12 @@
 #include "highscore_file.h"
 #include "point.h"
 
+const Point button_pos{SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT - 150};
+const Point title_pos{SCREEN_WIDTH / 2 - 150, 150};
+
 ViewHighscore::ViewHighscore(SDL_Renderer* renderer)
-    : button_back{renderer,
-        {SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT - 150},
-	"BACK", State_Menu},
-    title{renderer,
-	    "HIGHSCORE",
-	    {SCREEN_WIDTH / 2 - 150, 150},
-	    Assets::getInstance().getFont("title")}
+    : button_back{renderer, button_pos, "BACK", State_Menu},
+      title{renderer, "HIGHSCORE", title_pos, Assets::getInstance().getFont("title")}
 {
     auto scores = HighscoreFile::read();
     createHighscoreText(renderer, scores);

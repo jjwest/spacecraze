@@ -13,7 +13,6 @@ EnterHighscore::EnterHighscore(SDL_Renderer* renderer, const ScoreKeeper& score)
     : back_button {renderer, button_position, "BACK", State_Menu},
       player_score{score.get()}
 {
-    // Always prepare to receive input
     SDL_StartTextInput();
 
     if (!goodEnoughForHighscore(player_score))
@@ -24,7 +23,6 @@ EnterHighscore::EnterHighscore(SDL_Renderer* renderer, const ScoreKeeper& score)
 
 EnterHighscore::~EnterHighscore()
 {
-    // Ensure that text input events does not carry over to other game states.
     SDL_StopTextInput();
 }
 
