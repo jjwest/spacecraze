@@ -116,7 +116,7 @@ void Player::shoot(World& world)
         int center_y = rect.y + (rect.h / 2);
         Point current_pos{ center_x, center_y };
 
-        world.addPlayerLaser(current_pos, damage);
+        world.addPlayerLaser({center_x, rect.y}, damage);
         last_shot = SDL_GetTicks();
     }
 }

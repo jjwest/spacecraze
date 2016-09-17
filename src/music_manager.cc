@@ -5,9 +5,12 @@
 MusicManager::MusicManager()
 {
     auto& assets = Assets::getInstance();
-    music.insert({ "menu", assets.getMusic("menu")});
-    music.insert({ "play", assets.getMusic("play")});
+    music.insert( {"menu", assets.getMusic("menu")} );
+    music.insert( {"play", assets.getMusic("play")} );
+}
 
+void MusicManager::start()
+{
     Mix_PlayMusic(music.at("menu"), -1);
 }
 

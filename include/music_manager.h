@@ -10,6 +10,7 @@ class MusicManager
 {
 public:
     MusicManager();
+    void start();
     void update(States current_state);
 
 private:

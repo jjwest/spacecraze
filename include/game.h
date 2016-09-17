@@ -14,13 +14,13 @@ private:
     SDL_Window* window = nullptr;
     SDL_Renderer* renderer = nullptr;
 
-    void initSDL();
+    void initSDL() const;
     void createWindowAndRenderer();
     void destroyWindowAndRenderer();
-    void loadAssets();
-    void freeLoadedAssets();
-    void shutdownSDL();
-    void sleepIfFrameTooFast(Uint32 time_elapsed) const;
+    void loadAssets() const;
+    void freeLoadedAssets() const;
+    void shutdownSDL() const;
+    void sleepIfFrameTooFast(Uint32 start, Uint32 end) const;
 };
 
 #endif

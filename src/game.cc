@@ -25,12 +25,12 @@ Game::~Game()
     shutdownSDL();
 }
 
-void Game::freeLoadedAssets()
+void Game::freeLoadedAssets() const
 {
     Assets::destroyInstance();
 }
 
-void Game::shutdownSDL()
+void Game::shutdownSDL() const
 {
     Mix_CloseAudio();
     IMG_Quit();
@@ -42,27 +42,28 @@ void Game::run()
 {
     StateManager state(renderer);
     MusicManager music;
+    music.start();
 
     while (state.stillPlaying())
     {
 	auto frame_start_time = SDL_GetTicks();
 	state.update();
 	music.update(state.getCurrent());
-
 	auto frame_end_time = SDL_GetTicks();
-	Uint32 time_elapsed = frame_end_time - frame_start_time;
-	sleepIfFrameTooFast(time_elapsed);
+
+	sleepIfFrameTooFast(frame_start_time, frame_end_time);
     }
 }
 
 
-void Game::sleepIfFrameTooFast(Uint32 time_elapsed) const
+void Game::sleepIfFrameTooFast(Uint32 start, Uint32 end) const
 {
     const int INTENDED_DURATION = 10;
+    Uint32 time_elapsed = end - start;
     SDL_Delay(INTENDED_DURATION - time_elapsed);
 }
 
-void Game::initSDL()
+void Game::initSDL() const
 {
     if ( SDL_Init(SDL_INIT_VIDEO) != 0 || SDL_Init(SDL_INIT_AUDIO) != 0 )
     {
@@ -100,7 +101,7 @@ void Game::destroyWindowAndRenderer()
     SDL_DestroyWindow(window);
 }
 
-void Game::loadAssets()
+void Game::loadAssets() const
 {
     auto& assets = Assets::getInstance();
 

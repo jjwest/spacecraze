@@ -11,25 +11,26 @@
 
 Laser::Laser(Texture* t, const Point& pos, const Point& destination,
              double dmg, double spd, double ang)
-    : GameObject(t, {pos.x, pos.y, t->getWidth() / 2, t->getHeight() / 2}, 1),
+    : GameObject(t, {pos.x - t->getWidth() / 2,
+		pos.y - (t->getHeight() / 2) - 10,
+		t->getWidth() / 2,
+		t->getHeight() / 2}, 1),
       damage{dmg},
       speed{spd},
       current_x{static_cast<double>(pos.x)},
       current_y{static_cast<double>(pos.y)}
 {
     // Calculates movement direction
-    double center_laser_x = rect.x + (rect.w / 2);
-    double center_laser_y = rect.y + (rect.h / 2);
+    float center_laser_x = rect.x + (rect.w / 2);
+    float center_laser_y = rect.y + (rect.h / 2);
+    float x_dist = destination.x - center_laser_x;
+    float y_dist = destination.y - center_laser_y;
+    float longest = std::max( abs(x_dist), abs(y_dist) );
 
-    double x_dist = destination.x - center_laser_x;
-    double y_dist = destination.y - center_laser_y;
+    delta_x = x_dist / longest;
+    delta_y = y_dist / longest;
 
-    double longest = std::max( abs(x_dist), abs(y_dist) );
-
-    delta_x = x_dist / longest * speed;
-    delta_y = y_dist / longest * speed;
-
-    angle = ang;
+    setAngle();
 }
 
 void Laser::update()
@@ -46,8 +47,8 @@ int Laser::getDamage() const
 
 void Laser::move()
 {
-    current_x += delta_x;
-    current_y += delta_y;
+    current_x += delta_x * speed;
+    current_y += delta_y * speed;
     rect.x = static_cast<int>( round(current_x) );
     rect.y = static_cast<int>( round(current_y) );
 }
@@ -66,8 +67,8 @@ void Laser::setAngle()
      int x, y;
      SDL_GetMouseState(&x,&y);
 
-     float center_x = rect.x + (rect.h / 2);
-     float center_y = rect.y + (rect.w / 2);
+     float center_x = rect.x + (rect.w / 2);
+     float center_y = rect.y + (rect.h / 2);
 
      float ang = atan2(center_y - y, center_x - x);
      ang = ang * 180 / M_PI;
