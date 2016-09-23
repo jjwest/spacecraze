@@ -6,7 +6,7 @@ class ScoreKeeper
 public:
     ScoreKeeper() = default;
     int get() const;
-    void increase(int incremement);
+    void set(int new_score);
     void reset();
 
 private:

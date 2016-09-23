@@ -14,6 +14,11 @@ Player::Player(const SDL_Rect& rect)
        y_pos{ static_cast<double>(rect.y) } {}
 
 
+bool Player::hasSpecialWeapon() const
+{
+    return has_special;
+}
+
 Point Player::getPosition() const
 {
     int center_x = round( rect.x + (rect.w / 2) );
@@ -113,9 +118,6 @@ void Player::shoot(World& world)
     if (readyToShoot())
     {
         int center_x = rect.x + (rect.w / 2);
-        int center_y = rect.y + (rect.h / 2);
-        Point current_pos{ center_x, center_y };
-
         world.addPlayerLaser({center_x, rect.y}, damage);
         last_shot = SDL_GetTicks();
     }

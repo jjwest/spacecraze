@@ -9,6 +9,7 @@ class Player: public GameObject
 {
 public:
     Player(const SDL_Rect& rect);
+    bool hasSpecialWeapon() const;
     Point getPosition() const;
     void update(World& world);
 

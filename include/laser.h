@@ -7,8 +7,8 @@
 class Laser : public GameObject
 {
 public:
-    Laser(Texture* t, const Point& pos, const Point& destination,
-          double dmg, double spd, double angl);
+    Laser(Texture* t, const Point& origin, const Point& destination,
+          double damage, double speed);
     void update();
     int getDamage() const;
 

@@ -5,9 +5,9 @@ int ScoreKeeper::get() const
     return score;
 }
 
-void ScoreKeeper::increase(int increment)
+void ScoreKeeper::set(int new_score)
 {
-    score += increment;
+    score = new_score;
 }
 
 void ScoreKeeper::reset()

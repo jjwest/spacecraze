@@ -99,34 +99,20 @@ std::unique_ptr<Enemy> ObjectFactory::createEnemy(const std::string& type)
     }
 }
 
-double getLaserAngle(const Point& pos, int width, int height)
-{
-    int x, y;
-    SDL_GetMouseState(&x,&y);
-
-    int center_x = pos.x + (width / 2);
-    int center_y = pos.y + (height / 2);
-
-    double angle = atan2(center_y - y, center_x - x);
-    angle = angle * 180 / M_PI;
-
-    return angle - 90 % 360;
-}
-
-std::unique_ptr<Laser> ObjectFactory::createEnemyLaser(const Point& origin,
-						       const Point& destination,
-						       double damage)
+std::unique_ptr<Laser> ObjectFactory::createEnemyLaser(
+    const Point& origin,
+    const Point& destination,
+    double damage)
 {
     auto texture = Assets::getInstance().getTexture("enemy_laser");
-    double angle = getLaserAngle(origin, texture->getWidth(), texture->getHeight());
-    return std::make_unique<Laser>(texture, origin, destination, damage, 2.5, angle);
+    return std::make_unique<Laser>(texture, origin, destination, damage, 2.5);
 }
 
-std::unique_ptr<Laser> ObjectFactory::createPlayerLaser(const Point& origin,
-							const Point& destination,
-							double damage)
+std::unique_ptr<Laser> ObjectFactory::createPlayerLaser(
+    const Point& origin,
+    const Point& destination,
+    double damage)
 {
     auto texture = Assets::getInstance().getTexture("player_laser");
-    double angle = getLaserAngle(origin, texture->getWidth(), texture->getHeight());
-    return std::make_unique<Laser>(texture, origin, destination, damage, 7, angle);
+    return std::make_unique<Laser>(texture, origin, destination, damage, 7);
 }

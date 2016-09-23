@@ -5,10 +5,9 @@
 
 #include <iostream>
 
-Play::Play(SDL_Renderer* renderer, ScoreKeeper& s)
+Play::Play(SDL_Renderer*, ScoreKeeper& score)
     : GameState(),
-      user_interface{renderer},
-      score{s} {}
+      score{score} {}
 
 
 States Play::getNextState() const
@@ -31,11 +30,13 @@ void Play::handleEvents()
 void Play::update()
 {
     enemy_generator.update(world);
-    score.increase(world.update());
-
-    if (world.playerIsDead())
+    world.update();
+    auto state = world.getState();
+    user_interface.update(state.score, state.player_has_special);
+    if (state.player_dead)
     {
         next_state = State_EnterHighscore;
+	score.set(state.score);
     }
 }
 
@@ -45,6 +46,6 @@ void Play::draw(SDL_Renderer* renderer)
     auto background = Assets::getInstance().getTexture("background");
     SDL_RenderCopy(renderer, background->getTexture(), NULL, NULL);
     world.draw(renderer);
-    user_interface.draw(renderer, score.get());
+    user_interface.draw(renderer);
     SDL_RenderPresent(renderer);
 }

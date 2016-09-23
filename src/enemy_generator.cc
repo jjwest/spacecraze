@@ -44,9 +44,9 @@ void EnemyGenerator::updateEnemyType(EnemyType& enemy)
     enemy.times_spawned += 1;
     enemy.last_time_spawned = SDL_GetTicks();
 
-    if (isMultiple(enemy.times_spawned, enemy.spawns_until_decreased_delay))
+    if (isMultiple(enemy.times_spawned, enemy.spawns_until_increased_spawn_rate))
     {
-        enemy.spawn_delay *= 0.90;
+	enemy.spawn_amount++;
     }
 }
 

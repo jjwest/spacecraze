@@ -9,16 +9,16 @@
 #include "assets.h"
 #include "constants.h"
 
-Laser::Laser(Texture* t, const Point& pos, const Point& destination,
-             double dmg, double spd, double ang)
-    : GameObject(t, {pos.x - t->getWidth() / 2,
-		pos.y - (t->getHeight() / 2) - 10,
+Laser::Laser(Texture* t, const Point& origin, const Point& destination,
+             double damage, double speed)
+    : GameObject(t, {origin.x - t->getWidth() / 2,
+		origin.y - (t->getHeight() / 2) - 10,
 		t->getWidth() / 2,
 		t->getHeight() / 2}, 1),
-      damage{dmg},
-      speed{spd},
-      current_x{static_cast<double>(pos.x)},
-      current_y{static_cast<double>(pos.y)}
+      damage{damage},
+      speed{speed},
+      current_x{static_cast<double>(origin.x)},
+      current_y{static_cast<double>(origin.y)}
 {
     // Calculates movement direction
     float center_laser_x = rect.x + (rect.w / 2);

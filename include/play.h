@@ -11,7 +11,7 @@
 class Play: public GameState
 {
 public:
-    Play(SDL_Renderer* renderer, ScoreKeeper& s);
+    Play(SDL_Renderer* renderer, ScoreKeeper& score);
     States getNextState() const override;
     void handleEvents() override;
     void update() override;

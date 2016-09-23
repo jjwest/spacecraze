@@ -12,22 +12,21 @@
 World::World()
     : player {SDL_Rect{ 500, 350,
 	    static_cast<int>(Assets::getInstance().getTexture("player")->getWidth() * 0.5),
-	    static_cast<int>(Assets::getInstance().getTexture("player")->getHeight() * 0.5) }}
-{}
+	    static_cast<int>(Assets::getInstance().getTexture("player")->getHeight() * 0.5) }} {}
 
-bool World::playerIsDead() const
-{
-    return player.isDead();
-}
 
-int World::update()
+void World::update()
 {
     updateObjects();
     resolveCollisions();
-    int accumulated_score = updateScore();
+    updateScore();
     removeDeadObjects();
+    updateState();
+}
 
-    return accumulated_score;
+WorldState World::getState() const
+{
+    return state;
 }
 
 void World::addEnemy(std::unique_ptr<Enemy> enemy)
@@ -94,10 +93,10 @@ void World::updateObjects()
     }
 }
 
-int World::updateScore()
+void World::updateScore()
 {
-    return std::accumulate(
-	begin(enemies), end(enemies), 0,
+     state.score = std::accumulate(
+	begin(enemies), end(enemies), state.score,
 	[] (int sum, const auto& enemy)
 	{ return enemy->isDead() ? sum + enemy->getScore() : sum; }
 	);
@@ -112,13 +111,11 @@ void World::resolveCollisions()
 void World::resolvePlayerCollisions()
 {
     AABB player_hitbox = player.getHitbox();
-    auto collides = [&player_hitbox] (auto& object) {
-	return object->collides(player_hitbox);
+    auto collides = [&player_hitbox] (const auto& enemy) {
+	return enemy->collides(player_hitbox);
     };
 
-    bool hit_by_laser = std::any_of(
-	begin(enemy_lasers), end(enemy_lasers), collides);
-
+    bool hit_by_laser = std::any_of(begin(enemy_lasers), end(enemy_lasers), collides);
     bool collides_with_enemy = std::any_of(begin(enemies), end(enemies), collides);
 
     if (collides_with_enemy || hit_by_laser)
@@ -151,4 +148,11 @@ void World::removeDeadObjects()
 				       isDead), end(player_lasers));
     enemy_lasers.erase(std::remove_if(begin(enemy_lasers), end(enemy_lasers), isDead),
 		       end(enemy_lasers));
+}
+
+
+void World::updateState()
+{
+    state.player_dead = player.isDead();
+    state.player_has_special = player.hasSpecialWeapon();
 }

@@ -2,27 +2,39 @@
 #include "assets.h"
 #include "point.h"
 
-UserInterface::UserInterface(SDL_Renderer* renderer)
-{
-    updateScoreTexture(renderer, 0);
-}
+UserInterface::UserInterface()
+    : special_weapon(Assets::getInstance().getTexture("singularity"),
+		     SDL_Rect{1070, 20, 50, 50}) {}
 
-void UserInterface::draw(SDL_Renderer* renderer, int new_score)
+void UserInterface::draw(SDL_Renderer* renderer)
 {
-    if (score != new_score)
+    if (player_has_special)
     {
-        updateScoreTexture(renderer, new_score);
-        score = new_score;
+	special_weapon.draw(renderer);
+    }
+    if (score_changed)
+    {
+        updateScoreTexture(renderer);
     }
     rendered_score->draw(renderer);
 }
 
-void UserInterface::updateScoreTexture(SDL_Renderer* renderer, int new_score)
+void UserInterface::update(int new_score, bool has_special)
+{
+    player_has_special = has_special;
+    if (score != new_score)
+    {
+	score = new_score;
+	score_changed = true;
+    }
+}
+
+void UserInterface::updateScoreTexture(SDL_Renderer* renderer)
 {
     auto font = Assets::getInstance().getFont("text");
     rendered_score.reset(new RenderedText(
 			     renderer,
-			     std::to_string(new_score),
+			     std::to_string(score),
 			     Point{950, 30},
 			     font));
 

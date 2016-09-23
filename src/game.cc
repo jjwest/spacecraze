@@ -42,13 +42,13 @@ void Game::run()
 {
     StateManager state(renderer);
     MusicManager music;
-    music.start();
+    // music.start();
 
     while (state.stillPlaying())
     {
 	auto frame_start_time = SDL_GetTicks();
 	state.update();
-	music.update(state.getCurrent());
+	// music.update(state.getCurrent());
 	auto frame_end_time = SDL_GetTicks();
 
 	sleepIfFrameTooFast(frame_start_time, frame_end_time);

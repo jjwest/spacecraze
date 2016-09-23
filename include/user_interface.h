@@ -10,14 +10,18 @@
 class UserInterface
 {
 public:
-    UserInterface(SDL_Renderer* renderer);
-    void draw(SDL_Renderer* renderer, int current_score);
+    UserInterface();
+    void draw(SDL_Renderer* renderer);
+    void update(int new_score, bool has_special);
 
 private:
+    bool player_has_special = true;
+    bool score_changed = true;
     int score = 0;
+    Sprite special_weapon;
     std::unique_ptr<RenderedText> rendered_score;
 
-    void updateScoreTexture(SDL_Renderer* renderer, int new_score);
+    void updateScoreTexture(SDL_Renderer* renderer);
 };
 
 
