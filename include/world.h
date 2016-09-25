@@ -23,13 +23,13 @@ class World
 {
 public:
     World();
+    WorldState getState() const;
     void addEnemy(std::unique_ptr<Enemy> enemy);
     void addEnemyLaser(const Point& pos, const Point& dest, double dmg);
     void addPlayerLaser(const Point& pos, double dmg);
-    void killAllEnemies();
     void draw(SDL_Renderer* renderer);
+    void killAllEnemies();
     void update();
-    WorldState getState() const;
 
 private:
     WorldState state;
@@ -38,13 +38,12 @@ private:
     std::vector<std::unique_ptr<Laser>> enemy_lasers;
     std::vector<std::unique_ptr<Laser>> player_lasers;
 
-    void updateScore();
     void updateObjects();
     void resolveCollisions();
-    void resolveLaserCollisions();
     void resolvePlayerCollisions();
-    void removeDeadObjects();
+    void resolveLaserCollisions();
     void updateState();
+    void removeDeadObjects();
 };
 
 #endif // _WORLD_H_

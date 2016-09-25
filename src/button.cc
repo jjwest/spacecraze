@@ -4,9 +4,11 @@
 
 #include "assets.h"
 
-Button::Button(SDL_Renderer* renderer, const Point& pos, const std::string& text,
-               const States& act)
-    : action{act}
+Button::Button(SDL_Renderer* renderer,
+	       const Point& pos,
+	       const std::string& text,
+	       States action)
+    : action{action}
 {
     rect.x = pos.x;
     rect.y = pos.y;
@@ -32,7 +34,7 @@ Button::~Button()
     SDL_DestroyTexture(texture_hover);
 }
 
-States Button::update(const States& current_state)
+States Button::update(States current_state)
 {
     return mouseOverButton() ? action : current_state;
 }

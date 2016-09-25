@@ -18,9 +18,9 @@ public:
     EnterHighscore(SDL_Renderer* renderer, const ScoreKeeper& score);
     ~EnterHighscore();
     States getNextState() const override;
+    void draw(SDL_Renderer* renderer) override;
     void handleEvents() override;
     void update() override;
-    void draw(SDL_Renderer* renderer) override;
 private:
     Button back_button;
     int player_score;

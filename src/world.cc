@@ -14,16 +14,6 @@ World::World()
 	    static_cast<int>(Assets::getInstance().getTexture("player")->getWidth() * 0.5),
 	    static_cast<int>(Assets::getInstance().getTexture("player")->getHeight() * 0.5) }} {}
 
-
-void World::update()
-{
-    updateObjects();
-    resolveCollisions();
-    updateScore();
-    removeDeadObjects();
-    updateState();
-}
-
 WorldState World::getState() const
 {
     return state;
@@ -34,6 +24,12 @@ void World::addEnemy(std::unique_ptr<Enemy> enemy)
     enemies.push_back(move(enemy));
 }
 
+void World::addEnemyLaser(const Point& origin, const Point& destination, double damage)
+{
+    auto& factory = ObjectFactory::getInstance();
+    enemy_lasers.push_back(factory.createEnemyLaser(origin, destination, damage));
+}
+
 void World::addPlayerLaser(const Point& origin, double damage)
 {
     Point destination;
@@ -41,21 +37,6 @@ void World::addPlayerLaser(const Point& origin, double damage)
 
     auto& factory = ObjectFactory::getInstance();
     player_lasers.push_back(factory.createPlayerLaser(origin, destination, damage));
-}
-
-void World::addEnemyLaser(const Point& origin, const Point& destination, double damage)
-{
-    auto& factory = ObjectFactory::getInstance();
-    enemy_lasers.push_back(factory.createEnemyLaser(origin, destination, damage));
-}
-
-
-void World::killAllEnemies()
-{
-    for (auto& enemy : enemies)
-    {
-	enemy->kill();
-    }
 }
 
 void World::draw(SDL_Renderer* renderer)
@@ -70,6 +51,22 @@ void World::draw(SDL_Renderer* renderer)
     std::for_each(begin(enemy_lasers), end(enemy_lasers), draw);
     std::for_each(begin(player_lasers), end(player_lasers), draw);
     player.draw(renderer);
+}
+
+void World::killAllEnemies()
+{
+    for (auto& enemy : enemies)
+    {
+	enemy->kill();
+    }
+}
+
+void World::update()
+{
+    updateObjects();
+    resolveCollisions();
+    updateState();
+    removeDeadObjects();
 }
 
 void World::updateObjects()
@@ -91,15 +88,6 @@ void World::updateObjects()
     {
 	laser->update();
     }
-}
-
-void World::updateScore()
-{
-     state.score = std::accumulate(
-	begin(enemies), end(enemies), state.score,
-	[] (int sum, const auto& enemy)
-	{ return enemy->isDead() ? sum + enemy->getScore() : sum; }
-	);
 }
 
 void World::resolveCollisions()
@@ -139,6 +127,18 @@ void World::resolveLaserCollisions()
     }
 }
 
+void World::updateState()
+{
+     state.score = std::accumulate(
+	begin(enemies), end(enemies), state.score,
+	[] (int sum, const auto& enemy)
+	{ return enemy->isDead() ? sum + enemy->getScore() : sum; }
+	);
+
+     state.player_dead = player.isDead();
+     state.player_has_special = player.hasSpecialWeapon();
+}
+
 void World::removeDeadObjects()
 {
     auto isDead = [] (const auto& object) { return object->isDead(); };
@@ -148,11 +148,4 @@ void World::removeDeadObjects()
 				       isDead), end(player_lasers));
     enemy_lasers.erase(std::remove_if(begin(enemy_lasers), end(enemy_lasers), isDead),
 		       end(enemy_lasers));
-}
-
-
-void World::updateState()
-{
-    state.player_dead = player.isDead();
-    state.player_has_special = player.hasSpecialWeapon();
 }

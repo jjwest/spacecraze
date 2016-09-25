@@ -20,18 +20,18 @@ class ViewHighscore: public GameState
 public:
     ViewHighscore(SDL_Renderer* renderer);
     States getNextState() const override;
+    void draw(SDL_Renderer* renderer) override;
     void handleEvents() override;
     void update() override;
-    void draw(SDL_Renderer* renderer) override;
 
 private:
-    bool left_mouse_key_pressed = false;
     Button button_back;
     SDL_Event event;
     RenderedText title;
     States next_state = State_ViewHighscore;
     std::vector<std::unique_ptr<RenderedText>> highscores;
 
+    bool leftMouseButtonPressed() const;
     void createHighscoreText(SDL_Renderer* renderer, const score_vec& scores);
 };
 

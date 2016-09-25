@@ -10,15 +10,17 @@
 class Button
 {
 public:
-    Button(SDL_Renderer* renderer, const Point& pos, const std::string& text,
-           const States& act);
+    Button(SDL_Renderer* renderer,
+	   const Point& pos,
+	   const std::string& text,
+           States action);
     Button(const Button&) = delete;
     Button(Button&&) = default;
     Button& operator=(const Button&) = delete;
     Button& operator=(Button&&) = default;
     ~Button();
 
-    States update(const States& current_state);
+    States update(States current_state);
     void draw(SDL_Renderer* renderer);
 
 private:

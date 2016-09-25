@@ -22,30 +22,6 @@ States ViewHighscore::getNextState() const
     return next_state;
 }
 
-void ViewHighscore::handleEvents()
-{
-    while (SDL_PollEvent(&event) != 0)
-    {
-        if (event.type == SDL_QUIT)
-	{
-            next_state = State_Quit;
-        }
-	else if (event.type == SDL_MOUSEBUTTONDOWN &&
-		   SDL_BUTTON(SDL_BUTTON_LEFT))
-	{
-	    left_mouse_key_pressed = true;
-	}
-    }
-}
-
-void ViewHighscore::update()
-{
-    if (left_mouse_key_pressed)
-    {
-	next_state = button_back.update(next_state);
-    }
-}
-
 void ViewHighscore::draw(SDL_Renderer* renderer)
 {
     SDL_RenderClear(renderer);
@@ -61,6 +37,28 @@ void ViewHighscore::draw(SDL_Renderer* renderer)
     }
 
     SDL_RenderPresent(renderer);
+}
+
+void ViewHighscore::handleEvents()
+{
+    while (SDL_PollEvent(&event) != 0)
+    {
+        if (event.type == SDL_QUIT)
+	{
+            next_state = State_Quit;
+        }
+	else if (leftMouseButtonPressed())
+	{
+	    next_state = button_back.update(next_state);
+	}
+    }
+}
+
+void ViewHighscore::update() {}
+
+bool ViewHighscore::leftMouseButtonPressed() const
+{
+    return event.type == SDL_MOUSEBUTTONDOWN && SDL_BUTTON(SDL_BUTTON_LEFT);
 }
 
 void ViewHighscore::createHighscoreText(SDL_Renderer* renderer,
