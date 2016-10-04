@@ -18,7 +18,7 @@ namespace {
 class ViewHighscore: public GameState
 {
 public:
-    ViewHighscore(SDL_Renderer* renderer);
+    ViewHighscore(SDL_Renderer* renderer, int last_score);
     States getNextState() const override;
     void draw(SDL_Renderer* renderer) override;
     void handleEvents() override;
@@ -28,6 +28,7 @@ private:
     Button button_back;
     SDL_Event event;
     RenderedText title;
+    std::unique_ptr<RenderedText> latest_score = nullptr;
     States next_state = State_ViewHighscore;
     std::vector<std::unique_ptr<RenderedText>> highscores;
 

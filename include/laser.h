@@ -18,8 +18,8 @@ private:
     double speed;
     double current_x;
     double current_y;
-    double delta_x = 0;
-    double delta_y = 0;
+    double delta_x;
+    double delta_y;
 
     void move();
     void killIfOutsideScreen();

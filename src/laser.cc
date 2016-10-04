@@ -25,7 +25,7 @@ Laser::Laser(Texture* t, const Point& origin, const Point& destination,
     float center_laser_y = rect.y + (rect.h / 2);
     float x_dist = destination.x - center_laser_x;
     float y_dist = destination.y - center_laser_y;
-    float longest = std::max( abs(x_dist), abs(y_dist) );
+    float longest = std::max( std::abs(x_dist), std::abs(y_dist) );
 
     delta_x = x_dist / longest;
     delta_y = y_dist / longest;
@@ -69,9 +69,8 @@ void Laser::setAngle()
 
      float center_x = rect.x + (rect.w / 2);
      float center_y = rect.y + (rect.h / 2);
+     float angle_in_radians = atan2(center_y - y, center_x - x);
+     float angle_in_degrees = angle_in_radians * 180 / M_PI;
 
-     float ang = atan2(center_y - y, center_x - x);
-     ang = ang * 180 / M_PI;
-
-     angle = (static_cast<int> (ang) - 90) % 360;
+     angle = static_cast<int>(angle_in_degrees) - 90;
 }

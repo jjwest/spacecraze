@@ -9,12 +9,22 @@
 const Point button_pos{SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT - 150};
 const Point title_pos{SCREEN_WIDTH / 2 - 150, 150};
 
-ViewHighscore::ViewHighscore(SDL_Renderer* renderer)
+ViewHighscore::ViewHighscore(SDL_Renderer* renderer, int last_score)
     : button_back{renderer, button_pos, "BACK", State_Menu},
       title{renderer, "HIGHSCORE", title_pos, Assets::getInstance().getFont("title")}
 {
     auto scores = HighscoreFile::read();
     createHighscoreText(renderer, scores);
+
+    if (last_score > 0)
+    {
+	Point score_pos{SCREEN_WIDTH / 2 - 150, 300};
+	latest_score.reset(new RenderedText(
+			       renderer,
+			       "Your score: " + std::to_string(last_score),
+			       score_pos,
+			       Assets::getInstance().getFont("text")));
+    }
 }
 
 States ViewHighscore::getNextState() const
@@ -34,6 +44,11 @@ void ViewHighscore::draw(SDL_Renderer* renderer)
     for (auto& score : highscores)
     {
 	score->draw(renderer);
+    }
+
+    if (latest_score)
+    {
+	latest_score->draw(renderer);
     }
 
     SDL_RenderPresent(renderer);

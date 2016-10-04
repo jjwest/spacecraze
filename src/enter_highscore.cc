@@ -146,7 +146,7 @@ void EnterHighscore::updateHighscoreFile() const
 
 bool EnterHighscore::enteringName() const
 {
-    return event.type == SDL_TEXTINPUT;;
+    return event.type == SDL_TEXTINPUT;
 }
 
 bool EnterHighscore::containsSpace(const std::string& input) const

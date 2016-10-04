@@ -41,7 +41,7 @@ void StateManager::changeStateIfRequired(States next_state)
             break;
 
         case State_ViewHighscore:
-	    current_state.reset(new ViewHighscore(renderer));
+	    current_state.reset(new ViewHighscore(renderer, score.get()));
             break;
 
 	case State_EnterHighscore:
