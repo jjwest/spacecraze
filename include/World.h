@@ -2,6 +2,7 @@
 #define _WORLD_H_
 
 #include <SDL2/SDL.h>
+
 #include <memory>
 #include <vector>
 
@@ -27,8 +28,8 @@ public:
     void addEnemy(std::unique_ptr<Enemy> enemy);
     void addEnemyLaser(const Point& pos, const Point& dest, double dmg);
     void addPlayerLaser(const Point& pos, double dmg);
+    void clearEnemies();
     void draw(SDL_Renderer* renderer);
-    void killAllEnemies();
     void update();
 
 private:

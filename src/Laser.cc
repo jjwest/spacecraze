@@ -21,8 +21,8 @@ Laser::Laser(Texture* t, const Point& origin, const Point& destination,
       current_y{static_cast<double>(origin.y)}
 {
     // Calculates movement direction
-    float center_laser_x = rect.x + (rect.w / 2);
-    float center_laser_y = rect.y + (rect.h / 2);
+    float center_laser_x = hitbox.x + (hitbox.w / 2);
+    float center_laser_y = hitbox.y + (hitbox.h / 2);
     float x_dist = destination.x - center_laser_x;
     float y_dist = destination.y - center_laser_y;
     float longest = std::max( std::abs(x_dist), std::abs(y_dist) );
@@ -36,7 +36,7 @@ Laser::Laser(Texture* t, const Point& origin, const Point& destination,
 void Laser::update()
 {
     move();
-    updateHitbox(rect);
+    updateHitbox(hitbox);
     killIfOutsideScreen();
 }
 
@@ -49,14 +49,14 @@ void Laser::move()
 {
     current_x += delta_x * speed;
     current_y += delta_y * speed;
-    rect.x = static_cast<int>( round(current_x) );
-    rect.y = static_cast<int>( round(current_y) );
+    hitbox.x = static_cast<int>( round(current_x) );
+    hitbox.y = static_cast<int>( round(current_y) );
 }
 
 void Laser::killIfOutsideScreen()
 {
-    if ( rect.x + rect.w < 0 || rect.x > SCREEN_WIDTH ||
-         rect.y + rect.h < 0 || rect.y > SCREEN_HEIGHT )
+    if ( hitbox.x + hitbox.w < 0 || hitbox.x > SCREEN_WIDTH ||
+         hitbox.y + hitbox.h < 0 || hitbox.y > SCREEN_HEIGHT )
     {
         kill();
     }
@@ -67,8 +67,8 @@ void Laser::setAngle()
      int x, y;
      SDL_GetMouseState(&x,&y);
 
-     float center_x = rect.x + (rect.w / 2);
-     float center_y = rect.y + (rect.h / 2);
+     float center_x = hitbox.x + (hitbox.w / 2);
+     float center_y = hitbox.y + (hitbox.h / 2);
      float angle_in_radians = atan2(center_y - y, center_x - x);
      float angle_in_degrees = angle_in_radians * 180 / M_PI;
 

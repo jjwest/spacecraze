@@ -46,14 +46,25 @@ void World::draw(SDL_Renderer* renderer)
     auto background = AssetManager::getInstance().getTexture("background");
     SDL_RenderCopy(renderer, background->getTexture(), NULL, NULL);
 
-    auto draw = [&renderer] (auto& object) { object->draw(renderer); };
-    std::for_each(begin(enemies), end(enemies), draw);
-    std::for_each(begin(enemy_lasers), end(enemy_lasers), draw);
-    std::for_each(begin(player_lasers), end(player_lasers), draw);
+    for (auto& enemy : enemies)
+    {
+	enemy->draw(renderer);
+    }
+
+    for (auto& laser : enemy_lasers)
+    {
+	laser->draw(renderer);
+    }
+
+    for (auto& laser : player_lasers)
+    {
+	laser->draw(renderer);
+    }
+
     player.draw(renderer);
 }
 
-void World::killAllEnemies()
+void World::clearEnemies()
 {
     for (auto& enemy : enemies)
     {
@@ -72,19 +83,19 @@ void World::update()
 void World::updateObjects()
 {
     player.update(*this);
-
     auto player_pos = player.getPosition();
+
     for (auto& enemy : enemies)
     {
         enemy->update(player_pos, *this);
     }
 
-    for (const auto& laser : player_lasers)
+    for (auto& laser : player_lasers)
     {
 	laser->update();
     }
 
-    for (const auto& laser : enemy_lasers)
+    for (auto& laser : enemy_lasers)
     {
 	laser->update();
     }
@@ -129,14 +140,13 @@ void World::resolveLaserCollisions()
 
 void World::updateState()
 {
-     state.score = std::accumulate(
+    state.score = std::accumulate(
 	begin(enemies), end(enemies), state.score,
-	[] (int sum, const auto& enemy)
-	{ return enemy->isDead() ? sum + enemy->getScore() : sum; }
-	);
-
-     state.player_dead = player.isDead();
-     state.player_has_special = player.hasSpecialWeapon();
+	[] (int sum, const auto& enemy) {
+	    return enemy->isDead() ? sum + enemy->getScore() : sum;
+	});
+    state.player_dead = player.isDead();
+    state.player_has_special = player.hasSpecialWeapon();
 }
 
 void World::removeDeadObjects()

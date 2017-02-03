@@ -9,6 +9,8 @@
 #include "Point.h"
 #include "Texture.h"
 
+enum Sections{Section_Up, Section_Down, Section_Left, Section_Right};
+
 ObjectFactory& ObjectFactory::getInstance()
 {
     static ObjectFactory instance;
@@ -62,9 +64,9 @@ std::unique_ptr<Enemy> ObjectFactory::createEnemy(const std::string& type)
         auto spawn_point = getSpawnPoint(texture);
 	SDL_Rect hitbox {
 	    spawn_point.x,
-		spawn_point.y,
-		texture->getWidth(),
-		texture->getHeight()
+	    spawn_point.y,
+	    texture->getWidth(),
+	    texture->getHeight()
 	 };
         return std::make_unique<Asteroid>(Asteroid(hitbox));
     }
@@ -74,10 +76,11 @@ std::unique_ptr<Enemy> ObjectFactory::createEnemy(const std::string& type)
         auto spawn_point = getSpawnPoint(texture);
 	SDL_Rect hitbox {
 	    spawn_point.x,
-		spawn_point.y,
-		texture->getWidth(),
-		texture->getHeight()
+	    spawn_point.y,
+	    texture->getWidth(),
+	    texture->getHeight()
 	 };
+
         return std::make_unique<Blaster>(Blaster(hitbox));
     }
     else if (type == "drone")
@@ -87,10 +90,11 @@ std::unique_ptr<Enemy> ObjectFactory::createEnemy(const std::string& type)
         auto spawn_point = getSpawnPoint(texture);
 	SDL_Rect hitbox {
 	    spawn_point.x,
-		spawn_point.y,
-		static_cast<int>(texture->getWidth() * scale),
-		static_cast<int>(texture->getHeight() * scale)
+	    spawn_point.y,
+	    static_cast<int>(texture->getWidth() * scale),
+	    static_cast<int>(texture->getHeight() * scale)
 	 };
+
         return std::make_unique<Drone>(Drone(hitbox));
     }
     else
@@ -99,18 +103,22 @@ std::unique_ptr<Enemy> ObjectFactory::createEnemy(const std::string& type)
     }
 }
 
-std::unique_ptr<Laser> ObjectFactory::createEnemyLaser(const Point& origin,
-						       const Point& destination,
-						       double damage)
+std::unique_ptr<Laser> ObjectFactory::createEnemyLaser(
+    const Point& origin,
+    const Point& destination,
+    double damage)
 {
     auto texture = AssetManager::getInstance().getTexture("enemy_laser");
-    return std::make_unique<Laser>(texture, origin, destination, damage, 2.5);
+    double speed = 2.5;
+    return std::make_unique<Laser>(texture, origin, destination, damage, speed);
 }
 
-std::unique_ptr<Laser> ObjectFactory::createPlayerLaser(const Point& origin,
-							const Point& destination,
-							double damage)
+std::unique_ptr<Laser> ObjectFactory::createPlayerLaser(
+    const Point& origin,
+    const Point& destination,
+    double damage)
 {
     auto texture = AssetManager::getInstance().getTexture("player_laser");
-    return std::make_unique<Laser>(texture, origin, destination, damage, 7);
+    double speed = 7.0;
+    return std::make_unique<Laser>(texture, origin, destination, damage, speed);
 }

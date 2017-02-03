@@ -16,7 +16,7 @@ Asteroid::Asteroid(const SDL_Rect& rect)
 void Asteroid::update(const Point&, World&)
 {
     move();
-    updateHitbox(rect);
+    updateHitbox(hitbox);
     killIfOutsideScreen();
 }
 
@@ -27,22 +27,22 @@ Point Asteroid::calculateExitPoint()
     std::uniform_int_distribution<int> random_y(30, 700);
 
     Point exit;
-    if (rect.y < 0)
+    if (hitbox.y < 0)
     {
         exit.x = random_x(rd);
         exit.y = SCREEN_HEIGHT;
     }
-    else if (rect.y >= SCREEN_HEIGHT)
+    else if (hitbox.y >= SCREEN_HEIGHT)
     {
         exit.x = random_x(rd);
         exit.y = 0;
     }
-    else if (rect.x <= 0)
+    else if (hitbox.x <= 0)
     {
         exit.x = SCREEN_WIDTH;
         exit.y = random_y(rd);
     }
-    else if (rect.x >= SCREEN_WIDTH)
+    else if (hitbox.x >= SCREEN_WIDTH)
     {
         exit.x = 0;
         exit.y = random_y(rd);
@@ -53,16 +53,16 @@ Point Asteroid::calculateExitPoint()
 
 void Asteroid::move()
 {
-    rect.x += move_x;
-    rect.y += move_y;
+    hitbox.x += move_x;
+    hitbox.y += move_y;
     angle++;
 }
 
 
 void Asteroid::calculateDirection(const Point& exit)
 {
-    double center_asteroid_x = rect.x + (rect.h / 2);
-    double center_asteroid_y = rect.y + (rect.w / 2);
+    double center_asteroid_x = hitbox.x + (hitbox.h / 2);
+    double center_asteroid_y = hitbox.y + (hitbox.w / 2);
     double x_dist = exit.x - center_asteroid_x;
     double y_dist = exit.y - center_asteroid_y;
     double longest = std::max( abs(x_dist), abs(y_dist) );
@@ -74,8 +74,8 @@ void Asteroid::calculateDirection(const Point& exit)
 
 void Asteroid::killIfOutsideScreen()
 {
-    if (rect.x + (rect.w * 2) < 0 || rect.x > SCREEN_WIDTH ||
-        rect.y + (rect.h * 2) < 0 || rect.y > SCREEN_HEIGHT)
+    if (hitbox.x + (hitbox.w * 2) < 0 || hitbox.x > SCREEN_WIDTH ||
+        hitbox.y + (hitbox.h * 2) < 0 || hitbox.y > SCREEN_HEIGHT)
     {
         reduceHealth(500);
     }

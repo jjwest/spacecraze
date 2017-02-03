@@ -10,19 +10,19 @@
 
 Player::Player(const SDL_Rect& rect)
     :  GameObject(AssetManager::getInstance().getTexture("player"), rect, 1.0),
-       x_pos{ static_cast<double>(rect.x) },
-       y_pos{ static_cast<double>(rect.y) } {}
+       pos_x{ static_cast<double>(rect.x) },
+       pos_y{ static_cast<double>(rect.y) } {}
 
 
 bool Player::hasSpecialWeapon() const
 {
-    return has_special;
+    return has_special_weapon;
 }
 
 Point Player::getPosition() const
 {
-    int center_x = round( rect.x + (rect.w / 2) );
-    int center_y = round( rect.y + (rect.h / 2) );
+    int center_x = round( hitbox.x + (hitbox.w / 2) );
+    int center_y = round( hitbox.y + (hitbox.h / 2) );
 
     return {center_x, center_y};
 }
@@ -33,7 +33,7 @@ void Player::update(World& world)
     adjustAngle();
     shoot(world);
     useSpecialWeapon(world);
-    updateHitbox(rect);
+    updateHitbox(hitbox);
 }
 
 
@@ -61,77 +61,79 @@ void Player::move()
 
 bool Player::canMoveLeft() const
 {
-    return rect.x - speed >= 0;
+    return hitbox.x - speed >= 0;
 }
 
 bool Player::canMoveRight() const
 {
-    return rect.x + rect.w + speed <= SCREEN_WIDTH;
+    return hitbox.x + hitbox.w + speed <= SCREEN_WIDTH;
 }
 
 bool Player::canMoveUp() const
 {
-    return rect.y - speed >= 0;
+    return hitbox.y - speed >= 0;
 }
 
 bool Player::canMoveDown() const
 {
-    return rect.y + rect.h + speed <= SCREEN_HEIGHT;
+    return hitbox.y + hitbox.h + speed <= SCREEN_HEIGHT;
 }
 
 void Player::moveLeft()
 {
-    x_pos -= speed;
-    rect.x = round(x_pos);
+    pos_x -= speed;
+    hitbox.x = round(pos_x);
 }
 
 void Player::moveRight()
 {
-    x_pos += speed;
-    rect.x = round(x_pos);
+    pos_x += speed;
+    hitbox.x = round(pos_x);
 }
 
 void Player::moveUp()
 {
-    y_pos -= speed;
-    rect.y = round(y_pos);
+    pos_y -= speed;
+    hitbox.y = round(pos_y);
 }
 
 void Player::moveDown()
 {
-    y_pos += speed;
-    rect.y = round(y_pos);
+    pos_y += speed;
+    hitbox.y = round(pos_y);
 }
 
 void Player::adjustAngle()
 {
      int x, y;
      SDL_GetMouseState(&x, &y);
-     int center_x = rect.x + (rect.w / 2);
-     int center_y = rect.y + (rect.h / 2);
+     int center_x = hitbox.x + (hitbox.w / 2);
+     int center_y = hitbox.y + (hitbox.h / 2);
 
-     angle = atan2(center_y - y, center_x - x);
-     angle = angle * 180 / M_PI;
-     angle = (static_cast<int>(angle) - 90) % 360;
+     double angle_in_radians = atan2(center_y - y, center_x - x);
+     double angle_in_degrees = angle_in_radians * 180 / M_PI;
+     angle = (static_cast<int>(angle_in_degrees) - 90) % 360;
 }
 
 void Player::shoot(World& world)
 {
-    if (readyToShoot())
+    if (tryingToShoot() && canShoot())
     {
-        int center_x = rect.x + (rect.w / 2);
-        world.addPlayerLaser({center_x, rect.y}, damage);
-        last_shot = SDL_GetTicks();
+        int hitbox_center_x = hitbox.x + (hitbox.w / 2);
+        world.addPlayerLaser({hitbox_center_x, hitbox.y}, damage);
+        last_shot_time = SDL_GetTicks();
     }
 }
 
-bool Player::readyToShoot() const
+bool Player::tryingToShoot() const
+{
+    return SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT);
+}
+
+bool Player::canShoot() const
 {
     auto current_time = SDL_GetTicks();
-
-    return (SDL_GetMouseState(NULL, NULL) &
-	    SDL_BUTTON(SDL_BUTTON_LEFT) &&
-	    current_time - last_shot > shoot_cooldown);
+    return current_time - last_shot_time > shoot_cooldown;
 }
 
 bool rightMouseButtonPressed()
@@ -141,9 +143,9 @@ bool rightMouseButtonPressed()
 
 void Player::useSpecialWeapon(World& world)
 {
-    if (has_special && rightMouseButtonPressed())
+    if (has_special_weapon && rightMouseButtonPressed())
     {
-	world.killAllEnemies();
-	has_special = false;
+	world.clearEnemies();
+	has_special_weapon = false;
     }
 }

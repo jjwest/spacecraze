@@ -16,7 +16,7 @@ public:
 protected:
     Texture* texture;
     double angle = 0;
-    SDL_Rect rect;
+    SDL_Rect hitbox;
 };
 
 #endif

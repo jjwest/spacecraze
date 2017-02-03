@@ -12,6 +12,7 @@ Texture::Texture(SDL_Renderer* renderer, const std::string& path)
     {
         throw "Could not find texture " + path;
     }
+
     texture = SDL_CreateTextureFromSurface(renderer, surface);
     width = surface->w;
     height = surface->h;

@@ -14,13 +14,13 @@ public:
     void update(World& world);
 
 private:
-    bool has_special = true;
+    bool has_special_weapon = true;
     double damage = 2;
     double speed = 4.5;
-    double x_pos;
-    double y_pos;
+    double pos_x;
+    double pos_y;
     Uint32 shoot_cooldown = 80;
-    Uint32 last_shot = 0;
+    Uint32 last_shot_time = 0;
 
     void move();
     bool canMoveLeft() const;
@@ -33,7 +33,8 @@ private:
     void moveDown();
     void adjustAngle();
     void shoot(World& world);
-    bool readyToShoot() const;
+    bool tryingToShoot() const;
+    bool canShoot() const;
     void useSpecialWeapon(World& world);
 };
 
