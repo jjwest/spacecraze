@@ -10,7 +10,7 @@ Blaster::Blaster(const SDL_Rect& rect)
     : Enemy(AssetManager::getInstance().getTexture("blaster"), rect, 15, 40)
 {}
 
-void Blaster::update(const Point &player_pos, World& world)
+void Blaster::update(const Point& player_pos, World& world)
 {
     move();
     setAngle(player_pos);
@@ -22,8 +22,8 @@ void Blaster::move()
 {
     changeDirection();
 
-    double center_blaster_x = hitbox.x + (hitbox.h / 2);
-    double center_blaster_y = hitbox.y + (hitbox.w / 2);
+    double center_blaster_x = hitbox.x + (hitbox.w / 2);
+    double center_blaster_y = hitbox.y + (hitbox.h / 2);
 
     double x_dist = move_to.x - center_blaster_x;
     double y_dist = move_to.y - center_blaster_y;
@@ -42,15 +42,15 @@ void Blaster::move()
 void Blaster::changeDirection()
 {
     std::random_device rd;
-    std::uniform_int_distribution<int> rand_x(0, SCREEN_WIDTH);
-    std::uniform_int_distribution<int> rand_y(0, SCREEN_HEIGHT);
+    std::uniform_int_distribution<int> rand_x(0, constants::SCREEN_WIDTH);
+    std::uniform_int_distribution<int> rand_y(0, constants::SCREEN_HEIGHT);
 
     if (hitbox.y - hitbox.h <= 0)
     {
         move_to.x = rand_x(rd);
-        move_to.y = SCREEN_HEIGHT;
+        move_to.y = constants::SCREEN_HEIGHT;
     }
-    else if (hitbox.y + hitbox.h >= SCREEN_HEIGHT)
+    else if (hitbox.y + hitbox.h >= constants::SCREEN_HEIGHT)
     {
         move_to.x = rand_x(rd);
         move_to.y = 0;
@@ -58,9 +58,9 @@ void Blaster::changeDirection()
     else if (hitbox.x - hitbox.w <= 0)
     {
         move_to.y = rand_y(rd);
-        move_to.x = SCREEN_WIDTH;
+        move_to.x = constants::SCREEN_WIDTH;
     }
-    else if (hitbox.x + hitbox.w >= SCREEN_WIDTH)
+    else if (hitbox.x + hitbox.w >= constants::SCREEN_WIDTH)
     {
         move_to.y = rand_y(rd);
         move_to.x = 0;

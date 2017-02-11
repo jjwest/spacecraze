@@ -15,8 +15,8 @@ private:
     int move_y = 0;
 
     Point calculateExitPoint();
+    void calculateDirection(const Point& destination);
     void move();
-    void calculateDirection(const Point& exit);
     void killIfOutsideScreen();
 };
 

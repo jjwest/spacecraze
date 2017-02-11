@@ -33,7 +33,7 @@ private:
     void moveDown();
     void adjustAngle();
     void shoot(World& world);
-    bool tryingToShoot() const;
+    bool leftMouseButtonPressed() const;
     bool canShoot() const;
     void useSpecialWeapon(World& world);
 };

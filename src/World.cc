@@ -10,9 +10,11 @@
 #include "ObjectFactory.h"
 
 World::World()
-    : player {SDL_Rect{ 500, 350,
-	    static_cast<int>(AssetManager::getInstance().getTexture("player")->getWidth() * 0.5),
-	    static_cast<int>(AssetManager::getInstance().getTexture("player")->getHeight() * 0.5) }} {}
+    : player {SDL_Rect {
+		  500,
+		  350,
+		  static_cast<int>(AssetManager::getInstance().getTexture("player")->getWidth() * 0.5),
+		  static_cast<int>(AssetManager::getInstance().getTexture("player")->getHeight() * 0.5) }} {}
 
 WorldState World::getState() const
 {
@@ -32,11 +34,16 @@ void World::addEnemyLaser(const Point& origin, const Point& destination, double 
 
 void World::addPlayerLaser(const Point& origin, double damage)
 {
-    Point destination;
-    SDL_GetMouseState(&destination.x, &destination.y);
+    Point target;
+    SDL_GetMouseState(&target.x, &target.y);
 
     auto& factory = ObjectFactory::getInstance();
-    player_lasers.push_back(factory.createPlayerLaser(origin, destination, damage));
+    player_lasers.push_back(factory.createPlayerLaser(origin, target, damage));
+}
+
+void World::clearEnemies()
+{
+    enemies.clear();
 }
 
 void World::draw(SDL_Renderer* renderer)
@@ -64,13 +71,6 @@ void World::draw(SDL_Renderer* renderer)
     player.draw(renderer);
 }
 
-void World::clearEnemies()
-{
-    for (auto& enemy : enemies)
-    {
-	enemy->kill();
-    }
-}
 
 void World::update()
 {
@@ -140,11 +140,14 @@ void World::resolveLaserCollisions()
 
 void World::updateState()
 {
-    state.score = std::accumulate(
-	begin(enemies), end(enemies), state.score,
-	[] (int sum, const auto& enemy) {
-	    return enemy->isDead() ? sum + enemy->getScore() : sum;
-	});
+    for (const auto& enemy : enemies)
+    {
+	if (enemy->isDead())
+	{
+	    state.score += enemy->getScore();
+	}
+    }
+
     state.player_dead = player.isDead();
     state.player_has_special = player.hasSpecialWeapon();
 }
@@ -154,6 +157,6 @@ void World::removeDeadObjects()
     auto isDead = [] (const auto& object) { return object->isDead(); };
 
     enemies.erase(std::remove_if(begin(enemies), end(enemies), isDead), end(enemies));
-    player_lasers.erase(std::remove_if(begin(player_lasers), end(player_lasers), isDead), end(player_lasers));
     enemy_lasers.erase(std::remove_if(begin(enemy_lasers), end(enemy_lasers), isDead), end(enemy_lasers));
+    player_lasers.erase(std::remove_if(begin(player_lasers), end(player_lasers), isDead), end(player_lasers));
 }

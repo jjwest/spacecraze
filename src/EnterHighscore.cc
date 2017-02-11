@@ -7,7 +7,7 @@
 #include "Constants.h"
 #include "HighscoreFile.h"
 
-const Point button_position = {SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT - 150};
+const Point button_position = {constants::SCREEN_WIDTH / 2 - 50, constants::SCREEN_HEIGHT - 150};
 
 EnterHighscore::EnterHighscore(SDL_Renderer* renderer, const ScoreKeeper& score)
     : back_button {renderer, button_position, "BACK", State_Menu},

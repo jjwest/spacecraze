@@ -21,10 +21,10 @@ Point getSpawnPoint(Texture* texture)
 {
     std::vector<std::pair<Sections, int>> spawn_sections
     {
-	{Section_Up, SCREEN_WIDTH},
-	{Section_Down, SCREEN_WIDTH},
-	{Section_Left, SCREEN_HEIGHT},
-	{Section_Right, SCREEN_HEIGHT}
+	{Section_Up, constants::SCREEN_WIDTH},
+	{Section_Down, constants::SCREEN_WIDTH},
+	{Section_Left, constants::SCREEN_HEIGHT},
+	{Section_Right, constants::SCREEN_HEIGHT}
     };
 
     std::uniform_int_distribution<int> index(0,3);
@@ -44,11 +44,11 @@ Point getSpawnPoint(Texture* texture)
         break;
 
     case Section_Down:
-        spawn_point = {spawn_range(random), SCREEN_HEIGHT};
+        spawn_point = {spawn_range(random), constants::SCREEN_HEIGHT};
         break;
 
     case Section_Right:
-        spawn_point = {SCREEN_WIDTH, spawn_range(random)};
+        spawn_point = {constants::SCREEN_WIDTH, spawn_range(random)};
         break;
     }
 

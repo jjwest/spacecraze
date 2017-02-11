@@ -30,19 +30,19 @@ Point Asteroid::calculateExitPoint()
     if (hitbox.y < 0)
     {
         exit.x = random_x(rd);
-        exit.y = SCREEN_HEIGHT;
+        exit.y = constants::SCREEN_HEIGHT;
     }
-    else if (hitbox.y >= SCREEN_HEIGHT)
+    else if (hitbox.y >= constants::SCREEN_HEIGHT)
     {
         exit.x = random_x(rd);
         exit.y = 0;
     }
     else if (hitbox.x <= 0)
     {
-        exit.x = SCREEN_WIDTH;
+        exit.x = constants::SCREEN_WIDTH;
         exit.y = random_y(rd);
     }
-    else if (hitbox.x >= SCREEN_WIDTH)
+    else if (hitbox.x >= constants::SCREEN_WIDTH)
     {
         exit.x = 0;
         exit.y = random_y(rd);
@@ -51,32 +51,36 @@ Point Asteroid::calculateExitPoint()
     return exit;
 }
 
+void Asteroid::calculateDirection(const Point& destination)
+{
+    int asteroid_center_x = hitbox.x + (hitbox.w / 2);
+    int asteroid_center_y = hitbox.y + (hitbox.h / 2);
+
+    int x_dist = destination.x - asteroid_center_x;
+    int y_dist = destination.y - asteroid_center_y;
+
+    int longest = std::max( abs(x_dist), abs(y_dist) );
+
+    int delta_x = x_dist / longest;
+    int delta_y = y_dist / longest;
+    move_x = round(delta_x * speed);
+    move_y = round(delta_y * speed);
+}
+
+
 void Asteroid::move()
 {
     hitbox.x += move_x;
     hitbox.y += move_y;
-    angle++;
+    ++angle;
 }
 
-
-void Asteroid::calculateDirection(const Point& exit)
-{
-    double center_asteroid_x = hitbox.x + (hitbox.h / 2);
-    double center_asteroid_y = hitbox.y + (hitbox.w / 2);
-    double x_dist = exit.x - center_asteroid_x;
-    double y_dist = exit.y - center_asteroid_y;
-    double longest = std::max( abs(x_dist), abs(y_dist) );
-    double delta_x = x_dist / longest;
-    double delta_y = y_dist / longest;
-    move_x = int( round(delta_x * speed) );
-    move_y = int( round(delta_y * speed) );
-}
 
 void Asteroid::killIfOutsideScreen()
 {
-    if (hitbox.x + (hitbox.w * 2) < 0 || hitbox.x > SCREEN_WIDTH ||
-        hitbox.y + (hitbox.h * 2) < 0 || hitbox.y > SCREEN_HEIGHT)
+    if (hitbox.x + hitbox.w < 0 || hitbox.x > constants::SCREEN_WIDTH ||
+        hitbox.y + hitbox.h < 0 || hitbox.y > constants::SCREEN_HEIGHT)
     {
-        reduceHealth(500);
+        kill();
     }
 }

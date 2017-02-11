@@ -66,7 +66,7 @@ bool Player::canMoveLeft() const
 
 bool Player::canMoveRight() const
 {
-    return hitbox.x + hitbox.w + speed <= SCREEN_WIDTH;
+    return hitbox.x + hitbox.w + speed <= constants::SCREEN_WIDTH;
 }
 
 bool Player::canMoveUp() const
@@ -76,7 +76,7 @@ bool Player::canMoveUp() const
 
 bool Player::canMoveDown() const
 {
-    return hitbox.y + hitbox.h + speed <= SCREEN_HEIGHT;
+    return hitbox.y + hitbox.h + speed <= constants::SCREEN_HEIGHT;
 }
 
 void Player::moveLeft()
@@ -105,27 +105,28 @@ void Player::moveDown()
 
 void Player::adjustAngle()
 {
-     int x, y;
-     SDL_GetMouseState(&x, &y);
-     int center_x = hitbox.x + (hitbox.w / 2);
-     int center_y = hitbox.y + (hitbox.h / 2);
+     int mouse_x, mouse_y;
+     SDL_GetMouseState(&mouse_x, &mouse_y);
 
-     double angle_in_radians = atan2(center_y - y, center_x - x);
+     int player_center_x = hitbox.x + (hitbox.w / 2);
+     int player_center_y = hitbox.y + (hitbox.h / 2);
+
+     double angle_in_radians = atan2(player_center_y - mouse_y, player_center_x - mouse_x);
      double angle_in_degrees = angle_in_radians * 180 / M_PI;
      angle = (static_cast<int>(angle_in_degrees) - 90) % 360;
 }
 
 void Player::shoot(World& world)
 {
-    if (tryingToShoot() && canShoot())
+    if (leftMouseButtonPressed() && canShoot())
     {
-        int hitbox_center_x = hitbox.x + (hitbox.w / 2);
-        world.addPlayerLaser({hitbox_center_x, hitbox.y}, damage);
+        int player_center_x = hitbox.x + (hitbox.w / 2);
+        world.addPlayerLaser({player_center_x, hitbox.y}, damage);
         last_shot_time = SDL_GetTicks();
     }
 }
 
-bool Player::tryingToShoot() const
+bool Player::leftMouseButtonPressed() const
 {
     return SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT);
 }

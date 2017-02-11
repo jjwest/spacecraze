@@ -32,10 +32,10 @@ bool AABB::contain(const Point & a) const
 
 bool AABB::intersect(const AABB & a) const
 {
-  return (a.get_left() <= right &&
-          a.get_right() >= left &&
-          a.get_top() <= bottom &&
-          a.get_bottom() >= top);
+  return (a.left <= right &&
+          a.right >= left &&
+          a.top <= bottom &&
+          a.bottom >= top);
 }
 
 bool AABB::will_not_collide(const AABB & from, const Point & to) const
