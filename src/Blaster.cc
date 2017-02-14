@@ -84,7 +84,7 @@ void Blaster::shoot(const Point &player_pos, World& world)
 {
     if (readyToShoot())
     {
-        Point this_pos {hitbox.x, hitbox.y};
+        Point this_pos{ hitbox.x + hitbox.w / 2, hitbox.y  + hitbox.h / 2};
         world.addEnemyLaser(this_pos, player_pos, damage);
         last_shot = SDL_GetTicks();
     }

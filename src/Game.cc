@@ -58,12 +58,12 @@ void Game::run()
 
 void Game::sleepIfFrameTooFast(Uint32 start, Uint32 end) const
 {
-    const Uint32 INTENDED_DURATION = 10; // Duration in ms
+    const Uint32 INTENDED_DURATION_MS = 10;
     Uint32 time_elapsed = end - start;
 
-    if (time_elapsed < INTENDED_DURATION)
+    if (time_elapsed < INTENDED_DURATION_MS)
     {
-	SDL_Delay(INTENDED_DURATION - time_elapsed);
+	SDL_Delay(INTENDED_DURATION_MS - time_elapsed);
     }
 }
 

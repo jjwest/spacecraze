@@ -23,7 +23,7 @@ private:
 
     void move();
     void killIfOutsideScreen();
-    void setAngle();
+    void setAngle(const Point& destination);
 };
 
 #endif

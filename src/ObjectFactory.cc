@@ -68,7 +68,7 @@ std::unique_ptr<Enemy> ObjectFactory::createEnemy(const std::string& type)
 	    texture->getWidth(),
 	    texture->getHeight()
 	 };
-        return std::make_unique<Asteroid>(Asteroid(hitbox));
+        return std::make_unique<Asteroid>(hitbox);
     }
     else if (type == "blaster")
     {
@@ -81,7 +81,7 @@ std::unique_ptr<Enemy> ObjectFactory::createEnemy(const std::string& type)
 	    texture->getHeight()
 	 };
 
-        return std::make_unique<Blaster>(Blaster(hitbox));
+        return std::make_unique<Blaster>(hitbox);
     }
     else if (type == "drone")
     {
@@ -95,7 +95,7 @@ std::unique_ptr<Enemy> ObjectFactory::createEnemy(const std::string& type)
 	    static_cast<int>(texture->getHeight() * scale)
 	 };
 
-        return std::make_unique<Drone>(Drone(hitbox));
+        return std::make_unique<Drone>(hitbox);
     }
     else
     {
