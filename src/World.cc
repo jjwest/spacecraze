@@ -44,6 +44,7 @@ void World::addPlayerLaser(const Point& origin, double damage)
 void World::clearEnemies()
 {
     enemies.clear();
+    enemy_lasers.clear();
 }
 
 void World::draw(SDL_Renderer* renderer)

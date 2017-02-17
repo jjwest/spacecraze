@@ -137,10 +137,6 @@ void EnterHighscore::updateHighscoreFile() const
 		  return a.second > b.second;
 	      });
 
-    for (const auto& score : highscores)
-    {
-	std::cout << score.second << '\n';
-    }
     HighscoreFile::write(highscores);
 }
 

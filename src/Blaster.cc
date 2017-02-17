@@ -72,10 +72,10 @@ void Blaster::setAngle(const Point &player_pos)
     int center_x = hitbox.x + (hitbox.h / 2);
     int center_y = hitbox.y + (hitbox.w / 2);
 
-    float ang = atan2(center_y - player_pos.y, center_x - player_pos.x);
-    ang = ang * 180 / M_PI;
+    double angle_in_radians = atan2(center_y - player_pos.y, center_x - player_pos.x);
+    double angle_in_degrees = angle_in_radians * 180 / M_PI;
 
-    angle = (static_cast<int>(ang) + 90) % 360;
+    angle = (static_cast<int>(angle_in_degrees) + 90) % 360;
 }
 
 
