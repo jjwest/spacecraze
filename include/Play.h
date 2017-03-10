@@ -12,14 +12,14 @@ class Play: public GameState
 {
 public:
     Play(SDL_Renderer* renderer, ScoreKeeper& score);
-    States getNextState() const override;
+    State getNextState() const override;
     void handleEvents() override;
     void update() override;
     void draw(SDL_Renderer* renderer) override;
 
 private:
     EnemyGenerator enemy_generator;
-    States next_state = State_Play;
+    State next_state = State::PLAY;
     SDL_Event event;
     UserInterface user_interface;
     ScoreKeeper& score;

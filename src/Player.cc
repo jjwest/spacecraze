@@ -27,6 +27,11 @@ Point Player::getPosition() const
     return {center_x, center_y};
 }
 
+void Player::setDoubleDamage()
+{
+    // double_damage.activate();
+}
+
 void Player::update(World& world)
 {
     move();
@@ -121,7 +126,7 @@ void Player::shoot(World& world)
     if (leftMouseButtonPressed() && canShoot())
     {
         int player_center_x = hitbox.x + (hitbox.w / 2);
-        world.addPlayerLaser({player_center_x, hitbox.y}, damage);
+	world.addPlayerLaser({player_center_x, hitbox.y}, damage);
         last_shot_time = SDL_GetTicks();
     }
 }
@@ -133,7 +138,7 @@ bool Player::leftMouseButtonPressed() const
 
 bool Player::canShoot() const
 {
-    auto current_time = SDL_GetTicks();
+    Uint32 current_time = SDL_GetTicks();
     return current_time - last_shot_time > shoot_cooldown;
 }
 

@@ -3,18 +3,18 @@
 #include "Point.h"
 
 Menu::Menu(SDL_Renderer* renderer)
-    : next_state{State_Menu},
+    : next_state{MENU},
       title{ renderer,
               "SPACECRAZE",
               {450, 150},
               AssetManager::getInstance().getFont("title")}
 {
     buttons.emplace_back(
-        std::make_unique<Button>(renderer, Point{550, 400}, "PLAY", State_Play));
+        std::make_unique<Button>(renderer, Point{550, 400}, "PLAY", PLAY));
     buttons.emplace_back(
-        std::make_unique<Button>(renderer, Point{550, 450}, "HIGHSCORE", State_ViewHighscore));
+        std::make_unique<Button>(renderer, Point{550, 450}, "HIGHSCORE", VIEW_HIGHSCORE));
     buttons.emplace_back(
-        std::make_unique<Button>(renderer, Point{550, 500}, "QUIT", State_Quit));
+        std::make_unique<Button>(renderer, Point{550, 500}, "QUIT", QUIT));
 }
 
 
@@ -24,7 +24,7 @@ void Menu::handleEvents()
     {
         if (events.type == SDL_QUIT)
 	{
-            next_state = State_Quit;
+            next_state = QUIT;
         }
         else if (events.type == SDL_MOUSEBUTTONDOWN)
 	{
@@ -61,7 +61,7 @@ void Menu::draw(SDL_Renderer *renderer)
     SDL_RenderPresent(renderer);
 }
 
-States Menu::getNextState() const
+State Menu::getNextState() const
 {
     return next_state;
 }

@@ -11,6 +11,7 @@ public:
     Player(const SDL_Rect& rect);
     bool hasSpecialWeapon() const;
     Point getPosition() const;
+    void setDoubleDamage();
     void update(World& world);
 
 private:

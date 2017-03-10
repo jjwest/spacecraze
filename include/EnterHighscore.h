@@ -17,7 +17,7 @@ class EnterHighscore: public GameState
 public:
     EnterHighscore(SDL_Renderer* renderer, const ScoreKeeper& score);
     ~EnterHighscore();
-    States getNextState() const override;
+    State getNextState() const override;
     void draw(SDL_Renderer* renderer) override;
     void handleEvents() override;
     void update() override;
@@ -25,7 +25,7 @@ private:
     Button back_button;
     int player_score;
     SDL_Event event;
-    States next_state = State_EnterHighscore;
+    State next_state = State::ENTER_HIGHSCORE;
     std::string player_name;
     std::unique_ptr<RenderedText> rendered_player_name;
 

@@ -1,13 +1,11 @@
 #include "Button.h"
 
-#include <iostream>
-
 #include "AssetManager.h"
 
 Button::Button(SDL_Renderer* renderer,
 	       const Point& pos,
 	       const std::string& text,
-	       States action)
+	       State action)
     : action{action}
 {
     rect.x = pos.x;
@@ -34,7 +32,7 @@ Button::~Button()
     SDL_DestroyTexture(texture_hover);
 }
 
-States Button::update(States current_state)
+State Button::update(State current_state)
 {
     return mouseOverButton() ? action : current_state;
 }
@@ -56,8 +54,8 @@ bool Button::mouseOverButton() const
     Point mouse;
     SDL_GetMouseState(&mouse.x, &mouse.y);
 
-    return mouse.x >= rect.x
-        && mouse.x <= rect.x + rect.w
-        && mouse.y >= rect.y
-        && mouse.y <= rect.y + rect.h;
+    return (mouse.x >= rect.x &&
+	    mouse.x <= (rect.x + rect.w) &&
+	    mouse.y >= rect.y &&
+	    mouse.y <= (rect.y + rect.h));
 }

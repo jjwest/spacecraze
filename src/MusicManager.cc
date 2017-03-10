@@ -14,7 +14,7 @@ void MusicManager::start()
     Mix_PlayMusic(music.at("menu"), -1);
 }
 
-void MusicManager::update(States current_state)
+void MusicManager::update(State current_state)
 {
     if (switchingToPlay(current_state))
     {
@@ -28,12 +28,12 @@ void MusicManager::update(States current_state)
     current_music = current_state;
 }
 
-bool MusicManager::switchingToPlay(States current_state) const
+bool MusicManager::switchingToPlay(State current_state) const
 {
-    return current_music != current_state && current_state == State_Play;
+    return current_music != current_state && current_state == State::PLAY;
 }
 
-bool MusicManager::switchingFromPlay(States current_state) const
+bool MusicManager::switchingFromPlay(State current_state) const
 {
-    return current_music != current_state && current_music == State_Play;
+    return current_music != current_state && current_music == State::PLAY;
 }

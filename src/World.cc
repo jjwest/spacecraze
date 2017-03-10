@@ -3,11 +3,11 @@
 #include <algorithm>
 #include <numeric>
 
-#include "Point.h"
-#include "Constants.h"
 #include "AssetManager.h"
+#include "Constants.h"
 #include "Enums.h"
 #include "ObjectFactory.h"
+#include "Point.h"
 
 World::World()
     : player {SDL_Rect {
@@ -39,6 +39,11 @@ void World::addPlayerLaser(const Point& origin, double damage)
 
     auto& factory = ObjectFactory::getInstance();
     player_lasers.push_back(factory.createPlayerLaser(origin, target, damage));
+}
+
+void World::addPowerup(std::unique_ptr<GameObject> powerup)
+{
+    powerups.push_back(std::move(powerup));
 }
 
 void World::clearEnemies()

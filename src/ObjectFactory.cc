@@ -9,7 +9,12 @@
 #include "Point.h"
 #include "Texture.h"
 
-enum Sections{Section_Up, Section_Down, Section_Left, Section_Right};
+enum Section {
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT
+};
 
 ObjectFactory& ObjectFactory::getInstance()
 {
@@ -19,37 +24,26 @@ ObjectFactory& ObjectFactory::getInstance()
 
 Point getSpawnPoint(Texture* texture)
 {
-    std::vector<std::pair<Sections, int>> spawn_sections
-    {
-	{Section_Up, constants::SCREEN_WIDTH},
-	{Section_Down, constants::SCREEN_WIDTH},
-	{Section_Left, constants::SCREEN_HEIGHT},
-	{Section_Right, constants::SCREEN_HEIGHT}
+    std::vector<std::pair<Section, int>> spawn_sections {
+	{UP, constants::SCREEN_WIDTH},
+	{DOWN, constants::SCREEN_WIDTH},
+	{LEFT, constants::SCREEN_HEIGHT},
+	{RIGHT, constants::SCREEN_HEIGHT}
     };
 
     std::uniform_int_distribution<int> index(0,3);
     std::random_device random;
 
-    std::pair<Sections, int> section{ spawn_sections.at( index(random) ) };
+    std::pair<Section, int> section{ spawn_sections.at( index(random) ) };
     std::uniform_int_distribution<int> spawn_range(0, section.second);
 
     Point spawn_point;
-    switch (section.first) {
-    case Section_Up:
-        spawn_point = {spawn_range(random), 0 - texture->getHeight()};
-        break;
-
-    case Section_Left:
-        spawn_point = {0 - texture->getWidth(), spawn_range(random)};
-        break;
-
-    case Section_Down:
-        spawn_point = {spawn_range(random), constants::SCREEN_HEIGHT};
-        break;
-
-    case Section_Right:
-        spawn_point = {constants::SCREEN_WIDTH, spawn_range(random)};
-        break;
+    switch (section.first)
+    {
+    case Section::UP:    spawn_point = { spawn_range(random), 0 - texture->getHeight() }; break;
+    case Section::LEFT:  spawn_point = { 0 - texture->getWidth(), spawn_range(random) };  break;
+    case Section::DOWN:  spawn_point = { spawn_range(random), constants::SCREEN_HEIGHT }; break;
+    case Section::RIGHT: spawn_point = { constants::SCREEN_WIDTH, spawn_range(random) };  break;
     }
 
     return spawn_point;

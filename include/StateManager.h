@@ -13,16 +13,16 @@ class StateManager
 public:
     StateManager(SDL_Renderer* r);
     bool stillPlaying() const;
-    States getCurrent() const;
+    State getCurrent() const;
     void update();
 
 private:
     SDL_Renderer* renderer;
     ScoreKeeper score;
     std::unique_ptr<GameState> current_state;
-    States current_state_id = State_Menu;
+    State current_state_id = State::MENU;
 
-    void changeStateIfRequired(States next_state);
+    void changeStateIfRequired(State next_state);
 };
 
 

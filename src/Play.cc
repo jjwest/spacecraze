@@ -10,7 +10,7 @@ Play::Play(SDL_Renderer*, ScoreKeeper& score)
       score{score} {}
 
 
-States Play::getNextState() const
+State Play::getNextState() const
 {
     return next_state;
 }
@@ -22,7 +22,7 @@ void Play::handleEvents()
     {
         if (event.type == SDL_QUIT)
 	{
-            next_state = State_Quit;
+            next_state = QUIT;
         }
     }
 }
@@ -31,11 +31,12 @@ void Play::update()
 {
     enemy_generator.update(world);
     world.update();
-    auto state = world.getState();
+    WorldState state = world.getState();
     user_interface.update(state.score, state.player_has_special);
+
     if (state.player_dead)
     {
-        next_state = State_EnterHighscore;
+        next_state = ENTER_HIGHSCORE;
 	score.set(state.score);
     }
 }

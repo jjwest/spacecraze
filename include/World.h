@@ -28,6 +28,7 @@ public:
     void addEnemy(std::unique_ptr<Enemy> enemy);
     void addEnemyLaser(const Point& pos, const Point& dest, double dmg);
     void addPlayerLaser(const Point& pos, double dmg);
+    void addPowerup(std::unique_ptr<GameObject> powerup);
     void clearEnemies();
     void draw(SDL_Renderer* renderer);
     void update();
@@ -38,6 +39,7 @@ private:
     std::vector<std::unique_ptr<Enemy>> enemies;
     std::vector<std::unique_ptr<Laser>> enemy_lasers;
     std::vector<std::unique_ptr<Laser>> player_lasers;
+    std::vector<std::unique_ptr<GameObject>> powerups;
 
     void updateObjects();
     void resolveCollisions();

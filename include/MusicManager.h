@@ -11,14 +11,14 @@ class MusicManager
 public:
     MusicManager();
     void start();
-    void update(States current_state);
+    void update(State current_state);
 
 private:
-    States current_music = State_Menu;
+    State current_music = State::MENU;
     std::map<std::string, Mix_Music*> music;
 
-    bool switchingToPlay(States current_state) const;
-    bool switchingFromPlay(States current_state) const;
+    bool switchingToPlay(State current_state) const;
+    bool switchingFromPlay(State current_state) const;
 };
 
 

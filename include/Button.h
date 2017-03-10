@@ -13,21 +13,21 @@ public:
     Button(SDL_Renderer* renderer,
 	   const Point& pos,
 	   const std::string& text,
-           States action);
+           State action);
     Button(const Button&) = delete;
     Button(Button&&) = default;
     Button& operator=(const Button&) = delete;
     Button& operator=(Button&&) = default;
     ~Button();
 
-    States update(States current_state);
+    State update(State current_state);
     void draw(SDL_Renderer* renderer);
 
 private:
     SDL_Rect rect;
     SDL_Texture* texture_normal;
     SDL_Texture* texture_hover;
-    States action;
+    State action;
 
     bool mouseOverButton() const;
 };

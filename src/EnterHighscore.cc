@@ -10,14 +10,14 @@
 const Point button_position = {constants::SCREEN_WIDTH / 2 - 50, constants::SCREEN_HEIGHT - 150};
 
 EnterHighscore::EnterHighscore(SDL_Renderer* renderer, const ScoreKeeper& score)
-    : back_button {renderer, button_position, "BACK", State_Menu},
+    : back_button {renderer, button_position, "BACK", MENU},
       player_score{score.get()}
 {
     SDL_StartTextInput();
 
     if (!goodEnoughForHighscore(player_score))
     {
-	next_state = State_ViewHighscore;
+	next_state = VIEW_HIGHSCORE;
     }
 }
 
@@ -26,7 +26,7 @@ EnterHighscore::~EnterHighscore()
     SDL_StopTextInput();
 }
 
-States EnterHighscore::getNextState() const
+State EnterHighscore::getNextState() const
 {
     return next_state;
 }
@@ -37,7 +37,7 @@ void EnterHighscore::handleEvents()
     {
         if (event.type == SDL_QUIT)
 	{
-	    next_state = State_Quit;
+	    next_state = QUIT;
         }
 	else if (leftMouseButtonPressed())
 	{
@@ -50,7 +50,7 @@ void EnterHighscore::handleEvents()
 	else if (returnIsPressed())
 	{
 	    updateHighscoreFile();
-	    next_state = State_ViewHighscore;
+	    next_state = VIEW_HIGHSCORE;
 	}
 	else if (enteringName())
 	{

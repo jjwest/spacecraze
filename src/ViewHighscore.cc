@@ -10,7 +10,7 @@ const Point button_pos{constants::SCREEN_WIDTH / 2 - 50, constants::SCREEN_HEIGH
 const Point title_pos{constants::SCREEN_WIDTH / 2 - 150, 150};
 
 ViewHighscore::ViewHighscore(SDL_Renderer* renderer, int last_score)
-    : button_back{renderer, button_pos, "BACK", State_Menu},
+    : button_back{renderer, button_pos, "BACK", MENU},
       title{renderer, "HIGHSCORE", title_pos, AssetManager::getInstance().getFont("title")}
 {
     auto scores = HighscoreFile::read();
@@ -27,7 +27,7 @@ ViewHighscore::ViewHighscore(SDL_Renderer* renderer, int last_score)
     }
 }
 
-States ViewHighscore::getNextState() const
+State ViewHighscore::getNextState() const
 {
     return next_state;
 }
@@ -60,7 +60,7 @@ void ViewHighscore::handleEvents()
     {
         if (event.type == SDL_QUIT)
 	{
-            next_state = State_Quit;
+            next_state = QUIT;
         }
 	else if (leftMouseButtonPressed())
 	{
