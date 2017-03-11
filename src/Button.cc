@@ -34,7 +34,14 @@ Button::~Button()
 
 State Button::update(State current_state)
 {
-    return mouseOverButton() ? action : current_state;
+    if (mouseOverButton())
+    {
+	return action;
+    }
+    else
+    {
+	return current_state;
+    }
 }
 
 void Button::draw(SDL_Renderer* renderer)

@@ -3,8 +3,9 @@
 
 #include <SDL2/SDL.h>
 
-#include "GameState.h"
 #include "EnemyGenerator.h"
+#include "GameState.h"
+#include "PowerupGenerator.h"
 #include "UserInterface.h"
 #include "World.h"
 
@@ -19,10 +20,13 @@ public:
 
 private:
     EnemyGenerator enemy_generator;
-    State next_state = State::PLAY;
+    PowerupGenerator powerup_generator;
+
     SDL_Event event;
-    UserInterface user_interface;
     ScoreKeeper& score;
+
+    State next_state = State::PLAY;
+    UserInterface user_interface;
     World world;
 };
 

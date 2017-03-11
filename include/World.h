@@ -10,6 +10,7 @@
 #include "Enums.h"
 #include "Laser.h"
 #include "Player.h"
+#include "Powerup.h"
 #include "ScoreKeeper.h"
 #include "UserInterface.h"
 
@@ -28,7 +29,7 @@ public:
     void addEnemy(std::unique_ptr<Enemy> enemy);
     void addEnemyLaser(const Point& pos, const Point& dest, double dmg);
     void addPlayerLaser(const Point& pos, double dmg);
-    void addPowerup(std::unique_ptr<GameObject> powerup);
+    void addPowerup(std::unique_ptr<Powerup> powerup);
     void clearEnemies();
     void draw(SDL_Renderer* renderer);
     void update();
@@ -39,12 +40,13 @@ private:
     std::vector<std::unique_ptr<Enemy>> enemies;
     std::vector<std::unique_ptr<Laser>> enemy_lasers;
     std::vector<std::unique_ptr<Laser>> player_lasers;
-    std::vector<std::unique_ptr<GameObject>> powerups;
+    std::vector<std::unique_ptr<Powerup>> powerups;
 
     void updateObjects();
     void resolveCollisions();
     void resolvePlayerCollisions();
     void resolveLaserCollisions();
+    void resolvePowerups();
     void updateState();
     void removeDeadObjects();
 };

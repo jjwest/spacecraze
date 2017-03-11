@@ -41,7 +41,7 @@ void World::addPlayerLaser(const Point& origin, double damage)
     player_lasers.push_back(factory.createPlayerLaser(origin, target, damage));
 }
 
-void World::addPowerup(std::unique_ptr<GameObject> powerup)
+void World::addPowerup(std::unique_ptr<Powerup> powerup)
 {
     powerups.push_back(std::move(powerup));
 }
@@ -74,6 +74,11 @@ void World::draw(SDL_Renderer* renderer)
 	laser->draw(renderer);
     }
 
+    for (auto& powerup : powerups)
+    {
+	powerup->draw(renderer);
+    }
+
     player.draw(renderer);
 }
 
@@ -82,6 +87,7 @@ void World::update()
 {
     updateObjects();
     resolveCollisions();
+    resolvePowerups();
     updateState();
     removeDeadObjects();
 }
@@ -104,6 +110,11 @@ void World::updateObjects()
     for (auto& laser : enemy_lasers)
     {
 	laser->update();
+    }
+
+    for (auto& powerup : powerups)
+    {
+	powerup->update();
     }
 }
 
@@ -144,6 +155,21 @@ void World::resolveLaserCollisions()
     }
 }
 
+void World::resolvePowerups()
+{
+    for (auto& powerup : powerups)
+    {
+	if (player.collides(powerup->getHitbox()))
+	{
+	    if (powerup->getType() == "doubledamage")
+	    {
+		player.increaseDamage();
+	    }
+	    powerup->kill();
+	}
+    }
+}
+
 void World::updateState()
 {
     for (const auto& enemy : enemies)
@@ -165,4 +191,5 @@ void World::removeDeadObjects()
     enemies.erase(std::remove_if(begin(enemies), end(enemies), isDead), end(enemies));
     enemy_lasers.erase(std::remove_if(begin(enemy_lasers), end(enemy_lasers), isDead), end(enemy_lasers));
     player_lasers.erase(std::remove_if(begin(player_lasers), end(player_lasers), isDead), end(player_lasers));
+    powerups.erase(std::remove_if(begin(powerups), end(powerups), isDead), end(powerups));
 }

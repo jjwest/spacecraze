@@ -10,12 +10,12 @@
 class PowerupGenerator
 {
 public:
-    PowerupGenerator() = default;
+    PowerupGenerator();
     void update(World& world);
 
 private:
     std::random_device random;
-    std::vector<std::string> powerups{"doubledamage"};
+    std::vector<std::string> powerups;
 
     const Uint32 spawn_delay_ms = 10000;
     Uint32 last_spawn_time = SDL_GetTicks();

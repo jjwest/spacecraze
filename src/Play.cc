@@ -30,6 +30,7 @@ void Play::handleEvents()
 void Play::update()
 {
     enemy_generator.update(world);
+    powerup_generator.update(world);
     world.update();
     WorldState state = world.getState();
     user_interface.update(state.score, state.player_has_special);

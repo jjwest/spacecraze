@@ -112,6 +112,7 @@ void Game::loadAssets() const
     assets.loadTexture("player_laser", "sprites/playerlaser.png", renderer);
     assets.loadTexture("enemy_laser", "sprites/enemylaser.png", renderer);
     assets.loadTexture("singularity", "sprites/singularity.png", renderer);
+    assets.loadTexture("doubledamage", "sprites/double_damage.png", renderer);
 
     assets.loadFont("text", "fonts/Akashi.ttf", 36);
     assets.loadFont("title", "fonts/Akashi.ttf", 60);

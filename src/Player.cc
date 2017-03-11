@@ -27,9 +27,9 @@ Point Player::getPosition() const
     return {center_x, center_y};
 }
 
-void Player::setDoubleDamage()
+void Player::increaseDamage()
 {
-    // double_damage.activate();
+    damage++;
 }
 
 void Player::update(World& world)

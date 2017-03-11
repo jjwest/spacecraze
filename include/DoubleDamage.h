@@ -3,13 +3,15 @@
 
 #include <string>
 
-#include "GameObject.h"
+#include "Powerup.h"
 
-class DoubleDamage: GameObject
+class DoubleDamage: public Powerup
 {
 public:
     DoubleDamage(Texture* texture, const SDL_Rect& rect);
-    std::string type() const;
+    ~DoubleDamage()  {};
+    std::string getType() const override;
+    void update() override;
 };
 
 
