@@ -161,7 +161,7 @@ void World::resolvePowerups()
     {
 	if (player.collides(powerup->getHitbox()))
 	{
-	    if (powerup->getType() == "doubledamage")
+	    if (powerup->getType() == PowerupType::BONUS_DAMAGE)
 	    {
 		player.increaseDamage();
 	    }

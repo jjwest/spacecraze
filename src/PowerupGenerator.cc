@@ -2,7 +2,6 @@
 
 #include "AssetManager.h"
 #include "Constants.h"
-#include "DoubleDamage.h"
 
 #include <iostream>
 
@@ -37,7 +36,7 @@ void PowerupGenerator::spawnPowerup(World& world)
     if (powerup == "doubledamage")
     {
 	auto texture = AssetManager::getInstance().getTexture("doubledamage");
-	world.addPowerup(std::make_unique<DoubleDamage>(texture, hitbox));
+	world.addPowerup(std::make_unique<Powerup>(texture, hitbox, PowerupType::BONUS_DAMAGE));
     }
 }
 

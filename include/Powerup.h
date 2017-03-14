@@ -3,13 +3,18 @@
 
 #include "GameObject.h"
 
+enum PowerupType {
+    BONUS_DAMAGE
+};
+
 class Powerup: public GameObject
 {
 public:
-    Powerup(Texture* texture, const SDL_Rect& rect);
-    virtual ~Powerup() {};
-    virtual std::string getType() const = 0;
-    virtual void update() = 0;
+    Powerup(Texture* texture, const SDL_Rect& rect, PowerupType type);
+    PowerupType getType() const;
+    void update();
+private:
+    PowerupType type;
 };
 
 

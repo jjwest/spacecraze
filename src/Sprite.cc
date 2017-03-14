@@ -1,7 +1,7 @@
 #include "GameObject.h"
 
-Sprite::Sprite(Texture* t, const SDL_Rect& r)
-    : texture{t}, hitbox{r} {}
+Sprite::Sprite(Texture* texture, const SDL_Rect& hitbox)
+    : texture{texture}, hitbox{hitbox} {}
 
 Sprite::~Sprite() {}
 
