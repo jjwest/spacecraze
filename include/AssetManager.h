@@ -6,9 +6,9 @@
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_ttf.h>
 
-#include <map>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 #include "Font.h"
 #include "Music.h"
@@ -34,9 +34,9 @@ public:
 private:
     AssetManager() = default;
     static AssetManager* instance;
-    std::map<std::string, std::unique_ptr<Texture>> textures;
-    std::map<std::string, std::unique_ptr<Music>> music;
-    std::map<std::string, std::unique_ptr<Font>> fonts;
+    std::unordered_map<std::string, std::unique_ptr<Texture>> textures;
+    std::unordered_map<std::string, std::unique_ptr<Music>> music;
+    std::unordered_map<std::string, std::unique_ptr<Font>> fonts;
 };
 
 #endif // _ASSETS_H_
