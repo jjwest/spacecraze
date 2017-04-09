@@ -2,7 +2,7 @@
 #define _MUSIC_MANAGER_H_
 
 #include <SDL2/SDL_mixer.h>
-#include <map>
+#include <unordered_map>
 
 #include "Enums.h"
 
@@ -15,7 +15,7 @@ public:
 
 private:
     State current_music = State::MENU;
-    std::map<std::string, Mix_Music*> music;
+    std::unordered_map<std::string, Mix_Music*> music;
 
     bool switchingToPlay(State current_state) const;
     bool switchingFromPlay(State current_state) const;

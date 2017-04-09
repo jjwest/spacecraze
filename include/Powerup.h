@@ -3,7 +3,7 @@
 
 #include "GameObject.h"
 
-enum PowerupType {
+enum class PowerupType {
     BONUS_DAMAGE
 };
 
