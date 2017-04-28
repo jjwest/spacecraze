@@ -1,5 +1,5 @@
 EXEC      = spacecraze
-BUILD_DIR = build/
+BUILD_DIR = build
 INCLUDE   = include/
 SRC_DIR   = src/
 
@@ -14,7 +14,7 @@ LIBS     = -lSDL2 -lSDL2main -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 
 VPATH     = ${SRC_DIR}:${INCLUDES}:${BUILD_DIR}
 SOURCES   = $(notdir $(wildcard ${SRC_DIR}*.cc))
-OBJECTS   = $(addprefix ${BUILD_DIR}, $(patsubst %.cc, %.o, ${SOURCES}))
+OBJECTS   = $(addprefix ${BUILD_DIR}/, $(patsubst %.cc, %.o, ${SOURCES}))
 INCLUDES  = $(addprefix -I, ${INCLUDE})
 
 all: ${EXEC}
@@ -22,14 +22,17 @@ all: ${EXEC}
 ${EXEC}: ${OBJECTS}
 	${CC} ${CCFLAGS} ${INCLUDES} -o $@ $^ ${LIBS}
 
-${BUILD_DIR}%.o: %.cc %.h
+${BUILD_DIR}/%.o: %.cc %.h | ${BUILD_DIR}
 	${CC} ${CCFLAGS} ${INCLUDES} -c -o $@ $< ${LIBS}
 
-${BUILD_DIR}%.o: %.cc
+${BUILD_DIR}/%.o: %.cc | ${BUILD_DIR}
 	${CC} ${CCFLAGS} ${INCLUDES} -c -o $@ $< ${LIBS}
+
+${BUILD_DIR}:
+	mkdir -p ${BUILD_DIR}
 
 clean:
-	rm ${BUILD_DIR}*.o ${EXEC}
+	rm ${BUILD_DIR}/*.o ${EXEC}
 
 run:
 	./${EXEC}
