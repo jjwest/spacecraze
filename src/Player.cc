@@ -113,11 +113,11 @@ void Player::adjustAngle()
      int mouse_x, mouse_y;
      SDL_GetMouseState(&mouse_x, &mouse_y);
 
-     int player_center_x = hitbox.x + (hitbox.w / 2);
-     int player_center_y = hitbox.y + (hitbox.h / 2);
+     auto player_center_x = hitbox.x + (hitbox.w / 2);
+     auto player_center_y = hitbox.y + (hitbox.h / 2);
 
-     double angle_in_radians = atan2(player_center_y - mouse_y, player_center_x - mouse_x);
-     double angle_in_degrees = angle_in_radians * 180 / M_PI;
+     auto angle_in_radians = atan2(player_center_y - mouse_y, player_center_x - mouse_x);
+     auto angle_in_degrees = angle_in_radians * 180 / M_PI;
      angle = (static_cast<int>(angle_in_degrees) - 90) % 360;
 }
 
@@ -125,7 +125,7 @@ void Player::shoot(World& world)
 {
     if (leftMouseButtonPressed() && canShoot())
     {
-        int player_center_x = hitbox.x + (hitbox.w / 2);
+        auto player_center_x = hitbox.x + (hitbox.w / 2);
 	world.addPlayerLaser({player_center_x, hitbox.y}, damage);
         last_shot_time = SDL_GetTicks();
     }
@@ -138,7 +138,7 @@ bool Player::leftMouseButtonPressed() const
 
 bool Player::canShoot() const
 {
-    Uint32 current_time = SDL_GetTicks();
+    auto current_time = SDL_GetTicks();
     return current_time - last_shot_time > shoot_cooldown;
 }
 

@@ -126,7 +126,7 @@ void World::resolveCollisions()
 
 void World::resolvePlayerCollisions()
 {
-    AABB player_hitbox = player.getHitbox();
+    auto player_hitbox = player.getHitbox();
     auto collides = [&player_hitbox] (const auto& enemy) {
 	return enemy->collides(player_hitbox);
     };

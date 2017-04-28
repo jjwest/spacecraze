@@ -5,6 +5,7 @@
 #include <SDL2/SDL_ttf.h>
 
 #include <stdexcept>
+#include <iostream>
 
 #include "AssetManager.h"
 #include "Constants.h"
@@ -43,13 +44,13 @@ void Game::run()
 {
     StateManager state(renderer);
     MusicManager music;
-    // music.start();
+    music.start();
 
     while (state.stillPlaying())
     {
 	auto frame_start_time = SDL_GetTicks();
 	state.update();
-	// music.update(state.getCurrent());
+	music.update(state.getCurrent());
 	auto frame_end_time = SDL_GetTicks();
 
 	sleepIfFrameTooFast(frame_start_time, frame_end_time);
@@ -59,7 +60,7 @@ void Game::run()
 void Game::sleepIfFrameTooFast(Uint32 start, Uint32 end) const
 {
     const Uint32 INTENDED_DURATION_MS = 10;
-    Uint32 time_elapsed = end - start;
+    auto time_elapsed = end - start;
 
     if (time_elapsed < INTENDED_DURATION_MS)
     {
@@ -90,9 +91,14 @@ void Game::initSDL() const
 
 void Game::createWindowAndRenderer()
 {
-    window = SDL_CreateWindow("SPACECRAZE", SDL_WINDOWPOS_UNDEFINED,
-			      SDL_WINDOWPOS_UNDEFINED, constants::SCREEN_WIDTH,
-			      constants::SCREEN_HEIGHT, SDL_WINDOW_RESIZABLE);
+    window = SDL_CreateWindow(
+	"SPACECRAZE",
+	SDL_WINDOWPOS_UNDEFINED,
+	SDL_WINDOWPOS_UNDEFINED,
+	constants::SCREEN_WIDTH,
+	constants::SCREEN_HEIGHT,
+	SDL_WINDOW_RESIZABLE
+    );
 
     renderer = SDL_CreateRenderer(window, -1, 0);
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");

@@ -4,7 +4,7 @@ INCLUDE   = include/
 SRC_DIR   = src/
 
 CC       = g++-5
-CCFLAGS  = -std=c++14 -Wall -Wextra -Wold-style-cast -Woverloaded-virtual -pedantic -g
+CCFLAGS  = -std=c++14 -O2 -Wall -Wextra -Wold-style-cast -Woverloaded-virtual -pedantic -g
 LIBS     = -lSDL2 -lSDL2main -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 
 

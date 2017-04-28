@@ -1,11 +1,12 @@
 #include "EnemyGenerator.h"
 
-#include <SDL2/SDL.h>
 #include <random>
 
-#include "Constants.h"
+#include <SDL2/SDL.h>
+
 #include "Asteroid.h"
 #include "Blaster.h"
+#include "Constants.h"
 #include "Drone.h"
 #include "ObjectFactory.h"
 
