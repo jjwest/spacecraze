@@ -126,9 +126,8 @@ void World::resolveCollisions()
 
 void World::resolvePlayerCollisions()
 {
-    auto player_hitbox = player.getHitbox();
-    auto collides = [&player_hitbox] (const auto& enemy) {
-	return enemy->collides(player_hitbox);
+    auto collides = [&] (const auto& enemy) {
+	return enemy->collides(player);
     };
 
     bool hit_by_laser = std::any_of(begin(enemy_lasers), end(enemy_lasers), collides);
@@ -146,7 +145,7 @@ void World::resolveLaserCollisions()
     {
         for (auto& enemy : enemies)
 	{
-            if (laser->collides(enemy->getHitbox()))
+            if (laser->collides(*enemy))
 	    {
                 enemy->reduceHealth(laser->getDamage());
                 laser->kill();
@@ -159,7 +158,7 @@ void World::resolvePowerups()
 {
     for (auto& powerup : powerups)
     {
-	if (player.collides(powerup->getHitbox()))
+	if (player.collides(*powerup))
 	{
 	    if (powerup->getType() == PowerupType::BONUS_DAMAGE)
 	    {

@@ -17,14 +17,14 @@ public:
     GameObject(Texture* t, const SDL_Rect& rect, double hp);
     virtual ~GameObject();
     AABB getHitbox() const;
-    bool collides(const AABB& other) const;
+    bool collides(const GameObject& other) const;
     bool isDead() const;
     void kill();
     void reduceHealth(double damage);
     void updateHitbox(const SDL_Rect& pos);
 
 private:
-    AABB this_aabb;
+    AABB aabb;
     double health;
 };
 

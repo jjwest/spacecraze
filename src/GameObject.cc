@@ -2,19 +2,19 @@
 
 GameObject::GameObject(Texture* t, const SDL_Rect& rect, double hp)
     : Sprite(t, rect),
-      this_aabb{rect.y, rect.x, rect.y + rect.h, rect.x + rect.w},
+      aabb{rect.y, rect.x, rect.y + rect.h, rect.x + rect.w},
       health{hp} {}
 
 GameObject::~GameObject() {}
 
 AABB GameObject::getHitbox() const
 {
-    return this_aabb;
+    return aabb;
 }
 
-bool GameObject::collides(const AABB& other) const
+bool GameObject::collides(const GameObject& other) const
 {
-    return this_aabb.intersect(other);
+    return aabb.intersect(other.aabb);
 }
 
 bool GameObject::isDead() const
@@ -34,5 +34,5 @@ void GameObject::reduceHealth(double damage)
 
 void GameObject::updateHitbox(const SDL_Rect& rect)
 {
-    this_aabb = AABB(rect.y, rect.x, rect.y + rect.h, rect.x + rect.w);
+    aabb = AABB(rect.y, rect.x, rect.y + rect.h, rect.x + rect.w);
 }
