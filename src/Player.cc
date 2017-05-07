@@ -8,10 +8,10 @@
 #include "Constants.h"
 #include "World.h"
 
-Player::Player(const SDL_Rect& rect)
-    :  GameObject(AssetManager::getInstance().getTexture("player"), rect, 1.0),
-       pos_x{ static_cast<double>(rect.x) },
-       pos_y{ static_cast<double>(rect.y) } {}
+Player::Player(const SDL_Rect& hitbox)
+    :  GameObject(AssetManager::getInstance().getTexture("player"), hitbox, 1.0),
+       pos_x{ static_cast<double>(hitbox.x) },
+       pos_y{ static_cast<double>(hitbox.y) } {}
 
 
 bool Player::hasSpecialWeapon() const

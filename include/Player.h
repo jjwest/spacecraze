@@ -8,7 +8,7 @@
 class Player: public GameObject
 {
 public:
-    Player(const SDL_Rect& rect);
+    Player(const SDL_Rect& hitbox);
     bool hasSpecialWeapon() const;
     Point getPosition() const;
     void increaseDamage();
