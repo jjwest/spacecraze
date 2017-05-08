@@ -9,7 +9,7 @@ StateManager::StateManager(SDL_Renderer* r)
 
 bool StateManager::stillPlaying() const
 {
-    return current_state_id != QUIT;
+    return current_state_id != State::QUIT;
 }
 
 State StateManager::getCurrent() const
@@ -31,24 +31,32 @@ void StateManager::changeStateIfRequired(State next_state)
     if (next_state != current_state_id)
     {
         switch (next_state) {
-        case PLAY:
+        case State::PLAY:
+	{
 	    score.reset();
             current_state.reset(new Play(renderer, score));
             break;
+	}
 
-        case MENU:
-            current_state.reset(new Menu(renderer));
+        case State::MENU:
+	{
+	    current_state.reset(new Menu(renderer));
             break;
+	}
 
-        case VIEW_HIGHSCORE:
+        case State::VIEW_HIGHSCORE:
+	{
 	    current_state.reset(new ViewHighscore(renderer, score.get()));
             break;
+	}
 
-	case ENTER_HIGHSCORE:
+	case State::ENTER_HIGHSCORE:
+	{
 	    current_state.reset(new EnterHighscore(renderer, score));
 	    break;
+	}
 
-	case QUIT:
+	case State::QUIT:
 	    break;
 	}
 

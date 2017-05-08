@@ -77,7 +77,7 @@ bool ViewHighscore::leftMouseButtonPressed() const
 }
 
 void ViewHighscore::createHighscoreText(SDL_Renderer* renderer,
-					const score_vec& scores)
+					const score_t& scores)
 {
     int row_y_pos = 400;
     int name_offset = 170;

@@ -5,11 +5,12 @@
 
 const std::string FILE_PATH = "highscore.txt";
 
-score_vec HighscoreFile::read()
+score_t HighscoreFile::read()
 {
     using namespace std;
 
     ifstream file{FILE_PATH};
+
     // Create highscore file if non-existing
     if (!file)
     {
@@ -20,7 +21,7 @@ score_vec HighscoreFile::read()
         file.open(FILE_PATH);
     }
 
-    score_vec entries;
+    score_t entries;
     string line;
     while (getline(file, line))
     {
@@ -35,7 +36,7 @@ score_vec HighscoreFile::read()
     return entries;
 }
 
-void HighscoreFile::write(const score_vec& scores)
+void HighscoreFile::write(const score_t& scores)
 {
     std::ofstream file{FILE_PATH};
     for (const auto& score : scores)

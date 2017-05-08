@@ -22,7 +22,7 @@ void Play::handleEvents()
     {
         if (event.type == SDL_QUIT)
 	{
-            next_state = QUIT;
+            next_state = State::QUIT;
         }
     }
 }
@@ -37,7 +37,7 @@ void Play::update()
 
     if (state.player_dead)
     {
-        next_state = ENTER_HIGHSCORE;
+        next_state = State::ENTER_HIGHSCORE;
 	score.set(state.score);
     }
 }
