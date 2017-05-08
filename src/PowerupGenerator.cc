@@ -42,10 +42,10 @@ void PowerupGenerator::spawnPowerup(World& world)
 
 Point PowerupGenerator::getSpawnPoint()
 {
-    int x_min = constants::SCREEN_WIDTH / 10;
-    int x_max = constants::SCREEN_WIDTH * 0.90;
-    int y_min = constants::SCREEN_HEIGHT / 10;
-    int y_max = constants::SCREEN_HEIGHT * 0.90;
+    int x_min = SCREEN_WIDTH / 10;
+    int x_max = SCREEN_WIDTH * 0.90;
+    int y_min = SCREEN_HEIGHT / 10;
+    int y_max = SCREEN_HEIGHT * 0.90;
 
     std::uniform_int_distribution<int> range_x(x_min, x_max);
     std::uniform_int_distribution<int> range_y(y_min, y_max);

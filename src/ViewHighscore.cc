@@ -6,11 +6,11 @@
 #include "HighscoreFile.h"
 #include "Point.h"
 
-const Point button_pos{constants::SCREEN_WIDTH / 2 - 50, constants::SCREEN_HEIGHT - 150};
-const Point title_pos{constants::SCREEN_WIDTH / 2 - 150, 150};
+const Point button_pos{SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT - 150};
+const Point title_pos{SCREEN_WIDTH / 2 - 150, 150};
 
 ViewHighscore::ViewHighscore(SDL_Renderer* renderer, int last_score)
-    : button_back{renderer, button_pos, "BACK", MENU},
+    : button_back{renderer, button_pos, "BACK", State::MENU},
       title{renderer, "HIGHSCORE", title_pos, AssetManager::getInstance().getFont("title")}
 {
     auto scores = HighscoreFile::read();
@@ -18,7 +18,7 @@ ViewHighscore::ViewHighscore(SDL_Renderer* renderer, int last_score)
 
     if (last_score > 0)
     {
-	Point score_pos{constants::SCREEN_WIDTH / 2 - 150, 300};
+	Point score_pos{SCREEN_WIDTH / 2 - 150, 300};
 	latest_score.reset(new RenderedText(
 			       renderer,
 			       "Your score: " + std::to_string(last_score),
@@ -60,7 +60,7 @@ void ViewHighscore::handleEvents()
     {
         if (event.type == SDL_QUIT)
 	{
-            next_state = QUIT;
+            next_state = State::QUIT;
         }
 	else if (leftMouseButtonPressed())
 	{
@@ -87,11 +87,11 @@ void ViewHighscore::createHighscoreText(SDL_Renderer* renderer,
     {
 	highscores.emplace_back(std::make_unique<RenderedText>(
 				    renderer, score.first,
-				    Point{constants::SCREEN_WIDTH / 2 - name_offset, row_y_pos},
+				    Point{SCREEN_WIDTH / 2 - name_offset, row_y_pos},
 				    AssetManager::getInstance().getFont("text")));
 	highscores.emplace_back(std::make_unique<RenderedText>(
 				    renderer, std::to_string(score.second),
-				    Point{constants::SCREEN_WIDTH / 2 + score_offset, row_y_pos},
+				    Point{SCREEN_WIDTH / 2 + score_offset, row_y_pos},
 				    AssetManager::getInstance().getFont("text")));
 	row_y_pos += 50;
     }

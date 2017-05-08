@@ -9,7 +9,7 @@
 #include "Point.h"
 #include "Texture.h"
 
-enum Section {
+enum class Section {
     UP,
     DOWN,
     LEFT,
@@ -25,10 +25,10 @@ ObjectFactory& ObjectFactory::getInstance()
 Point getSpawnPoint(Texture* texture)
 {
     std::vector<std::pair<Section, int>> spawn_sections {
-	{UP, constants::SCREEN_WIDTH},
-	{DOWN, constants::SCREEN_WIDTH},
-	{LEFT, constants::SCREEN_HEIGHT},
-	{RIGHT, constants::SCREEN_HEIGHT}
+	{Section::UP, SCREEN_WIDTH},
+	{Section::DOWN, SCREEN_WIDTH},
+	{Section::LEFT, SCREEN_HEIGHT},
+	{Section::RIGHT, SCREEN_HEIGHT}
     };
 
     std::uniform_int_distribution<int> index(0,3);
@@ -42,8 +42,8 @@ Point getSpawnPoint(Texture* texture)
     {
     case Section::UP:    spawn_point = { spawn_range(random), 0 - texture->getHeight() }; break;
     case Section::LEFT:  spawn_point = { 0 - texture->getWidth(), spawn_range(random) };  break;
-    case Section::DOWN:  spawn_point = { spawn_range(random), constants::SCREEN_HEIGHT }; break;
-    case Section::RIGHT: spawn_point = { constants::SCREEN_WIDTH, spawn_range(random) };  break;
+    case Section::DOWN:  spawn_point = { spawn_range(random), SCREEN_HEIGHT }; break;
+    case Section::RIGHT: spawn_point = { SCREEN_WIDTH, spawn_range(random) };  break;
     }
 
     return spawn_point;

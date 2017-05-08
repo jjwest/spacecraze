@@ -55,8 +55,8 @@ void Laser::move()
 
 void Laser::killIfOutsideScreen()
 {
-    if ( hitbox.x + hitbox.w < 0 || hitbox.x > constants::SCREEN_WIDTH ||
-         hitbox.y + hitbox.h < 0 || hitbox.y > constants::SCREEN_HEIGHT )
+    if ( hitbox.x + hitbox.w < 0 || hitbox.x > SCREEN_WIDTH ||
+         hitbox.y + hitbox.h < 0 || hitbox.y > SCREEN_HEIGHT )
     {
         kill();
     }

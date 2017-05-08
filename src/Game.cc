@@ -95,14 +95,14 @@ void Game::createWindowAndRenderer()
 	"SPACECRAZE",
 	SDL_WINDOWPOS_UNDEFINED,
 	SDL_WINDOWPOS_UNDEFINED,
-	constants::SCREEN_WIDTH,
-	constants::SCREEN_HEIGHT,
+	SCREEN_WIDTH,
+	SCREEN_HEIGHT,
 	SDL_WINDOW_RESIZABLE
     );
 
     renderer = SDL_CreateRenderer(window, -1, 0);
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
-    SDL_RenderSetLogicalSize(renderer, constants::SCREEN_WIDTH, constants::SCREEN_HEIGHT);
+    SDL_RenderSetLogicalSize(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
 }
 
 

@@ -7,17 +7,17 @@
 #include "Constants.h"
 #include "HighscoreFile.h"
 
-const Point button_position = {constants::SCREEN_WIDTH / 2 - 50, constants::SCREEN_HEIGHT - 150};
+const Point button_position = {SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT - 150};
 
 EnterHighscore::EnterHighscore(SDL_Renderer* renderer, const ScoreKeeper& score)
-    : back_button {renderer, button_position, "BACK", MENU},
+    : back_button {renderer, button_position, "BACK", State::MENU},
       player_score{score.get()}
 {
     SDL_StartTextInput();
 
     if (!goodEnoughForHighscore(player_score))
     {
-	next_state = VIEW_HIGHSCORE;
+	next_state = State::VIEW_HIGHSCORE;
     }
 }
 
@@ -37,7 +37,7 @@ void EnterHighscore::handleEvents()
     {
         if (event.type == SDL_QUIT)
 	{
-	    next_state = QUIT;
+	    next_state = State::QUIT;
         }
 	else if (leftMouseButtonPressed())
 	{
@@ -50,7 +50,7 @@ void EnterHighscore::handleEvents()
 	else if (returnIsPressed())
 	{
 	    updateHighscoreFile();
-	    next_state = VIEW_HIGHSCORE;
+	    next_state = State::VIEW_HIGHSCORE;
 	}
 	else if (enteringName())
 	{

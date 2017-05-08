@@ -30,19 +30,19 @@ Point Asteroid::calculateExitPoint()
     if (hitbox.y < 0)
     {
         exit.x = random_x(rd);
-        exit.y = constants::SCREEN_HEIGHT;
+        exit.y = SCREEN_HEIGHT;
     }
-    else if (hitbox.y >= constants::SCREEN_HEIGHT)
+    else if (hitbox.y >= SCREEN_HEIGHT)
     {
         exit.x = random_x(rd);
         exit.y = 0;
     }
     else if (hitbox.x <= 0)
     {
-        exit.x = constants::SCREEN_WIDTH;
+        exit.x = SCREEN_WIDTH;
         exit.y = random_y(rd);
     }
-    else if (hitbox.x >= constants::SCREEN_WIDTH)
+    else if (hitbox.x >= SCREEN_WIDTH)
     {
         exit.x = 0;
         exit.y = random_y(rd);
@@ -78,8 +78,8 @@ void Asteroid::move()
 
 void Asteroid::killIfOutsideScreen()
 {
-    if (hitbox.x + hitbox.w < 0 || hitbox.x > constants::SCREEN_WIDTH ||
-        hitbox.y + hitbox.h < 0 || hitbox.y > constants::SCREEN_HEIGHT)
+    if (hitbox.x + hitbox.w < 0 || hitbox.x > SCREEN_WIDTH ||
+        hitbox.y + hitbox.h < 0 || hitbox.y > SCREEN_HEIGHT)
     {
         kill();
     }

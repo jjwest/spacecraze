@@ -1,7 +1,7 @@
 #ifndef ENUMS_H
 #define ENUMS_H
 
-enum State {
+enum class State {
     MENU,
     PLAY,
     VIEW_HIGHSCORE,

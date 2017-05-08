@@ -71,7 +71,7 @@ bool Player::canMoveLeft() const
 
 bool Player::canMoveRight() const
 {
-    return hitbox.x + hitbox.w + speed <= constants::SCREEN_WIDTH;
+    return hitbox.x + hitbox.w + speed <= SCREEN_WIDTH;
 }
 
 bool Player::canMoveUp() const
@@ -81,7 +81,7 @@ bool Player::canMoveUp() const
 
 bool Player::canMoveDown() const
 {
-    return hitbox.y + hitbox.h + speed <= constants::SCREEN_HEIGHT;
+    return hitbox.y + hitbox.h + speed <= SCREEN_HEIGHT;
 }
 
 void Player::moveLeft()
