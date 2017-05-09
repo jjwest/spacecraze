@@ -1,4 +1,5 @@
 *.out
 *.o
+highscore.txt
 compile_commands.json
 spacecraze
