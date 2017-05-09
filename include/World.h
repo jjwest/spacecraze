@@ -29,7 +29,7 @@ public:
     void addEnemy(std::unique_ptr<Enemy> enemy);
     void addEnemyLaser(const Point& pos, const Point& dest, double dmg);
     void addPlayerLaser(const Point& pos, double dmg);
-    void addPowerup(std::unique_ptr<Powerup> powerup);
+    void addPowerup(const Powerup& powerup);
     void clearEnemies();
     void draw(SDL_Renderer* renderer);
     void update();
@@ -38,9 +38,9 @@ private:
     WorldState state;
     Player player;
     std::vector<std::unique_ptr<Enemy>> enemies;
-    std::vector<std::unique_ptr<Laser>> enemy_lasers;
-    std::vector<std::unique_ptr<Laser>> player_lasers;
-    std::vector<std::unique_ptr<Powerup>> powerups;
+    std::vector<Laser> enemy_lasers;
+    std::vector<Laser> player_lasers;
+    std::vector<Powerup> powerups;
 
     void updateObjects();
     void resolveCollisions();

@@ -96,23 +96,3 @@ std::unique_ptr<Enemy> ObjectFactory::createEnemy(const std::string& type)
         throw std::invalid_argument("Tried to create non-existing enemy " + type);
     }
 }
-
-std::unique_ptr<Laser> ObjectFactory::createEnemyLaser(
-    const Point& origin,
-    const Point& destination,
-    double damage)
-{
-    auto texture = AssetManager::getInstance().getTexture("enemy_laser");
-    double speed = 2.5;
-    return std::make_unique<Laser>(texture, origin, destination, damage, speed);
-}
-
-std::unique_ptr<Laser> ObjectFactory::createPlayerLaser(
-    const Point& origin,
-    const Point& destination,
-    double damage)
-{
-    auto texture = AssetManager::getInstance().getTexture("player_laser");
-    double speed = 7.0;
-    return std::make_unique<Laser>(texture, origin, destination, damage, speed);
-}

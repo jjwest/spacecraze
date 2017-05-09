@@ -28,22 +28,23 @@ void World::addEnemy(std::unique_ptr<Enemy> enemy)
 
 void World::addEnemyLaser(const Point& origin, const Point& destination, double damage)
 {
-    auto& factory = ObjectFactory::getInstance();
-    enemy_lasers.push_back(factory.createEnemyLaser(origin, destination, damage));
+    auto texture = AssetManager::getInstance().getTexture("enemy_laser");
+    double speed = 2.5;
+    enemy_lasers.push_back(Laser(texture, origin, destination, damage, speed));
 }
 
 void World::addPlayerLaser(const Point& origin, double damage)
 {
-    Point target;
-    SDL_GetMouseState(&target.x, &target.y);
-
-    auto& factory = ObjectFactory::getInstance();
-    player_lasers.push_back(factory.createPlayerLaser(origin, target, damage));
+    auto texture = AssetManager::getInstance().getTexture("player_laser");
+    double speed = 7.0;
+    Point destination;
+    SDL_GetMouseState(&destination.x, &destination.y);
+    player_lasers.push_back(Laser(texture, origin, destination, damage, speed));
 }
 
-void World::addPowerup(std::unique_ptr<Powerup> powerup)
+void World::addPowerup(const Powerup& powerup)
 {
-    powerups.push_back(std::move(powerup));
+    powerups.push_back(powerup);
 }
 
 void World::clearEnemies()
@@ -66,17 +67,17 @@ void World::draw(SDL_Renderer* renderer)
 
     for (auto& laser : enemy_lasers)
     {
-	laser->draw(renderer);
+	laser.draw(renderer);
     }
 
     for (auto& laser : player_lasers)
     {
-	laser->draw(renderer);
+	laser.draw(renderer);
     }
 
     for (auto& powerup : powerups)
     {
-	powerup->draw(renderer);
+	powerup.draw(renderer);
     }
 
     player.draw(renderer);
@@ -104,17 +105,17 @@ void World::updateObjects()
 
     for (auto& laser : player_lasers)
     {
-	laser->update();
+	laser.update();
     }
 
     for (auto& laser : enemy_lasers)
     {
-	laser->update();
+	laser.update();
     }
 
     for (auto& powerup : powerups)
     {
-	powerup->update();
+	powerup.update();
     }
 }
 
@@ -126,12 +127,18 @@ void World::resolveCollisions()
 
 void World::resolvePlayerCollisions()
 {
-    auto collides = [&] (const auto& enemy) {
-	return enemy->collides(player);
-    };
-
-    bool hit_by_laser = std::any_of(begin(enemy_lasers), end(enemy_lasers), collides);
-    bool collides_with_enemy = std::any_of(begin(enemies), end(enemies), collides);
+    bool hit_by_laser =
+	std::any_of(begin(enemy_lasers), end(enemy_lasers),
+		    [&] (const Laser& laser)
+		    {
+			return laser.collides(player);
+		    });
+    bool collides_with_enemy =
+	std::any_of(begin(enemies), end(enemies),
+		    [&] (const auto& enemy)
+		    {
+			return enemy->collides(player);
+		    });
 
     if (collides_with_enemy || hit_by_laser)
     {
@@ -145,10 +152,10 @@ void World::resolveLaserCollisions()
     {
         for (auto& enemy : enemies)
 	{
-            if (laser->collides(*enemy))
+            if (laser.collides(*enemy))
 	    {
-                enemy->reduceHealth(laser->getDamage());
-                laser->kill();
+                enemy->reduceHealth(laser.getDamage());
+                laser.kill();
             }
         }
     }
@@ -158,13 +165,13 @@ void World::resolvePowerups()
 {
     for (auto& powerup : powerups)
     {
-	if (player.collides(*powerup))
+	if (player.collides(powerup))
 	{
-	    if (powerup->getType() == PowerupType::BONUS_DAMAGE)
+	    if (powerup.getType() == PowerupType::BONUS_DAMAGE)
 	    {
 		player.increaseDamage();
 	    }
-	    powerup->kill();
+	    powerup.kill();
 	}
     }
 }
@@ -185,10 +192,13 @@ void World::updateState()
 
 void World::removeDeadObjects()
 {
-    auto isDead = [] (const auto& object) { return object->isDead(); };
+    auto isDead = [] (const auto& object) { return object.isDead(); };
 
-    enemies.erase(std::remove_if(begin(enemies), end(enemies), isDead), end(enemies));
     enemy_lasers.erase(std::remove_if(begin(enemy_lasers), end(enemy_lasers), isDead), end(enemy_lasers));
     player_lasers.erase(std::remove_if(begin(player_lasers), end(player_lasers), isDead), end(player_lasers));
     powerups.erase(std::remove_if(begin(powerups), end(powerups), isDead), end(powerups));
+    enemies.erase(std::remove_if(begin(enemies), end(enemies),
+				 [&] (const auto& enemy) {
+				     return enemy->isDead();
+				 }), end(enemies));
 }

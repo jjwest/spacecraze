@@ -36,7 +36,7 @@ void PowerupGenerator::spawnPowerup(World& world)
     if (powerup == "doubledamage")
     {
 	auto texture = AssetManager::getInstance().getTexture("doubledamage");
-	world.addPowerup(std::make_unique<Powerup>(texture, hitbox, PowerupType::BONUS_DAMAGE));
+	world.addPowerup(Powerup(texture, hitbox, PowerupType::BONUS_DAMAGE));
     }
 }
 
