@@ -25,7 +25,7 @@ public:
     void update() override;
 
 private:
-    Button button_back;
+    Button back_button;
     SDL_Event event;
     RenderedText title;
     std::unique_ptr<RenderedText> latest_score = nullptr;

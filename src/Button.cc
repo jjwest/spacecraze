@@ -2,15 +2,31 @@
 
 #include "AssetManager.h"
 
-Button::Button(SDL_Renderer* renderer,
-	       const Point& pos,
-	       const std::string& text,
-	       State action)
-    : action{action}
+Button::~Button()
 {
-    rect.x = pos.x;
-    rect.y = pos.y;
+    SDL_DestroyTexture(texture_normal);
+    SDL_DestroyTexture(texture_hover);
+}
 
+bool Button::pressed() const
+{
+    return mouseOverButton();
+}
+
+void Button::draw(SDL_Renderer* renderer)
+{
+    if (mouseOverButton())
+    {
+        SDL_RenderCopy(renderer, texture_hover, NULL, &rect);
+    }
+    else
+    {
+        SDL_RenderCopy(renderer, texture_normal, NULL, &rect);
+    }
+}
+
+void Button::setText(SDL_Renderer* renderer, const std::string& text)
+{
     auto font = AssetManager::getInstance().getFont("text");
     SDL_Color color_normal = {255, 255, 255, 0};
     SDL_Color color_hover = {0, 255, 0, 0};
@@ -26,34 +42,10 @@ Button::Button(SDL_Renderer* renderer,
     SDL_FreeSurface(hover_surface);
 }
 
-Button::~Button()
+void Button::setPosition(const Point& pos)
 {
-    SDL_DestroyTexture(texture_normal);
-    SDL_DestroyTexture(texture_hover);
-}
-
-State Button::update(State current_state)
-{
-    if (mouseOverButton())
-    {
-	return action;
-    }
-    else
-    {
-	return current_state;
-    }
-}
-
-void Button::draw(SDL_Renderer* renderer)
-{
-    if (mouseOverButton())
-    {
-        SDL_RenderCopy(renderer, texture_hover, NULL, &rect);
-    }
-    else
-    {
-        SDL_RenderCopy(renderer, texture_normal, NULL, &rect);
-    }
+    rect.x = pos.x;
+    rect.y = pos.y;
 }
 
 bool Button::mouseOverButton() const

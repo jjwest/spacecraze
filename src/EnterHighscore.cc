@@ -10,9 +10,11 @@
 const Point button_position = {SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT - 150};
 
 EnterHighscore::EnterHighscore(SDL_Renderer* renderer, const ScoreKeeper& score)
-    : back_button {renderer, button_position, "BACK", State::MENU},
-      player_score{score.get()}
+    : player_score{score.get()}
 {
+    back_button.setPosition(button_position);
+    back_button.setText(renderer, "BACK");
+
     SDL_StartTextInput();
 
     if (!goodEnoughForHighscore(player_score))
@@ -41,7 +43,10 @@ void EnterHighscore::handleEvents()
         }
 	else if (leftMouseButtonPressed())
 	{
-	    next_state = back_button.update(next_state);
+	    if (back_button.pressed())
+	    {
+		next_state = State::MENU;
+	    }
 	}
 	else if (backspaceIsPressed() && !player_name.empty())
 	{
@@ -108,7 +113,8 @@ bool EnterHighscore::goodEnoughForHighscore(int score) const
 
 bool EnterHighscore::leftMouseButtonPressed() const
 {
-    return event.type == SDL_MOUSEBUTTONDOWN && SDL_BUTTON(SDL_BUTTON_LEFT);
+    return (event.type == SDL_MOUSEBUTTONDOWN &&
+	    SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT));
 }
 
 bool EnterHighscore::backspaceIsPressed() const

@@ -20,10 +20,14 @@ public:
 
 private:
     bool check_button_pressed = false;
-    State next_state;
-    SDL_Event events;
+    State next_state = State::MENU;
+    SDL_Event event;
     RenderedText title;
-    std::vector<std::unique_ptr<Button>> buttons;
+    Button play_button;
+    Button highscore_button;
+    Button quit_button;
+
+    bool leftMouseButtonPressed() const;
 };
 
 

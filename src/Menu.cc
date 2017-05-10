@@ -3,47 +3,47 @@
 #include "Point.h"
 
 Menu::Menu(SDL_Renderer* renderer)
-    : next_state{State::MENU},
-      title{ renderer,
+    : title{ renderer,
               "SPACECRAZE",
               {450, 150},
               AssetManager::getInstance().getFont("title")}
 {
-    buttons.emplace_back(
-        std::make_unique<Button>(renderer, Point{550, 400}, "PLAY", State::PLAY));
-    buttons.emplace_back(
-        std::make_unique<Button>(renderer, Point{550, 450}, "HIGHSCORE", State::VIEW_HIGHSCORE));
-    buttons.emplace_back(
-        std::make_unique<Button>(renderer, Point{550, 500}, "QUIT", State::QUIT));
+    play_button.setPosition({550, 400});
+    play_button.setText(renderer, "PLAY");
+    highscore_button.setPosition({550, 450});
+    highscore_button.setText(renderer, "HIGHSCORE");
+    quit_button.setPosition({550, 500});
+    quit_button.setText(renderer, "QUIT");
 }
 
 
 void Menu::handleEvents()
 {
-    while (SDL_PollEvent(&events) != 0)
+    while (SDL_PollEvent(&event) != 0)
     {
-        if (events.type == SDL_QUIT)
+        if (event.type == SDL_QUIT)
 	{
             next_state = State::QUIT;
         }
-        else if (events.type == SDL_MOUSEBUTTONDOWN)
+        else if (leftMouseButtonPressed())
 	{
-            check_button_pressed = true;
+	    if (play_button.pressed())
+	    {
+		next_state = State::PLAY;
+	    }
+	    else if (highscore_button.pressed())
+	    {
+		next_state = State::VIEW_HIGHSCORE;
+	    }
+	    else if (quit_button.pressed())
+	    {
+		next_state = State::QUIT;
+	    }
         }
     }
 }
 
-void Menu::update()
-{
-    if (check_button_pressed)
-    {
-        for (const auto& button : buttons)
-	{
-            next_state = button->update(next_state);
-        }
-        check_button_pressed = false;
-    }
-}
+void Menu::update() {}
 
 void Menu::draw(SDL_Renderer *renderer)
 {
@@ -51,12 +51,11 @@ void Menu::draw(SDL_Renderer *renderer)
 
     auto background = AssetManager::getInstance().getTexture("background");
     SDL_RenderCopy(renderer, background->getTexture(), NULL, NULL);
-    title.draw(renderer);
 
-    for (auto& button : buttons)
-    {
-        button->draw(renderer);
-    }
+    title.draw(renderer);
+    play_button.draw(renderer);
+    highscore_button.draw(renderer);
+    quit_button.draw(renderer);
 
     SDL_RenderPresent(renderer);
 }
@@ -64,4 +63,10 @@ void Menu::draw(SDL_Renderer *renderer)
 State Menu::getNextState() const
 {
     return next_state;
+}
+
+bool Menu::leftMouseButtonPressed() const
+{
+    return (event.type == SDL_MOUSEBUTTONDOWN &&
+	    SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT));
 }

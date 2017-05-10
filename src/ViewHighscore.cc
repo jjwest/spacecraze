@@ -10,12 +10,13 @@ const Point button_pos{SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT - 150};
 const Point title_pos{SCREEN_WIDTH / 2 - 150, 150};
 
 ViewHighscore::ViewHighscore(SDL_Renderer* renderer, int last_score)
-    : button_back{renderer, button_pos, "BACK", State::MENU},
-      title{renderer, "HIGHSCORE", title_pos, AssetManager::getInstance().getFont("title")}
+    : title{renderer, "HIGHSCORE", title_pos, AssetManager::getInstance().getFont("title")}
 {
+    back_button.setPosition(button_pos);
+    back_button.setText(renderer, "BACK");
+
     auto scores = HighscoreFile::read();
     createHighscoreText(renderer, scores);
-
     if (last_score > 0)
     {
 	Point score_pos{SCREEN_WIDTH / 2 - 150, 300};
@@ -39,7 +40,7 @@ void ViewHighscore::draw(SDL_Renderer* renderer)
     auto background = AssetManager::getInstance().getTexture("background");
     SDL_RenderCopy(renderer, background->getTexture(), NULL, NULL);
     title.draw(renderer);
-    button_back.draw(renderer);
+    back_button.draw(renderer);
 
     for (auto& score : highscores)
     {
@@ -64,7 +65,10 @@ void ViewHighscore::handleEvents()
         }
 	else if (leftMouseButtonPressed())
 	{
-	    next_state = button_back.update(next_state);
+	    if (back_button.pressed())
+	    {
+		next_state = State::MENU;
+	    }
 	}
     }
 }
@@ -73,7 +77,8 @@ void ViewHighscore::update() {}
 
 bool ViewHighscore::leftMouseButtonPressed() const
 {
-    return event.type == SDL_MOUSEBUTTONDOWN && SDL_BUTTON(SDL_BUTTON_LEFT);
+    return (event.type == SDL_MOUSEBUTTONDOWN &&
+	    SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT));
 }
 
 void ViewHighscore::createHighscoreText(SDL_Renderer* renderer,
