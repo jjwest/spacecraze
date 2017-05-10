@@ -16,10 +16,10 @@ public:
 
 private:
     bool has_special_weapon = true;
-    double damage = 2;
-    double speed = 4.5;
-    double pos_x;
-    double pos_y;
+    float damage = 2;
+    float speed = 4.5;
+    float pos_x;
+    float pos_y;
     Uint32 shoot_cooldown = 80;
     Uint32 last_shot_time = 0;
 

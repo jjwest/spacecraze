@@ -30,7 +30,7 @@ void World::addEnemyLaser(const Point& origin, const Point& destination, double 
 {
     auto texture = AssetManager::getInstance().getTexture("enemy_laser");
     double speed = 2.5;
-    enemy_lasers.push_back(Laser(texture, origin, destination, damage, speed));
+    enemy_lasers.push_back({texture, origin, destination, damage, speed});
 }
 
 void World::addPlayerLaser(const Point& origin, double damage)
@@ -39,7 +39,7 @@ void World::addPlayerLaser(const Point& origin, double damage)
     double speed = 7.0;
     Point destination;
     SDL_GetMouseState(&destination.x, &destination.y);
-    player_lasers.push_back(Laser(texture, origin, destination, damage, speed));
+    player_lasers.push_back({texture, origin, destination, damage, speed});
 }
 
 void World::addPowerup(const Powerup& powerup)
