@@ -28,6 +28,7 @@ struct EnemyType
     bool readyToSpawn(const EnemyType& enemy);
     void spawnEnemy(World& world, const EnemyType& enemy);
     void updateEnemyType(EnemyType& enemy);
+    std::unique_ptr<Enemy> createEnemy(const std::string& type);
 };
 
 #endif

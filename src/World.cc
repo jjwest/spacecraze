@@ -6,7 +6,6 @@
 #include "AssetManager.h"
 #include "Constants.h"
 #include "Enums.h"
-#include "ObjectFactory.h"
 #include "Point.h"
 
 World::World()
@@ -197,6 +196,7 @@ void World::removeDeadObjects()
     enemy_lasers.erase(std::remove_if(begin(enemy_lasers), end(enemy_lasers), isDead), end(enemy_lasers));
     player_lasers.erase(std::remove_if(begin(player_lasers), end(player_lasers), isDead), end(player_lasers));
     powerups.erase(std::remove_if(begin(powerups), end(powerups), isDead), end(powerups));
+
     enemies.erase(std::remove_if(begin(enemies), end(enemies),
 				 [&] (const auto& enemy) {
 				     return enemy->isDead();
