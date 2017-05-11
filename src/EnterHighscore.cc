@@ -62,7 +62,10 @@ void EnterHighscore::handleEvents()
 	    std::string input = event.text.text;
 	    if (!containsSpace(input))
 	    {
-		player_name += input;
+		if (player_name.size() < 6)
+		{
+		    player_name += input;
+		}
 	    }
 	}
     }
