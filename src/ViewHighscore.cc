@@ -70,6 +70,34 @@ void ViewHighscore::handleEvents()
 		next_state = State::MENU;
 	    }
 	}
+	else if (event.type == SDL_MOUSEMOTION)
+	{
+	    if (back_button.mouseAbove())
+	    {
+		back_button.addHighlight();
+		back_button_active = true;
+	    }
+	    else
+	    {
+		back_button.removeHighlight();
+		back_button_active = false;
+	    }
+	}
+	else if (event.type == SDL_KEYDOWN)
+	{
+	    if (event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_DOWN)
+	    {
+		back_button.addHighlight();
+		back_button_active = true;
+	    }
+	    else if (event.key.keysym.sym == SDLK_RETURN)
+	    {
+		if (back_button_active)
+		{
+		    next_state = State::MENU;
+		}
+	    }
+	}
     }
 }
 

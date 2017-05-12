@@ -25,8 +25,7 @@ private:
 	NONE,
 	PLAY,
 	HIGHSCORE,
-	QUIT,
-	BUTTON_COUNT
+	QUIT
     };
     int active_button = NONE;
     Button play_button;

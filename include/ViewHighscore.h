@@ -25,11 +25,12 @@ public:
     void update() override;
 
 private:
+    bool back_button_active = false;
     Button back_button;
     SDL_Event event;
     RenderedText title;
-    std::unique_ptr<RenderedText> latest_score = nullptr;
     State next_state = State::VIEW_HIGHSCORE;
+    std::unique_ptr<RenderedText> latest_score = nullptr;
     std::vector<std::unique_ptr<RenderedText>> highscores;
 
     bool leftMouseButtonPressed() const;

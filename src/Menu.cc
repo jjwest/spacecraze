@@ -51,7 +51,7 @@ void Menu::handleEvents()
 	    {
 		--active_button;
 	    }
-	    else if (event.key.keysym.sym == SDLK_DOWN && active_button != BUTTON_COUNT - 1)
+	    else if (event.key.keysym.sym == SDLK_DOWN && active_button != QUIT)
 	    {
 		++active_button;
 	    }
@@ -67,6 +67,8 @@ void Menu::handleEvents()
 	}
 	else if (event.type == SDL_MOUSEMOTION)
 	{
+	    active_button = NONE;
+
 	    if (play_button.mouseAbove())
 	    {
 		active_button = PLAY;
@@ -103,6 +105,13 @@ void Menu::update() {
     case QUIT:
     {
 	quit_button.addHighlight();
+	highscore_button.removeHighlight();
+	play_button.removeHighlight();
+	break;
+    }
+    case NONE:
+    {
+	quit_button.removeHighlight();
 	highscore_button.removeHighlight();
 	play_button.removeHighlight();
 	break;
