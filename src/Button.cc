@@ -8,14 +8,20 @@ Button::~Button()
     SDL_DestroyTexture(texture_hover);
 }
 
-bool Button::pressed() const
+bool Button::mouseAbove() const
 {
-    return mouseOverButton();
+    Point mouse;
+    SDL_GetMouseState(&mouse.x, &mouse.y);
+
+    return (mouse.x >= rect.x &&
+	    mouse.x <= (rect.x + rect.w) &&
+	    mouse.y >= rect.y &&
+	    mouse.y <= (rect.y + rect.h));
 }
 
 void Button::draw(SDL_Renderer* renderer)
 {
-    if (mouseOverButton())
+    if (selected)
     {
         SDL_RenderCopy(renderer, texture_hover, NULL, &rect);
     }
@@ -48,13 +54,12 @@ void Button::setPosition(const Point& pos)
     rect.y = pos.y;
 }
 
-bool Button::mouseOverButton() const
+void Button::addHighlight()
 {
-    Point mouse;
-    SDL_GetMouseState(&mouse.x, &mouse.y);
+    selected = true;
+}
 
-    return (mouse.x >= rect.x &&
-	    mouse.x <= (rect.x + rect.w) &&
-	    mouse.y >= rect.y &&
-	    mouse.y <= (rect.y + rect.h));
+void Button::removeHighlight()
+{
+    selected = false;
 }

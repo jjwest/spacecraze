@@ -17,17 +17,18 @@ public:
     Button& operator=(Button&&) = default;
     ~Button();
 
-    bool pressed() const;
+    bool mouseAbove() const;
     void draw(SDL_Renderer* renderer);
     void setText(SDL_Renderer* renderer, const std::string& text);
     void setPosition(const Point& pos);
+    void addHighlight();
+    void removeHighlight();
 
 private:
+    bool selected = false;
     SDL_Rect rect;
     SDL_Texture* texture_normal = nullptr;
     SDL_Texture* texture_hover = nullptr;
-
-    bool mouseOverButton() const;
 };
 
 

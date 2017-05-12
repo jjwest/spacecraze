@@ -9,6 +9,7 @@
 #include "Button.h"
 #include "RenderedText.h"
 
+
 class Menu: public GameState
 {
 public:
@@ -19,13 +20,21 @@ public:
     void draw(SDL_Renderer* renderer) override;
 
 private:
-    bool check_button_pressed = false;
-    State next_state = State::MENU;
-    SDL_Event event;
-    RenderedText title;
+    enum ActiveButton
+    {
+	NONE,
+	PLAY,
+	HIGHSCORE,
+	QUIT,
+	BUTTON_COUNT
+    };
+    int active_button = NONE;
     Button play_button;
     Button highscore_button;
     Button quit_button;
+    State next_state = State::MENU;
+    SDL_Event event;
+    RenderedText title;
 
     bool leftMouseButtonPressed() const;
 };

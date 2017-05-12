@@ -1,6 +1,7 @@
 #include "Menu.h"
 #include "AssetManager.h"
 #include "Point.h"
+#include <iostream>
 
 Menu::Menu(SDL_Renderer* renderer)
     : title{ renderer,
@@ -27,23 +28,87 @@ void Menu::handleEvents()
         }
         else if (leftMouseButtonPressed())
 	{
-	    if (play_button.pressed())
+	    if (play_button.mouseAbove())
 	    {
 		next_state = State::PLAY;
 	    }
-	    else if (highscore_button.pressed())
+	    else if (highscore_button.mouseAbove())
 	    {
 		next_state = State::VIEW_HIGHSCORE;
 	    }
-	    else if (quit_button.pressed())
+	    else if (quit_button.mouseAbove())
 	    {
 		next_state = State::QUIT;
 	    }
         }
+	else if (event.type == SDL_KEYDOWN)
+	{
+	    if (active_button == NONE)
+	    {
+		active_button = PLAY;
+	    }
+	    else if (event.key.keysym.sym == SDLK_UP && active_button != PLAY)
+	    {
+		--active_button;
+	    }
+	    else if (event.key.keysym.sym == SDLK_DOWN && active_button != BUTTON_COUNT - 1)
+	    {
+		++active_button;
+	    }
+	    else if (event.key.keysym.sym == SDLK_RETURN)
+	    {
+		switch (active_button)
+		{
+		case PLAY:      next_state = State::PLAY; break;
+		case HIGHSCORE: next_state = State::VIEW_HIGHSCORE; break;
+		case QUIT:      next_state = State::QUIT; break;
+		}
+	    }
+	}
+	else if (event.type == SDL_MOUSEMOTION)
+	{
+	    if (play_button.mouseAbove())
+	    {
+		active_button = PLAY;
+	    }
+	    else if (highscore_button.mouseAbove())
+	    {
+		active_button = HIGHSCORE;
+	    }
+	    else if (quit_button.mouseAbove())
+	    {
+		active_button = QUIT;
+	    }
+	}
     }
 }
 
-void Menu::update() {}
+void Menu::update() {
+    switch (active_button)
+    {
+    case PLAY:
+    {
+	play_button.addHighlight();
+	highscore_button.removeHighlight();
+	quit_button.removeHighlight();
+	break;
+    }
+    case HIGHSCORE:
+    {
+	highscore_button.addHighlight();
+	play_button.removeHighlight();
+	quit_button.removeHighlight();
+	break;
+    }
+    case QUIT:
+    {
+	quit_button.addHighlight();
+	highscore_button.removeHighlight();
+	play_button.removeHighlight();
+	break;
+    }
+    }
+}
 
 void Menu::draw(SDL_Renderer *renderer)
 {

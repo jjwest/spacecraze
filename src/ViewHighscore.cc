@@ -65,7 +65,7 @@ void ViewHighscore::handleEvents()
         }
 	else if (leftMouseButtonPressed())
 	{
-	    if (back_button.pressed())
+	    if (back_button.mouseAbove())
 	    {
 		next_state = State::MENU;
 	    }
