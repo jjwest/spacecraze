@@ -17,8 +17,8 @@ private:
     State current_music = State::MENU;
     std::unordered_map<std::string, Mix_Music*> music;
 
-    bool switchingToPlay(State current_state) const;
-    bool switchingFromPlay(State current_state) const;
+    bool shouldStartPlayMusic(State current_state) const;
+    bool shouldStartMenuMusic(State current_state) const;
 };
 
 

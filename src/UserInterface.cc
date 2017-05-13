@@ -32,7 +32,7 @@ void UserInterface::update(int new_score, bool has_special)
 void UserInterface::updateScoreTexture(SDL_Renderer* renderer)
 {
     auto font = AssetManager::getInstance().getFont("text");
-    rendered_score.reset(new RenderedText(
+    rendered_score.reset(new Text(
 			     renderer,
 			     std::to_string(score),
 			     Point{950, 30},

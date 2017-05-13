@@ -9,7 +9,7 @@
 #include "Button.h"
 #include "GameState.h"
 #include "Enums.h"
-#include "RenderedText.h"
+#include "Text.h"
 #include "ScoreKeeper.h"
 
 class EnterHighscore: public GameState
@@ -27,7 +27,7 @@ private:
     SDL_Event event;
     State next_state = State::ENTER_HIGHSCORE;
     std::string player_name;
-    std::unique_ptr<RenderedText> rendered_player_name;
+    std::unique_ptr<Text> rendered_player_name;
 
     void renderUserInput(SDL_Renderer* renderer);
     bool goodEnoughForHighscore(int score) const;

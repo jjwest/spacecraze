@@ -1,7 +1,7 @@
-#include "RenderedText.h"
+#include "Text.h"
 #include "AssetManager.h"
 
-RenderedText::RenderedText(SDL_Renderer* renderer, const std::string& text,
+Text::Text(SDL_Renderer* renderer, const std::string& text,
                            const Point& pos, TTF_Font* font)
 {
     SDL_Color white{ 255, 255, 255, 255 };
@@ -14,12 +14,12 @@ RenderedText::RenderedText(SDL_Renderer* renderer, const std::string& text,
     SDL_FreeSurface(surface);
 }
 
-RenderedText::~RenderedText()
+Text::~Text()
 {
     SDL_DestroyTexture(texture);
 }
 
-void RenderedText::draw(SDL_Renderer *renderer)
+void Text::draw(SDL_Renderer *renderer)
 {
     SDL_RenderCopy(renderer, texture, NULL, &rect);
 }

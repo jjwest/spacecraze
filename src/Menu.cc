@@ -10,11 +10,13 @@ Menu::Menu(SDL_Renderer* renderer)
               AssetManager::getInstance().getFont("title")}
 {
     play_button.setPosition({550, 400});
-    play_button.setText(renderer, "PLAY");
+    play_button.setText("PLAY");
     highscore_button.setPosition({550, 450});
-    highscore_button.setText(renderer, "HIGHSCORE");
-    quit_button.setPosition({550, 500});
-    quit_button.setText(renderer, "QUIT");
+    highscore_button.setText("HIGHSCORE");
+    options_button.setPosition({550, 500});
+    options_button.setText("OPTIONS");
+    quit_button.setPosition({550, 550});
+    quit_button.setText("QUIT");
 }
 
 
@@ -35,6 +37,10 @@ void Menu::handleEvents()
 	    else if (highscore_button.mouseAbove())
 	    {
 		next_state = State::VIEW_HIGHSCORE;
+	    }
+	    else if (options_button.mouseAbove())
+	    {
+		next_state = State::OPTIONS;
 	    }
 	    else if (quit_button.mouseAbove())
 	    {
@@ -61,6 +67,7 @@ void Menu::handleEvents()
 		{
 		case PLAY:      next_state = State::PLAY; break;
 		case HIGHSCORE: next_state = State::VIEW_HIGHSCORE; break;
+		case OPTIONS:   next_state = State::OPTIONS; break;
 		case QUIT:      next_state = State::QUIT; break;
 		}
 	    }
@@ -77,6 +84,10 @@ void Menu::handleEvents()
 	    {
 		active_button = HIGHSCORE;
 	    }
+	    else if (options_button.mouseAbove())
+	    {
+		active_button = OPTIONS;
+	    }
 	    else if (quit_button.mouseAbove())
 	    {
 		active_button = QUIT;
@@ -86,6 +97,7 @@ void Menu::handleEvents()
 }
 
 void Menu::update() {
+
     switch (active_button)
     {
     case PLAY:
@@ -93,11 +105,21 @@ void Menu::update() {
 	play_button.addHighlight();
 	highscore_button.removeHighlight();
 	quit_button.removeHighlight();
+	options_button.removeHighlight();
 	break;
     }
     case HIGHSCORE:
     {
 	highscore_button.addHighlight();
+	play_button.removeHighlight();
+	quit_button.removeHighlight();
+	options_button.removeHighlight();
+	break;
+    }
+    case OPTIONS:
+    {
+	options_button.addHighlight();
+	highscore_button.removeHighlight();
 	play_button.removeHighlight();
 	quit_button.removeHighlight();
 	break;
@@ -107,6 +129,7 @@ void Menu::update() {
 	quit_button.addHighlight();
 	highscore_button.removeHighlight();
 	play_button.removeHighlight();
+	options_button.removeHighlight();
 	break;
     }
     case NONE:
@@ -114,6 +137,7 @@ void Menu::update() {
 	quit_button.removeHighlight();
 	highscore_button.removeHighlight();
 	play_button.removeHighlight();
+	options_button.removeHighlight();
 	break;
     }
     }
@@ -129,6 +153,7 @@ void Menu::draw(SDL_Renderer *renderer)
     title.draw(renderer);
     play_button.draw(renderer);
     highscore_button.draw(renderer);
+    options_button.draw(renderer);
     quit_button.draw(renderer);
 
     SDL_RenderPresent(renderer);

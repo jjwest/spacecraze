@@ -4,7 +4,7 @@
 #include <SDL2/SDL.h>
 #include <memory>
 
-#include "RenderedText.h"
+#include "Text.h"
 #include "Sprite.h"
 
 class UserInterface
@@ -19,7 +19,7 @@ private:
     bool score_changed = true;
     int score = 0;
     Sprite special_weapon;
-    std::unique_ptr<RenderedText> rendered_score;
+    std::unique_ptr<Text> rendered_score;
 
     void updateScoreTexture(SDL_Renderer* renderer);
 };

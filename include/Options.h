@@ -1,0 +1,39 @@
+#ifndef _OPTIONS_H_
+#define _OPTIONS_H_
+
+#include <SDL2/SDL.h>
+
+#include "Button.h"
+#include "GameState.h"
+#include "Text.h"
+
+class Options: public GameState
+{
+public:
+    Options(SDL_Renderer* renderer);
+    State getNextState() const override;
+    void handleEvents() override;
+    void update() override;
+    void draw(SDL_Renderer* renderer) override;
+
+private:
+    enum Buttons
+    {
+	NONE,
+	MUSIC,
+	BACK
+    };
+    Button back_button;
+    Button music_button;
+    Text music_text;
+    Text title;
+    State next_state = State::OPTIONS;
+    int active_button = NONE;
+    SDL_Event event;
+
+    bool leftMouseButtonPressed() const;
+    void toggleMusic();
+};
+
+
+#endif // _OPTIONS_H_

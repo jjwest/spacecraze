@@ -1,8 +1,10 @@
 #include "StateManager.h"
-#include "Play.h"
-#include "Menu.h"
-#include "ViewHighscore.h"
+
 #include "EnterHighscore.h"
+#include "Menu.h"
+#include "Options.h"
+#include "Play.h"
+#include "ViewHighscore.h"
 
 StateManager::StateManager(SDL_Renderer* r)
     : renderer{r}, current_state(new Menu(r)) {}
@@ -38,26 +40,11 @@ void StateManager::changeStateIfRequired(State next_state)
             break;
 	}
 
-        case State::MENU:
-	{
-	    current_state.reset(new Menu(renderer));
-            break;
-	}
-
-        case State::VIEW_HIGHSCORE:
-	{
-	    current_state.reset(new ViewHighscore(renderer, score.get()));
-            break;
-	}
-
-	case State::ENTER_HIGHSCORE:
-	{
-	    current_state.reset(new EnterHighscore(renderer, score));
-	    break;
-	}
-
-	case State::QUIT:
-	    break;
+        case State::MENU:            current_state.reset(new Menu(renderer)); break;
+	case State::OPTIONS:         current_state.reset(new Options(renderer)); break;
+        case State::VIEW_HIGHSCORE:  current_state.reset(new ViewHighscore(renderer, score.get())); break;
+	case State::ENTER_HIGHSCORE: current_state.reset(new EnterHighscore(renderer, score)); break;
+	case State::QUIT: break;
 	}
 
     }

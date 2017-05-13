@@ -9,11 +9,11 @@
 
 const Point button_position = {SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT - 150};
 
-EnterHighscore::EnterHighscore(SDL_Renderer* renderer, const ScoreKeeper& score)
+EnterHighscore::EnterHighscore(SDL_Renderer*, const ScoreKeeper& score)
     : player_score{score.get()}
 {
     back_button.setPosition(button_position);
-    back_button.setText(renderer, "BACK");
+    back_button.setText("BACK");
 
     SDL_StartTextInput();
 
@@ -94,7 +94,7 @@ void EnterHighscore::renderUserInput(SDL_Renderer* renderer)
     if (!player_name.empty())
     {
 	rendered_player_name.reset(
-	    new RenderedText(
+	    new Text(
 		renderer,
 		player_name,
 		Point{550, 700},

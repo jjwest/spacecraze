@@ -4,6 +4,7 @@
 enum class State {
     MENU,
     PLAY,
+    OPTIONS,
     VIEW_HIGHSCORE,
     ENTER_HIGHSCORE,
     QUIT

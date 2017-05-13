@@ -21,7 +21,29 @@ bool Button::mouseAbove() const
 
 void Button::draw(SDL_Renderer* renderer)
 {
-    if (selected)
+    if (update_text)
+    {
+	SDL_DestroyTexture(texture_normal);
+	SDL_DestroyTexture(texture_hover);
+
+	auto font = AssetManager::getInstance().getFont("text");
+	SDL_Color color_normal = {255, 255, 255, 0};
+	SDL_Color color_hover = {0, 255, 0, 0};
+
+	auto normal_surface = TTF_RenderText_Solid(font, text.c_str(), color_normal);
+	rect.w = normal_surface->w;
+	rect.h = normal_surface->h;
+	texture_normal = SDL_CreateTextureFromSurface(renderer, normal_surface);
+	SDL_FreeSurface(normal_surface);
+
+	auto hover_surface = TTF_RenderText_Solid(font, text.c_str(), color_hover);
+	texture_hover = SDL_CreateTextureFromSurface(renderer, hover_surface);
+	SDL_FreeSurface(hover_surface);
+
+	update_text = false;
+    }
+
+    if (highlighted)
     {
         SDL_RenderCopy(renderer, texture_hover, NULL, &rect);
     }
@@ -31,21 +53,10 @@ void Button::draw(SDL_Renderer* renderer)
     }
 }
 
-void Button::setText(SDL_Renderer* renderer, const std::string& text)
+void Button::setText(const std::string& text)
 {
-    auto font = AssetManager::getInstance().getFont("text");
-    SDL_Color color_normal = {255, 255, 255, 0};
-    SDL_Color color_hover = {0, 255, 0, 0};
-
-    auto normal_surface = TTF_RenderText_Solid(font, text.c_str(), color_normal);
-    rect.w = normal_surface->w;
-    rect.h = normal_surface->h;
-    texture_normal = SDL_CreateTextureFromSurface(renderer, normal_surface);
-    SDL_FreeSurface(normal_surface);
-
-    auto hover_surface = TTF_RenderText_Solid(font, text.c_str(), color_hover);
-    texture_hover = SDL_CreateTextureFromSurface(renderer, hover_surface);
-    SDL_FreeSurface(hover_surface);
+    this->text = text;
+    update_text = true;
 }
 
 void Button::setPosition(const Point& pos)
@@ -56,10 +67,10 @@ void Button::setPosition(const Point& pos)
 
 void Button::addHighlight()
 {
-    selected = true;
+    highlighted = true;
 }
 
 void Button::removeHighlight()
 {
-    selected = false;
+    highlighted = false;
 }

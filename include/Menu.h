@@ -7,7 +7,7 @@
 #include "GameState.h"
 #include "Enums.h"
 #include "Button.h"
-#include "RenderedText.h"
+#include "Text.h"
 
 
 class Menu: public GameState
@@ -25,15 +25,17 @@ private:
 	NONE,
 	PLAY,
 	HIGHSCORE,
+	OPTIONS,
 	QUIT
     };
     int active_button = NONE;
     Button play_button;
     Button highscore_button;
+    Button options_button;
     Button quit_button;
     State next_state = State::MENU;
     SDL_Event event;
-    RenderedText title;
+    Text title;
 
     bool leftMouseButtonPressed() const;
 };

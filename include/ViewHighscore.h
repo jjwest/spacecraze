@@ -9,7 +9,7 @@
 #include "GameState.h"
 #include "Button.h"
 #include "Enums.h"
-#include "RenderedText.h"
+#include "Text.h"
 
 namespace {
     using score_vec = std::vector<std::pair<std::string, int>>;
@@ -28,10 +28,10 @@ private:
     bool back_button_active = false;
     Button back_button;
     SDL_Event event;
-    RenderedText title;
+    Text title;
     State next_state = State::VIEW_HIGHSCORE;
-    std::unique_ptr<RenderedText> latest_score = nullptr;
-    std::vector<std::unique_ptr<RenderedText>> highscores;
+    std::unique_ptr<Text> latest_score = nullptr;
+    std::vector<std::unique_ptr<Text>> highscores;
 
     bool leftMouseButtonPressed() const;
     void createHighscoreText(SDL_Renderer* renderer, const score_vec& scores);
