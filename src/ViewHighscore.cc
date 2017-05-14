@@ -1,8 +1,8 @@
 #include "ViewHighscore.h"
 
+#include "AssetManager.h"
 #include "Constants.h"
 #include "Enums.h"
-#include "AssetManager.h"
 #include "HighscoreFile.h"
 #include "Point.h"
 
@@ -38,20 +38,20 @@ void ViewHighscore::draw(SDL_Renderer* renderer)
 	auto score_entries = HighscoreFile::read();
 	auto font = AssetManager::getInstance().getFont("text");
 	int row_y_pos = 400;
-	int name_offset = 170;
-	int score_offset = 100;
+	int name_x_pos = SCREEN_WIDTH / 2 - 170;
+	int score_x_pos = SCREEN_WIDTH / 2 + 100;
 
 	for (const auto& entry : score_entries)
 	{
 	    auto name = std::make_unique<Text>();
 	    name->setText(entry.first);
-	    name->setPosition(SCREEN_WIDTH / 2 - name_offset, row_y_pos);
+	    name->setPosition(name_x_pos, row_y_pos);
 	    name->setFont(font);
 	    highscores.push_back(std::move(name));
 
 	    auto score = std::make_unique<Text>();
 	    score->setText(std::to_string(entry.second));
-	    score->setPosition(SCREEN_WIDTH / 2 + score_offset, row_y_pos);
+	    score->setPosition(score_x_pos, row_y_pos);
 	    score->setFont(font);
 	    highscores.push_back(std::move(score));
 
@@ -64,9 +64,9 @@ void ViewHighscore::draw(SDL_Renderer* renderer)
     title.draw(renderer);
     back_button.draw(renderer);
 
-    for (auto& score : highscores)
+    for (auto& entry : highscores)
     {
-	score->draw(renderer);
+	entry->draw(renderer);
     }
 
     if (latest_score)

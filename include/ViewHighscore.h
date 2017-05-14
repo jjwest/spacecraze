@@ -6,14 +6,10 @@
 #include <memory>
 #include <vector>
 
-#include "GameState.h"
 #include "Button.h"
 #include "Enums.h"
+#include "GameState.h"
 #include "Text.h"
-
-namespace {
-    using score_vec = std::vector<std::pair<std::string, int>>;
-}
 
 class ViewHighscore: public GameState
 {
