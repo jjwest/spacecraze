@@ -5,7 +5,6 @@
 #include <SDL2/SDL_ttf.h>
 
 #include <stdexcept>
-#include <iostream>
 
 #include "AssetManager.h"
 #include "Constants.h"

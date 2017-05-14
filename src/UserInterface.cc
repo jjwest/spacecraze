@@ -14,8 +14,13 @@ void UserInterface::draw(SDL_Renderer* renderer)
     }
     if (score_changed)
     {
-        updateScoreTexture(renderer);
+	auto font = AssetManager::getInstance().getFont("text");
+	rendered_score.reset(new Text());
+	rendered_score->setText(std::to_string(score));
+	rendered_score->setPosition(950, 30);
+	rendered_score->setFont(font);
     }
+
     rendered_score->draw(renderer);
 }
 
@@ -27,15 +32,4 @@ void UserInterface::update(int new_score, bool has_special)
 	score = new_score;
 	score_changed = true;
     }
-}
-
-void UserInterface::updateScoreTexture(SDL_Renderer* renderer)
-{
-    auto font = AssetManager::getInstance().getFont("text");
-    rendered_score.reset(new Text(
-			     renderer,
-			     std::to_string(score),
-			     Point{950, 30},
-			     font));
-
 }

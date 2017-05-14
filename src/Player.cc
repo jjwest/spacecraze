@@ -2,7 +2,6 @@
 
 #include <utility>
 #include <string>
-#include <iostream>
 
 #include "AssetManager.h"
 #include "Constants.h"

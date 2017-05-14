@@ -1,21 +1,19 @@
 #include "Menu.h"
 #include "AssetManager.h"
 #include "Point.h"
-#include <iostream>
 
-Menu::Menu(SDL_Renderer* renderer)
-    : title{ renderer,
-              "SPACECRAZE",
-              {450, 150},
-              AssetManager::getInstance().getFont("title")}
+Menu::Menu()
 {
-    play_button.setPosition({550, 400});
+    title.setText("SPACECRAZE");
+    title.setPosition(450, 150);
+    title.setFont(AssetManager::getInstance().getFont("title"));
+    play_button.setPosition(550, 400);
     play_button.setText("PLAY");
-    highscore_button.setPosition({550, 450});
+    highscore_button.setPosition(550, 450);
     highscore_button.setText("HIGHSCORE");
-    options_button.setPosition({550, 500});
+    options_button.setPosition(550, 500);
     options_button.setText("OPTIONS");
-    quit_button.setPosition({550, 550});
+    quit_button.setPosition(550, 550);
     quit_button.setText("QUIT");
 }
 

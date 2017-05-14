@@ -59,10 +59,10 @@ void Button::setText(const std::string& text)
     update_text = true;
 }
 
-void Button::setPosition(const Point& pos)
+void Button::setPosition(int x, int y)
 {
-    rect.x = pos.x;
-    rect.y = pos.y;
+    rect.x = x;
+    rect.y = y;
 }
 
 void Button::addHighlight()

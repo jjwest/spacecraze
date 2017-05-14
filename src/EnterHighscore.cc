@@ -1,18 +1,15 @@
 #include "EnterHighscore.h"
 
 #include <algorithm>
-#include <iostream>
 
 #include "AssetManager.h"
 #include "Constants.h"
 #include "HighscoreFile.h"
 
-const Point button_position = {SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT - 150};
-
-EnterHighscore::EnterHighscore(SDL_Renderer*, const ScoreKeeper& score)
+EnterHighscore::EnterHighscore(const ScoreKeeper& score)
     : player_score{score.get()}
 {
-    back_button.setPosition(button_position);
+    back_button.setPosition(SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT - 150);
     back_button.setText("BACK");
 
     SDL_StartTextInput();
@@ -51,6 +48,7 @@ void EnterHighscore::handleEvents()
 	else if (backspaceIsPressed() && !player_name.empty())
 	{
 	    player_name.pop_back();
+	    name_changed = true;
 	}
 	else if (returnIsPressed())
 	{
@@ -65,6 +63,7 @@ void EnterHighscore::handleEvents()
 		if (player_name.size() < 6)
 		{
 		    player_name += input;
+		    name_changed = true;
 		}
 	    }
 	}
@@ -80,31 +79,30 @@ void EnterHighscore::draw(SDL_Renderer* renderer)
     auto background = AssetManager::getInstance().getTexture("background");
     SDL_RenderCopy(renderer, background->getTexture(), NULL, NULL);
     back_button.draw(renderer);
-    renderUserInput(renderer);
+
+    if (name_changed)
+    {
+	if (!player_name.empty())
+	{
+	    rendered_player_name.reset(new Text());
+	    rendered_player_name->setText(player_name);
+	    rendered_player_name->setPosition(550, 700);
+	    rendered_player_name->setFont(AssetManager::getInstance().getFont("text"));
+	}
+	else
+	{
+	    rendered_player_name.release();
+	}
+
+	name_changed = false;
+    }
+
     if (rendered_player_name)
     {
 	rendered_player_name->draw(renderer);
     }
 
     SDL_RenderPresent(renderer);
-}
-
-void EnterHighscore::renderUserInput(SDL_Renderer* renderer)
-{
-    if (!player_name.empty())
-    {
-	rendered_player_name.reset(
-	    new Text(
-		renderer,
-		player_name,
-		Point{550, 700},
-		AssetManager::getInstance().getFont("text"))
-	    );
-    }
-    else
-    {
-	rendered_player_name.release();
-    }
 }
 
 bool EnterHighscore::goodEnoughForHighscore(int score) const

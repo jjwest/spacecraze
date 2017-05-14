@@ -20,7 +20,7 @@ public:
     bool mouseAbove() const;
     void draw(SDL_Renderer* renderer);
     void setText(const std::string& text);
-    void setPosition(const Point& pos);
+    void setPosition(int x, int y);
     void addHighlight();
     void removeHighlight();
 

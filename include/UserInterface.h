@@ -20,8 +20,6 @@ private:
     int score = 0;
     Sprite special_weapon;
     std::unique_ptr<Text> rendered_score;
-
-    void updateScoreTexture(SDL_Renderer* renderer);
 };
 
 

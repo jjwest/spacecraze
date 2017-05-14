@@ -3,8 +3,6 @@
 #include "AssetManager.h"
 #include "Texture.h"
 
-#include <iostream>
-
 Play::Play(SDL_Renderer*, ScoreKeeper& score)
     : GameState(),
       score{score} {}

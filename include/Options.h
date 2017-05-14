@@ -10,7 +10,7 @@
 class Options: public GameState
 {
 public:
-    Options(SDL_Renderer* renderer);
+    Options();
     State getNextState() const override;
     void handleEvents() override;
     void update() override;

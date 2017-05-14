@@ -1,7 +1,5 @@
 #include "Font.h"
 
-#include <iostream>
-
 using namespace std;
 
 Font::Font(const string& path, int size)

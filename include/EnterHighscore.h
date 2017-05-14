@@ -15,7 +15,7 @@
 class EnterHighscore: public GameState
 {
 public:
-    EnterHighscore(SDL_Renderer* renderer, const ScoreKeeper& score);
+    EnterHighscore(const ScoreKeeper& score);
     ~EnterHighscore();
     State getNextState() const override;
     void draw(SDL_Renderer* renderer) override;
@@ -23,6 +23,7 @@ public:
     void update() override;
 private:
     Button back_button;
+    bool name_changed = false;
     int player_score;
     SDL_Event event;
     State next_state = State::ENTER_HIGHSCORE;

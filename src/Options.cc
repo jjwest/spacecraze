@@ -4,16 +4,18 @@
 #include "Constants.h"
 #include "Settings.h"
 
-Options::Options(SDL_Renderer* renderer) :
-    music_text{renderer, "Music", {450, 300}, AssetManager::getInstance().getFont("text")},
-    title{ renderer,
-	   "SETTINGS",
-	   {450, 150},
-	   AssetManager::getInstance().getFont("title")}
+Options::Options()
 {
-    back_button.setPosition({SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT - 150});
+    title.setText("SETTINGS");
+    title.setPosition(450, 150);
+    title.setFont(AssetManager::getInstance().getFont("title"));
+    back_button.setPosition(SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT - 150);
     back_button.setText("BACK");
-    music_button.setPosition({650, 300});
+    music_text.setText("Music");
+    music_text.setPosition(450, 300);
+    music_text.setFont(AssetManager::getInstance().getFont("text"));
+    music_button.setPosition(650, 300);
+
     if (G_SETTINGS.music)
     {
 	music_button.setText("ON");

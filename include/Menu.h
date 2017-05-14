@@ -13,7 +13,7 @@
 class Menu: public GameState
 {
 public:
-    Menu(SDL_Renderer* renderer);
+    Menu();
     State getNextState() const override;
     void handleEvents() override;
     void update() override;

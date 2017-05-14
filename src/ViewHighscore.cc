@@ -7,22 +7,20 @@
 #include "Point.h"
 
 
-ViewHighscore::ViewHighscore(SDL_Renderer* renderer, int last_score)
-    : title{renderer, "HIGHSCORE", {SCREEN_WIDTH / 2 - 150, 150}, AssetManager::getInstance().getFont("title")}
+ViewHighscore::ViewHighscore(int last_score)
 {
-    back_button.setPosition({SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT - 150});
+    title.setText("HIGHSCORE");
+    title.setPosition(SCREEN_WIDTH / 2 - 150, 150);
+    title.setFont(AssetManager::getInstance().getFont("title"));
+    back_button.setPosition(SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT - 150);
     back_button.setText("BACK");
 
-    auto scores = HighscoreFile::read();
-    createHighscoreText(renderer, scores);
     if (last_score > 0)
     {
-	Point score_pos{SCREEN_WIDTH / 2 - 150, 300};
-	latest_score.reset(new Text(
-			       renderer,
-			       "Your score: " + std::to_string(last_score),
-			       score_pos,
-			       AssetManager::getInstance().getFont("text")));
+	latest_score.reset(new Text());
+	latest_score->setText("Your score: " + std::to_string(last_score));
+	latest_score->setPosition(SCREEN_WIDTH / 2 - 150, 300);
+	latest_score->setFont(AssetManager::getInstance().getFont("text"));
     }
 }
 
@@ -34,6 +32,32 @@ State ViewHighscore::getNextState() const
 void ViewHighscore::draw(SDL_Renderer* renderer)
 {
     SDL_RenderClear(renderer);
+
+    if (render_new_textures)
+    {
+	auto score_entries = HighscoreFile::read();
+	auto font = AssetManager::getInstance().getFont("text");
+	int row_y_pos = 400;
+	int name_offset = 170;
+	int score_offset = 100;
+
+	for (const auto& entry : score_entries)
+	{
+	    auto name = std::make_unique<Text>();
+	    name->setText(entry.first);
+	    name->setPosition(SCREEN_WIDTH / 2 - name_offset, row_y_pos);
+	    name->setFont(font);
+	    highscores.push_back(std::move(name));
+
+	    auto score = std::make_unique<Text>();
+	    score->setText(std::to_string(entry.second));
+	    score->setPosition(SCREEN_WIDTH / 2 + score_offset, row_y_pos);
+	    score->setFont(font);
+	    highscores.push_back(std::move(score));
+
+	    row_y_pos += 50;
+	}
+    }
 
     auto background = AssetManager::getInstance().getTexture("background");
     SDL_RenderCopy(renderer, background->getTexture(), NULL, NULL);
@@ -105,25 +129,4 @@ bool ViewHighscore::leftMouseButtonPressed() const
 {
     return (event.type == SDL_MOUSEBUTTONDOWN &&
 	    SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT));
-}
-
-void ViewHighscore::createHighscoreText(SDL_Renderer* renderer,
-					const score_t& scores)
-{
-    int row_y_pos = 400;
-    int name_offset = 170;
-    int score_offset = 100;
-
-    for (const auto& score : scores)
-    {
-	highscores.emplace_back(std::make_unique<Text>(
-				    renderer, score.first,
-				    Point{SCREEN_WIDTH / 2 - name_offset, row_y_pos},
-				    AssetManager::getInstance().getFont("text")));
-	highscores.emplace_back(std::make_unique<Text>(
-				    renderer, std::to_string(score.second),
-				    Point{SCREEN_WIDTH / 2 + score_offset, row_y_pos},
-				    AssetManager::getInstance().getFont("text")));
-	row_y_pos += 50;
-    }
 }

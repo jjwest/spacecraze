@@ -3,7 +3,6 @@
 #include "AssetManager.h"
 #include "Constants.h"
 
-#include <iostream>
 
 PowerupGenerator::PowerupGenerator()
 {

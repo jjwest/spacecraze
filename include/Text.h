@@ -10,18 +10,23 @@
 class Text
 {
 public:
-    Text(SDL_Renderer* renderer, const std::string& text,
-                 const Point& pos, TTF_Font* font);
+    Text() = default;
     Text(const Text&) = delete;
     Text& operator=(const Text&) = delete;
     Text& operator=(Text&&) = default;
     ~Text();
 
     void draw(SDL_Renderer* renderer);
+    void setText(const std::string& text);
+    void setPosition(int x, int y);
+    void setFont(TTF_Font* font);
 
 private:
     SDL_Rect rect;
-    SDL_Texture* texture;
+    SDL_Texture* texture = nullptr;
+    TTF_Font* font = nullptr;
+    bool render_new_texture = true;
+    std::string text;
 };
 
 

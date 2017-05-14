@@ -1,7 +1,6 @@
 #include "Texture.h"
 
 #include <SDL2/SDL_image.h>
-#include <iostream>
 
 Texture::Texture(SDL_Renderer* renderer, const std::string& path)
     : texture{nullptr}
