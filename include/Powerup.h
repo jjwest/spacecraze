@@ -11,10 +11,10 @@ class Powerup: public GameObject
 {
 public:
     Powerup(Texture* texture, const SDL_Rect& rect, PowerupType type);
-    PowerupType getType() const;
+    PowerupType type() const;
     void update();
 private:
-    PowerupType type;
+    PowerupType type_;
 };
 
 

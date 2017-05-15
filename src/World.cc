@@ -166,7 +166,7 @@ void World::resolvePowerups()
     {
 	if (player.collides(powerup))
 	{
-	    if (powerup.getType() == PowerupType::BONUS_DAMAGE)
+	    if (powerup.type() == PowerupType::BONUS_DAMAGE)
 	    {
 		player.increaseDamage();
 	    }

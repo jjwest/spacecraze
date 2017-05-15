@@ -6,12 +6,13 @@
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_ttf.h>
 
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 #include "Font.h"
 #include "Music.h"
+#include "SoundEffect.h"
 #include "Texture.h"
 
 class AssetManager
@@ -27,16 +28,19 @@ public:
     Mix_Music* getMusic(const std::string& name) const;
     Texture* getTexture(const std::string& name) const;
     TTF_Font* getFont(const std::string& name) const;
+    Mix_Chunk* getSoundEffect(const std::string& name) const;
     void loadTexture(const std::string& name, const std::string& path, SDL_Renderer* renderer);
     void loadMusic(const std::string& name, const std::string& path);
     void loadFont(const std::string& name, const std::string& path, int size);
+    void loadSoundEffect(const std::string& name, const std::string& path);
 
 private:
     AssetManager() = default;
     static AssetManager* instance;
-    std::unordered_map<std::string, std::unique_ptr<Texture>> textures;
-    std::unordered_map<std::string, std::unique_ptr<Music>> music;
-    std::unordered_map<std::string, std::unique_ptr<Font>> fonts;
+    std::map<std::string, std::unique_ptr<Texture>> textures;
+    std::map<std::string, std::unique_ptr<Music>> music;
+    std::map<std::string, std::unique_ptr<Font>> fonts;
+    std::map<std::string, std::unique_ptr<SoundEffect>> sounds;
 };
 
 #endif // _ASSETS_H_

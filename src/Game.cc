@@ -124,4 +124,7 @@ void Game::loadAssets() const
 
     assets.loadMusic("menu", "sounds/menu_music.mp3");
     assets.loadMusic("play", "sounds/play_music.mp3");
+
+    assets.loadSoundEffect("small_laser", "sounds/small_laser.wav");
+    assets.loadSoundEffect("big_laser", "sounds/big_laser.wav");
 }

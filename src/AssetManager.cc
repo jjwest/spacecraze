@@ -52,6 +52,18 @@ TTF_Font* AssetManager::getFont(const std::string& name) const
     }
 }
 
+Mix_Chunk* AssetManager::getSoundEffect(const std::string& name) const
+{
+    try
+    {
+        return sounds.at(name)->getSound();
+    }
+    catch (std::exception& e)
+    {
+        throw std::invalid_argument("Tried to fetch non-loaded music " + name);
+    }
+}
+
 void AssetManager::loadTexture(const std::string& name,
 			       const std::string& path,
                                SDL_Renderer* renderer)
@@ -67,4 +79,9 @@ void AssetManager::loadMusic(const std::string& name, const std::string& path)
 void AssetManager::loadFont(const std::string& name, const std::string& path, int size)
 {
     fonts.insert(make_pair(name, std::make_unique<Font>(path, size)));
+}
+
+void AssetManager::loadSoundEffect(const std::string& name, const std::string& path)
+{
+    sounds.insert(make_pair(name, std::make_unique<SoundEffect>(path)));
 }

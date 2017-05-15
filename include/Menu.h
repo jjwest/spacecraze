@@ -20,7 +20,7 @@ public:
     void draw(SDL_Renderer* renderer) override;
 
 private:
-    enum ActiveButton
+    enum Buttons
     {
 	NONE,
 	PLAY,

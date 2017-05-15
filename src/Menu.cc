@@ -7,14 +7,18 @@ Menu::Menu()
     title.setText("SPACECRAZE");
     title.setPosition(450, 150);
     title.setFont(AssetManager::getInstance().getFont("title"));
-    play_button.setPosition(550, 400);
+
     play_button.setText("PLAY");
-    highscore_button.setPosition(550, 450);
+    play_button.setPosition(550, 400);
+
     highscore_button.setText("HIGHSCORE");
-    options_button.setPosition(550, 500);
+    highscore_button.setPosition(550, 450);
+
     options_button.setText("OPTIONS");
-    quit_button.setPosition(550, 550);
+    options_button.setPosition(550, 500);
+
     quit_button.setText("QUIT");
+    quit_button.setPosition(550, 550);
 }
 
 
@@ -94,8 +98,8 @@ void Menu::handleEvents()
     }
 }
 
-void Menu::update() {
-
+void Menu::update()
+{
     switch (active_button)
     {
     case PLAY:
@@ -141,7 +145,7 @@ void Menu::update() {
     }
 }
 
-void Menu::draw(SDL_Renderer *renderer)
+void Menu::draw(SDL_Renderer* renderer)
 {
     SDL_RenderClear(renderer);
 
