@@ -25,14 +25,28 @@ EnemyGenerator::EnemyGenerator()
     enemy_types.push_back({ "drone", 2.5, 3, 4 });
 }
 
+inline bool isMultiple(int a, int b)
+{
+    return a % b == 0;
+}
+
 void EnemyGenerator::update(World& world)
 {
     for (auto& enemy : enemy_types)
     {
         if (readyToSpawn(enemy))
 	{
-            spawnEnemy(world, enemy);
-            updateEnemyType(enemy);
+	    for (int i = 0; i < enemy.spawn_amount; ++i)
+	    {
+		world.addEnemy(createEnemy(enemy.name));
+	    }
+	    ++enemy.waves_spawned;
+	    enemy.last_time_spawned = SDL_GetTicks();
+
+	    if (isMultiple(enemy.waves_spawned, enemy.spawns_until_increased_spawn_rate))
+	    {
+		++enemy.spawn_amount;
+	    }
         }
     }
 }
@@ -41,14 +55,6 @@ bool EnemyGenerator::readyToSpawn(const EnemyType& enemy)
 {
     Uint32 current_time = SDL_GetTicks();
     return current_time - enemy.last_time_spawned > enemy.spawn_delay * 1000;
-}
-
-void EnemyGenerator::spawnEnemy(World& world, const EnemyType& enemy)
-{
-    for (int i = 0; i < enemy.spawn_amount; ++i)
-    {
-        world.addEnemy(createEnemy(enemy.name));
-    }
 }
 
 Point getSpawnPoint(Texture* texture)
@@ -122,21 +128,5 @@ std::unique_ptr<Enemy> EnemyGenerator::createEnemy(const std::string& type)
     else
     {
         throw std::invalid_argument("Tried to create non-existing enemy " + type);
-    }
-}
-
-inline bool isMultiple(int a, int b)
-{
-    return a % b == 0;
-}
-
-void EnemyGenerator::updateEnemyType(EnemyType& enemy)
-{
-    enemy.times_spawned += 1;
-    enemy.last_time_spawned = SDL_GetTicks();
-
-    if (isMultiple(enemy.times_spawned, enemy.spawns_until_increased_spawn_rate))
-    {
-	enemy.spawn_amount++;
     }
 }

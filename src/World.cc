@@ -13,7 +13,8 @@ World::World()
 		  500,
 		  350,
 		  static_cast<int>(AssetManager::getInstance().getTexture("player")->getWidth() * 0.5),
-		  static_cast<int>(AssetManager::getInstance().getTexture("player")->getHeight() * 0.5) }} {}
+		  static_cast<int>(AssetManager::getInstance().getTexture("player")->getHeight() * 0.5)
+	      }} {}
 
 WorldState World::getState() const
 {
@@ -126,18 +127,16 @@ void World::resolveCollisions()
 
 void World::resolvePlayerCollisions()
 {
-    bool hit_by_laser =
-	std::any_of(begin(enemy_lasers), end(enemy_lasers),
-		    [&] (const Laser& laser)
-		    {
-			return laser.collides(player);
-		    });
-    bool collides_with_enemy =
-	std::any_of(begin(enemies), end(enemies),
-		    [&] (const auto& enemy)
-		    {
-			return enemy->collides(player);
-		    });
+    bool hit_by_laser = std::any_of(begin(enemy_lasers), end(enemy_lasers),
+				    [&] (const Laser& laser)
+				    {
+					return laser.collides(player);
+				    });
+    bool collides_with_enemy = std::any_of(begin(enemies), end(enemies),
+					   [&] (const auto& enemy)
+					   {
+					       return enemy->collides(player);
+					   });
 
     if (collides_with_enemy || hit_by_laser)
     {
