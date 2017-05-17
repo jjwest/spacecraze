@@ -1,3 +1,3 @@
 #include "Settings.h"
 
-SettingsConfig G_SETTINGS;
+SettingsConfig GLOBAL_SETTINGS;

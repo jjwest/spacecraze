@@ -4,6 +4,7 @@
 
 #include "AssetManager.h"
 #include "Constants.h"
+#include "Settings.h"
 #include "World.h"
 
 Blaster::Blaster(const SDL_Rect& rect)
@@ -87,8 +88,12 @@ void Blaster::shoot(const Point &player_pos, World& world)
         Point this_pos{ hitbox.x + hitbox.w / 2, hitbox.y  + hitbox.h / 2};
         world.addEnemyLaser(this_pos, player_pos, damage);
         last_shot = SDL_GetTicks();
-	auto shoot_sound = AssetManager::getInstance().getSoundEffect("big_laser");
-	Mix_PlayChannel(-1, shoot_sound, 0);
+
+	if (GLOBAL_SETTINGS.sound_effects)
+	{
+	    auto shoot_sound = AssetManager::getInstance().getSoundEffect("big_laser");
+	    Mix_PlayChannel(-1, shoot_sound, 0);
+	}
     }
 }
 

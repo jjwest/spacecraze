@@ -23,7 +23,7 @@ Options::Options()
     sound_text.setFont(AssetManager::getInstance().getFont("text"));
     sound_button.setPosition(650, 350);
 
-    if (G_SETTINGS.music)
+    if (GLOBAL_SETTINGS.music)
     {
 	music_button.setText("ON");
     }
@@ -31,7 +31,7 @@ Options::Options()
     {
 	music_button.setText("OFF");
     }
-    if (G_SETTINGS.sound_effects)
+    if (GLOBAL_SETTINGS.sound_effects)
     {
 	sound_button.setText("ON");
     }
@@ -175,8 +175,8 @@ bool Options::leftMouseButtonPressed() const
 
 void Options::toggleMusic()
 {
-    G_SETTINGS.music = !G_SETTINGS.music;
-    if (G_SETTINGS.music)
+    GLOBAL_SETTINGS.music = !GLOBAL_SETTINGS.music;
+    if (GLOBAL_SETTINGS.music)
     {
 	music_button.setText("ON");
     }
@@ -188,8 +188,8 @@ void Options::toggleMusic()
 
 void Options::toggleSoundEffects()
 {
-    G_SETTINGS.sound_effects = !G_SETTINGS.sound_effects;
-    if (G_SETTINGS.sound_effects)
+    GLOBAL_SETTINGS.sound_effects = !GLOBAL_SETTINGS.sound_effects;
+    if (GLOBAL_SETTINGS.sound_effects)
     {
 	sound_button.setText("ON");
     }

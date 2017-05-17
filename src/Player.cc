@@ -5,6 +5,7 @@
 
 #include "AssetManager.h"
 #include "Constants.h"
+#include "Settings.h"
 #include "World.h"
 
 Player::Player(const SDL_Rect& hitbox)
@@ -108,8 +109,12 @@ void Player::shoot(World& world)
         auto player_center_x = hitbox.x + (hitbox.w / 2);
 	world.addPlayerLaser({player_center_x, hitbox.y}, damage);
         last_shot_time = SDL_GetTicks();
-	auto shoot_sound = AssetManager::getInstance().getSoundEffect("small_laser");
-	Mix_PlayChannel(-1, shoot_sound, 0);
+
+	if (GLOBAL_SETTINGS.sound_effects)
+	{
+	    auto shoot_sound = AssetManager::getInstance().getSoundEffect("small_laser");
+	    Mix_PlayChannel(-1, shoot_sound, 0);
+	}
     }
 }
 

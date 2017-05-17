@@ -17,7 +17,7 @@ void MusicManager::start()
 
 void MusicManager::update(State current_state)
 {
-    if (G_SETTINGS.music)
+    if (GLOBAL_SETTINGS.music)
     {
 	if (shouldStartPlayMusic(current_state))
 	{

@@ -7,6 +7,6 @@ struct SettingsConfig
     bool sound_effects = true;
 };
 
-extern SettingsConfig G_SETTINGS;
+extern SettingsConfig GLOBAL_SETTINGS;
 
 #endif // _SETTINGS_H_
