@@ -1,7 +1,7 @@
 #include "Player.h"
 
-#include <utility>
 #include <string>
+#include <utility>
 
 #include "AssetManager.h"
 #include "Constants.h"
@@ -28,7 +28,7 @@ Point Player::getPosition() const
 
 void Player::increaseDamage()
 {
-    damage++;
+    ++damage;
 }
 
 void Player::update(World& world)
@@ -47,19 +47,23 @@ void Player::move()
 
     if (key_pressed[SDL_SCANCODE_A] && canMoveLeft())
     {
-	moveLeft();
+	pos_x -= speed;
+	hitbox.x = round(pos_x);
     }
     if (key_pressed[SDL_SCANCODE_D] && canMoveRight())
     {
-	moveRight();
+	pos_x += speed;
+	hitbox.x = round(pos_x);
     }
     if (key_pressed[SDL_SCANCODE_W] && canMoveUp())
     {
-	moveUp();
+	pos_y -= speed;
+	hitbox.y = round(pos_y);
     }
     if (key_pressed[SDL_SCANCODE_S] && canMoveDown())
     {
-	moveDown();
+	pos_y += speed;
+	hitbox.y = round(pos_y);
     }
 }
 
@@ -83,29 +87,6 @@ bool Player::canMoveDown() const
     return hitbox.y + hitbox.h + speed <= SCREEN_HEIGHT;
 }
 
-void Player::moveLeft()
-{
-    pos_x -= speed;
-    hitbox.x = round(pos_x);
-}
-
-void Player::moveRight()
-{
-    pos_x += speed;
-    hitbox.x = round(pos_x);
-}
-
-void Player::moveUp()
-{
-    pos_y -= speed;
-    hitbox.y = round(pos_y);
-}
-
-void Player::moveDown()
-{
-    pos_y += speed;
-    hitbox.y = round(pos_y);
-}
 
 void Player::adjustAngle()
 {

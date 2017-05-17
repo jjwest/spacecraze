@@ -29,10 +29,6 @@ private:
     bool canMoveRight() const;
     bool canMoveUp() const;
     bool canMoveDown() const;
-    void moveLeft();
-    void moveRight();
-    void moveUp();
-    void moveDown();
     void adjustAngle();
     void shoot(World& world);
     bool leftMouseButtonPressed() const;

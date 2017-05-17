@@ -127,16 +127,18 @@ void World::resolveCollisions()
 
 void World::resolvePlayerCollisions()
 {
-    bool hit_by_laser = std::any_of(begin(enemy_lasers), end(enemy_lasers),
-				    [&] (const Laser& laser)
-				    {
-					return laser.collides(player);
-				    });
-    bool collides_with_enemy = std::any_of(begin(enemies), end(enemies),
-					   [&] (const auto& enemy)
-					   {
-					       return enemy->collides(player);
-					   });
+    bool hit_by_laser = std::any_of(
+	begin(enemy_lasers), end(enemy_lasers),
+	[&] (const Laser& laser)
+	{
+	    return laser.collides(player);
+	});
+    bool collides_with_enemy = std::any_of(
+	begin(enemies), end(enemies),
+	[&] (const auto& enemy)
+	{
+	    return enemy->collides(player);
+	});
 
     if (collides_with_enemy || hit_by_laser)
     {

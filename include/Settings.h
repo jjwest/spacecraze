@@ -4,6 +4,7 @@
 struct SettingsConfig
 {
     bool music = true;
+    bool sound_effects = true;
 };
 
 extern SettingsConfig G_SETTINGS;

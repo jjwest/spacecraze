@@ -28,14 +28,14 @@ private:
 	OPTIONS,
 	QUIT
     };
-    int active_button = NONE;
-    Button play_button;
     Button highscore_button;
     Button options_button;
+    Button play_button;
     Button quit_button;
-    State next_state = State::MENU;
     SDL_Event event;
+    State next_state = State::MENU;
     Text title;
+    int active_button = NONE;
 
     bool leftMouseButtonPressed() const;
 };

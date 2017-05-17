@@ -168,6 +168,6 @@ State Menu::getNextState() const
 
 bool Menu::leftMouseButtonPressed() const
 {
-    return (event.type == SDL_MOUSEBUTTONDOWN &&
-	    SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT));
+    return (event.type == SDL_MOUSEBUTTONDOWN
+	    && SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT));
 }

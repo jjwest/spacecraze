@@ -20,15 +20,10 @@ Game::Game()
 
 Game::~Game()
 {
-    freeLoadedAssets();
+    AssetManager::destroyInstance();
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     shutdownSDL();
-}
-
-void Game::freeLoadedAssets() const
-{
-    AssetManager::destroyInstance();
 }
 
 void Game::shutdownSDL() const

@@ -16,9 +16,7 @@ private:
 
     void initSDL() const;
     void createWindowAndRenderer();
-    void destroyWindowAndRenderer();
     void loadAssets() const;
-    void freeLoadedAssets() const;
     void shutdownSDL() const;
     void sleepIfFrameTooFast(Uint32 start, Uint32 end) const;
 };

@@ -9,12 +9,19 @@ Options::Options()
     title.setText("SETTINGS");
     title.setPosition(450, 150);
     title.setFont(AssetManager::getInstance().getFont("title"));
+
     back_button.setPosition(SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT - 150);
     back_button.setText("BACK");
+
     music_text.setText("Music");
     music_text.setPosition(450, 300);
     music_text.setFont(AssetManager::getInstance().getFont("text"));
     music_button.setPosition(650, 300);
+
+    sound_text.setText("Sound effects");
+    sound_text.setPosition(300, 350);
+    sound_text.setFont(AssetManager::getInstance().getFont("text"));
+    sound_button.setPosition(650, 350);
 
     if (G_SETTINGS.music)
     {
@@ -23,6 +30,14 @@ Options::Options()
     else
     {
 	music_button.setText("OFF");
+    }
+    if (G_SETTINGS.sound_effects)
+    {
+	sound_button.setText("ON");
+    }
+    else
+    {
+	sound_button.setText("OFF");
     }
 }
 
@@ -49,7 +64,11 @@ void Options::handleEvents()
     	    {
 		toggleMusic();
     	    }
-        }
+    	    else if (sound_button.mouseAbove())
+    	    {
+		toggleSoundEffects();
+    	    }
+	}
     	else if (event.type == SDL_KEYDOWN)
     	{
     	    if (active_button == NONE)
@@ -69,6 +88,7 @@ void Options::handleEvents()
     		switch (active_button)
     		{
     		case MUSIC: toggleMusic(); break;
+		case SOUND_EFFECTS: toggleSoundEffects(); break;
     		case BACK:  next_state = State::MENU; break;
     		}
     	    }
@@ -82,6 +102,10 @@ void Options::handleEvents()
     	    else if (music_button.mouseAbove())
     	    {
     		active_button = MUSIC;
+    	    }
+    	    else if (sound_button.mouseAbove())
+    	    {
+    		active_button = SOUND_EFFECTS;
     	    }
 	    else
 	    {
@@ -100,18 +124,28 @@ void Options::update()
     {
 	back_button.removeHighlight();
 	music_button.removeHighlight();
+	sound_button.removeHighlight();
 	break;
     }
     case MUSIC:
     {
 	music_button.addHighlight();
 	back_button.removeHighlight();
+	sound_button.removeHighlight();
+	break;
+    }
+    case SOUND_EFFECTS:
+    {
+	sound_button.addHighlight();
+	back_button.removeHighlight();
+	music_button.removeHighlight();
 	break;
     }
     case BACK:
     {
 	back_button.addHighlight();
 	music_button.removeHighlight();
+	sound_button.removeHighlight();
 	break;
     }
     }
@@ -126,6 +160,8 @@ void Options::draw(SDL_Renderer *renderer)
     title.draw(renderer);
     music_button.draw(renderer);
     music_text.draw(renderer);
+    sound_button.draw(renderer);
+    sound_text.draw(renderer);
     back_button.draw(renderer);
 
     SDL_RenderPresent(renderer);
@@ -147,5 +183,18 @@ void Options::toggleMusic()
     else
     {
 	music_button.setText("OFF");
+    }
+}
+
+void Options::toggleSoundEffects()
+{
+    G_SETTINGS.sound_effects = !G_SETTINGS.sound_effects;
+    if (G_SETTINGS.sound_effects)
+    {
+	sound_button.setText("ON");
+    }
+    else
+    {
+	sound_button.setText("OFF");
     }
 }

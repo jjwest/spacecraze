@@ -21,11 +21,14 @@ private:
     {
 	NONE,
 	MUSIC,
+	SOUND_EFFECTS,
 	BACK
     };
     Button back_button;
     Button music_button;
+    Button sound_button;
     Text music_text;
+    Text sound_text;
     Text title;
     State next_state = State::OPTIONS;
     int active_button = NONE;
@@ -33,6 +36,7 @@ private:
 
     bool leftMouseButtonPressed() const;
     void toggleMusic();
+    void toggleSoundEffects();
 };
 
 
