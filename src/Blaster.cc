@@ -4,7 +4,7 @@
 
 #include "AssetManager.h"
 #include "Constants.h"
-#include "Settings.h"
+#include "Globals.h"
 #include "World.h"
 
 Blaster::Blaster(const SDL_Rect& rect)

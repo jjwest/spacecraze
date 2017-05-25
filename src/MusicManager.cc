@@ -1,7 +1,7 @@
 #include "MusicManager.h"
 
 #include "AssetManager.h"
-#include "Settings.h"
+#include "Globals.h"
 
 MusicManager::MusicManager()
 {

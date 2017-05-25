@@ -25,12 +25,13 @@ public:
     void removeHighlight();
 
 private:
-    bool highlighted = false;
-    bool update_text = false;
-    std::string text;
     SDL_Rect rect;
-    SDL_Texture* texture_normal = nullptr;
     SDL_Texture* texture_hover = nullptr;
+    SDL_Texture* texture_normal = nullptr;
+
+    bool highlighted = false;
+    bool text_modified = false;
+    std::string text;
 };
 
 

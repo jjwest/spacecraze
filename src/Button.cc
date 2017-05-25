@@ -13,15 +13,15 @@ bool Button::mouseAbove() const
     Point mouse;
     SDL_GetMouseState(&mouse.x, &mouse.y);
 
-    return (mouse.x >= rect.x &&
-	    mouse.x <= (rect.x + rect.w) &&
-	    mouse.y >= rect.y &&
-	    mouse.y <= (rect.y + rect.h));
+    return mouse.x >= rect.x
+	&& mouse.x <= rect.x + rect.w
+	&& mouse.y >= rect.y
+	&& mouse.y <= rect.y + rect.h;
 }
 
 void Button::draw(SDL_Renderer* renderer)
 {
-    if (update_text)
+    if (text_modified)
     {
 	SDL_DestroyTexture(texture_normal);
 	SDL_DestroyTexture(texture_hover);
@@ -40,7 +40,7 @@ void Button::draw(SDL_Renderer* renderer)
 	texture_hover = SDL_CreateTextureFromSurface(renderer, hover_surface);
 	SDL_FreeSurface(hover_surface);
 
-	update_text = false;
+	text_modified = false;
     }
 
     if (highlighted)
@@ -56,7 +56,7 @@ void Button::draw(SDL_Renderer* renderer)
 void Button::setText(const std::string& text)
 {
     this->text = text;
-    update_text = true;
+    text_modified = true;
 }
 
 void Button::setPosition(int x, int y)

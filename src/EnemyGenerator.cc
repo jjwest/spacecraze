@@ -10,12 +10,6 @@
 #include "Constants.h"
 #include "Drone.h"
 
-enum class Section {
-    UP,
-    DOWN,
-    LEFT,
-    RIGHT
-};
 
 
 EnemyGenerator::EnemyGenerator()
@@ -40,6 +34,7 @@ void EnemyGenerator::update(World& world)
 	    {
 		world.addEnemy(createEnemy(enemy.name));
 	    }
+
 	    ++enemy.waves_spawned;
 	    enemy.last_time_spawned = SDL_GetTicks();
 
@@ -57,28 +52,29 @@ bool EnemyGenerator::readyToSpawn(const EnemyType& enemy)
     return current_time - enemy.last_time_spawned > enemy.spawn_delay * 1000;
 }
 
+
 Point getSpawnPoint(Texture* texture)
 {
-    std::vector<std::pair<Section, int>> spawn_sections {
-	{Section::UP, SCREEN_WIDTH},
-	{Section::DOWN, SCREEN_WIDTH},
-	{Section::LEFT, SCREEN_HEIGHT},
-	{Section::RIGHT, SCREEN_HEIGHT}
+    enum Section {
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT,
+	NUM_SECTIONS
     };
 
-    std::uniform_int_distribution<int> index(0,3);
     std::random_device random;
-
-    std::pair<Section, int> section{ spawn_sections.at( index(random) ) };
-    std::uniform_int_distribution<int> spawn_range(0, section.second);
+    std::uniform_int_distribution<int> section(0, NUM_SECTIONS);
+    std::uniform_int_distribution<int> spawn_range_x(200, SCREEN_WIDTH - 200);
+    std::uniform_int_distribution<int> spawn_range_y(200, SCREEN_HEIGHT - 200);
 
     Point spawn_point;
-    switch (section.first)
+    switch (section(random))
     {
-    case Section::UP:    spawn_point = { spawn_range(random), 0 - texture->getHeight() }; break;
-    case Section::LEFT:  spawn_point = { 0 - texture->getWidth(), spawn_range(random) };  break;
-    case Section::DOWN:  spawn_point = { spawn_range(random), SCREEN_HEIGHT }; break;
-    case Section::RIGHT: spawn_point = { SCREEN_WIDTH, spawn_range(random) };  break;
+    case DOWN:  spawn_point = { spawn_range_x(random), SCREEN_HEIGHT }; break;
+    case UP:    spawn_point = { spawn_range_x(random), 0 - texture->getHeight() }; break;
+    case RIGHT: spawn_point = { SCREEN_WIDTH, spawn_range_y(random) };  break;
+    case LEFT:  spawn_point = { 0 - texture->getWidth(), spawn_range_y(random) };  break;
     }
 
     return spawn_point;

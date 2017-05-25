@@ -5,7 +5,7 @@
 
 #include "AssetManager.h"
 #include "Constants.h"
-#include "Settings.h"
+#include "Globals.h"
 #include "World.h"
 
 Player::Player(const SDL_Rect& hitbox)
@@ -96,9 +96,9 @@ void Player::adjustAngle()
 
      auto player_center_x = hitbox.x + (hitbox.w / 2);
      auto player_center_y = hitbox.y + (hitbox.h / 2);
-
      auto angle_in_radians = atan2(player_center_y - mouse_y, player_center_x - mouse_x);
      auto angle_in_degrees = angle_in_radians * 180 / M_PI;
+
      angle = (static_cast<int>(angle_in_degrees) - 90) % 360;
 }
 

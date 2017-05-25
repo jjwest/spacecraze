@@ -2,7 +2,7 @@
 
 #include "AssetManager.h"
 #include "Constants.h"
-#include "Settings.h"
+#include "Globals.h"
 
 Options::Options()
 {
@@ -87,9 +87,9 @@ void Options::handleEvents()
     	    {
     		switch (active_button)
     		{
-    		case MUSIC: toggleMusic(); break;
-		case SOUND_EFFECTS: toggleSoundEffects(); break;
-    		case BACK:  next_state = State::MENU; break;
+		case SOUND_EFFECTS: toggleSoundEffects();     break;
+    		case MUSIC:         toggleMusic();            break;
+    		case BACK:          next_state = State::MENU; break;
     		}
     	    }
     	}
