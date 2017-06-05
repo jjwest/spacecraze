@@ -1,6 +1,5 @@
 EXEC         = spacecraze
 BUILD_DIR    = build
-INCLUDE_DIRS = include
 SRC_DIR      = src
 
 CC       = g++-5
@@ -16,7 +15,6 @@ FILE_EXT = cc
 VPATH     = ${SRC_DIR}:${INCLUDES}:${BUILD_DIR}
 SOURCES   = $(notdir $(wildcard ${SRC_DIR}/*.${FILE_EXT}))
 OBJECTS   = $(addprefix ${BUILD_DIR}/, $(patsubst %.${FILE_EXT}, %.o, ${SOURCES}))
-INCLUDES  = $(addprefix -I, ${INCLUDE_DIRS})
 
 all: ${EXEC}
 
