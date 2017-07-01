@@ -3,7 +3,7 @@
 #include "Point.h"
 
 Menu::Menu()
-{
+    {
     title.setText("SPACECRAZE");
     title.setPosition(450, 150);
     title.setFont(AssetManager::getInstance().getFont("title"));
@@ -26,43 +26,19 @@ void Menu::handleEvents()
 {
     while (SDL_PollEvent(&event) != 0)
     {
-        if (event.type == SDL_QUIT)
-	{
-            next_state = State::QUIT;
-        }
+        if (event.type == SDL_QUIT) next_state = State::QUIT;
+
         else if (leftMouseButtonPressed())
 	{
-	    if (play_button.mouseAbove())
-	    {
-		next_state = State::PLAY;
-	    }
-	    else if (highscore_button.mouseAbove())
-	    {
-		next_state = State::VIEW_HIGHSCORE;
-	    }
-	    else if (options_button.mouseAbove())
-	    {
-		next_state = State::OPTIONS;
-	    }
-	    else if (quit_button.mouseAbove())
-	    {
-		next_state = State::QUIT;
-	    }
+	    if (play_button.mouseOver()) next_state = State::PLAY;
+	    else if (highscore_button.mouseOver()) next_state = State::VIEW_HIGHSCORE;
+	    else if (options_button.mouseOver()) next_state = State::OPTIONS;
+	    else if (quit_button.mouseOver()) next_state = State::QUIT;
         }
 	else if (event.type == SDL_KEYDOWN)
 	{
-	    if (active_button == NONE)
-	    {
-		active_button = PLAY;
-	    }
-	    else if (event.key.keysym.sym == SDLK_UP && active_button != PLAY)
-	    {
-		--active_button;
-	    }
-	    else if (event.key.keysym.sym == SDLK_DOWN && active_button != QUIT)
-	    {
-		++active_button;
-	    }
+	    if (event.key.keysym.sym == SDLK_UP && active_button > PLAY) --active_button;
+	    else if (event.key.keysym.sym == SDLK_DOWN && active_button != QUIT) ++active_button;
 	    else if (event.key.keysym.sym == SDLK_RETURN)
 	    {
 		switch (active_button)
@@ -78,22 +54,10 @@ void Menu::handleEvents()
 	{
 	    active_button = NONE;
 
-	    if (play_button.mouseAbove())
-	    {
-		active_button = PLAY;
-	    }
-	    else if (highscore_button.mouseAbove())
-	    {
-		active_button = HIGHSCORE;
-	    }
-	    else if (options_button.mouseAbove())
-	    {
-		active_button = OPTIONS;
-	    }
-	    else if (quit_button.mouseAbove())
-	    {
-		active_button = QUIT;
-	    }
+	    if (play_button.mouseOver()) active_button = PLAY;
+	    else if (highscore_button.mouseOver()) active_button = HIGHSCORE;
+	    else if (options_button.mouseOver()) active_button = OPTIONS;
+	    else if (quit_button.mouseOver()) active_button = QUIT;
 	}
     }
 }

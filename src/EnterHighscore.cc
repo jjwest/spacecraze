@@ -40,7 +40,7 @@ void EnterHighscore::handleEvents()
         }
 	else if (leftMouseButtonPressed())
 	{
-	    if (back_button.mouseAbove())
+	    if (back_button.mouseOver())
 	    {
 		next_state = State::MENU;
 	    }

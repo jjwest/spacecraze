@@ -8,7 +8,7 @@ Button::~Button()
     SDL_DestroyTexture(texture_hover);
 }
 
-bool Button::mouseAbove() const
+bool Button::mouseOver() const
 {
     Point mouse;
     SDL_GetMouseState(&mouse.x, &mouse.y);

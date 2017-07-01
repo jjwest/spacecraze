@@ -56,15 +56,15 @@ void Options::handleEvents()
         }
         else if (leftMouseButtonPressed())
     	{
-    	    if (back_button.mouseAbove())
+    	    if (back_button.mouseOver())
     	    {
     		next_state = State::MENU;
     	    }
-    	    else if (music_button.mouseAbove())
+    	    else if (music_button.mouseOver())
     	    {
 		toggleMusic();
     	    }
-    	    else if (sound_button.mouseAbove())
+    	    else if (sound_button.mouseOver())
     	    {
 		toggleSoundEffects();
     	    }
@@ -95,15 +95,15 @@ void Options::handleEvents()
     	}
     	else if (event.type == SDL_MOUSEMOTION)
     	{
-    	    if (back_button.mouseAbove())
+    	    if (back_button.mouseOver())
     	    {
     		active_button = BACK;
     	    }
-    	    else if (music_button.mouseAbove())
+    	    else if (music_button.mouseOver())
     	    {
     		active_button = MUSIC;
     	    }
-    	    else if (sound_button.mouseAbove())
+    	    else if (sound_button.mouseOver())
     	    {
     		active_button = SOUND_EFFECTS;
     	    }

@@ -91,7 +91,7 @@ void Game::createWindowAndRenderer()
 	SDL_WINDOWPOS_UNDEFINED,
 	SCREEN_WIDTH,
 	SCREEN_HEIGHT,
-	SDL_WINDOW_RESIZABLE
+	SDL_WINDOW_SHOWN
     );
 
     renderer = SDL_CreateRenderer(window, -1, 0);

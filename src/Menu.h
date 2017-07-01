@@ -28,6 +28,7 @@ private:
 	OPTIONS,
 	QUIT
     };
+    int active_button = NONE;
     Button highscore_button;
     Button options_button;
     Button play_button;
@@ -35,7 +36,6 @@ private:
     SDL_Event event;
     State next_state = State::MENU;
     Text title;
-    int active_button = NONE;
 
     bool leftMouseButtonPressed() const;
 };

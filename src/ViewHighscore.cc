@@ -87,14 +87,14 @@ void ViewHighscore::handleEvents()
         }
 	else if (leftMouseButtonPressed())
 	{
-	    if (back_button.mouseAbove())
+	    if (back_button.mouseOver())
 	    {
 		next_state = State::MENU;
 	    }
 	}
 	else if (event.type == SDL_MOUSEMOTION)
 	{
-	    if (back_button.mouseAbove())
+	    if (back_button.mouseOver())
 	    {
 		back_button.addHighlight();
 		back_button_active = true;

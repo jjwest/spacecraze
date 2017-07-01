@@ -17,7 +17,7 @@ public:
     Button& operator=(Button&&) = default;
     ~Button();
 
-    bool mouseAbove() const;
+    bool mouseOver() const;
     void draw(SDL_Renderer* renderer);
     void setText(const std::string& text);
     void setPosition(int x, int y);
