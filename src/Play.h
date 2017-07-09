@@ -21,10 +21,8 @@ public:
 private:
     EnemyGenerator enemy_generator;
     PowerupGenerator powerup_generator;
-
     SDL_Event event;
     ScoreKeeper& score;
-
     State next_state = State::PLAY;
     UserInterface user_interface;
     World world;

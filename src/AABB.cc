@@ -54,13 +54,14 @@ bool AABB::collision_point(const AABB & from, const Point & to,
   float current_x{static_cast<float>(from.get_left())};
   float current_y{static_cast<float>(from.get_top())};
 
-  int x_dist{to.x - from.get_left()};
-  int y_dist{to.y - from.get_top()};
-  int long_dist{max(abs(x_dist), abs(y_dist))};
+  int x_distance{to.x - from.get_left()};
+  int y_distance{to.y - from.get_top()};
+  int longest_distance{max(abs(x_distance), abs(y_distance))};
 
-  float dx{static_cast<float>(x_dist) / long_dist};
-  float dy{static_cast<float>(y_dist) / long_dist};
-  for (int i{0}; i < long_dist; ++i)
+  float dx{static_cast<float>(x_distance) / longest_distance};
+  float dy{static_cast<float>(y_distance) / longest_distance};
+
+  for (int i{0}; i < longest_distance; ++i)
   {
       current_x += dx;
       current_y += dy;

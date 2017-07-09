@@ -16,7 +16,7 @@ private:
 struct EnemyType
 {
     std::string name;
-    double spawn_delay;
+    float spawn_delay;
     int spawn_amount;
     int spawns_until_increased_spawn_rate;
     int waves_spawned = 0;

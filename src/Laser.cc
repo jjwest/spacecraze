@@ -10,22 +10,22 @@
 #include "Constants.h"
 
 Laser::Laser(Texture* t, const Point& origin, const Point& destination,
-             double damage, double speed)
+             float damage, float speed)
     : GameObject(t, {origin.x - t->getWidth() / 2,
 		origin.y - (t->getHeight() / 2) - 10,
 		t->getWidth() / 2,
 		t->getHeight() / 2}, 1),
       damage{damage},
       speed{speed},
-      current_x{static_cast<double>(origin.x)},
-      current_y{static_cast<double>(origin.y)}
+      current_x{static_cast<float>(origin.x)},
+      current_y{static_cast<float>(origin.y)}
 {
-    // Calculates movement direction
-    double center_laser_x = hitbox.x + (hitbox.w / 2);
-    double center_laser_y = hitbox.y + (hitbox.h / 2);
-    double x_dist = destination.x - center_laser_x;
-    double y_dist = destination.y - center_laser_y;
-    double longest = std::max( std::abs(x_dist), std::abs(y_dist) );
+    // Calculate movement direction
+    float center_laser_x = hitbox.x + (hitbox.w / 2);
+    float center_laser_y = hitbox.y + (hitbox.h / 2);
+    float x_dist = destination.x - center_laser_x;
+    float y_dist = destination.y - center_laser_y;
+    float longest = std::max( std::abs(x_dist), std::abs(y_dist) );
 
     delta_x = x_dist / longest;
     delta_y = y_dist / longest;
@@ -64,10 +64,10 @@ void Laser::killIfOutsideScreen()
 
 void Laser::setAngle(const Point& destination)
 {
-     double center_x = hitbox.x + (hitbox.w / 2);
-     double center_y = hitbox.y + (hitbox.h / 2);
-     double angle_in_radians = atan2(center_y - destination.y, center_x - destination.x);
-     double angle_in_degrees = angle_in_radians * 180 / M_PI;
+     float center_x = hitbox.x + (hitbox.w / 2);
+     float center_y = hitbox.y + (hitbox.h / 2);
+     float angle_in_radians = atan2(center_y - destination.y, center_x - destination.x);
+     float angle_in_degrees = angle_in_radians * 180 / M_PI;
 
      angle = (static_cast<int>(angle_in_degrees) - 90) % 360;
 }

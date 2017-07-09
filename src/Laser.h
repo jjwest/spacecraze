@@ -8,18 +8,18 @@ class Laser : public GameObject
 {
 public:
     Laser(Texture* t, const Point& origin, const Point& destination,
-          double damage, double speed);
+          float damage, float speed);
     void update();
     int getDamage() const;
 
 
 private:
-    double damage;
-    double speed;
-    double current_x;
-    double current_y;
-    double delta_x;
-    double delta_y;
+    float damage;
+    float speed;
+    float current_x;
+    float current_y;
+    float delta_x;
+    float delta_y;
 
     void move();
     void killIfOutsideScreen();

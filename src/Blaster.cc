@@ -23,18 +23,18 @@ void Blaster::move()
 {
     changeDirection();
 
-    double center_blaster_x = hitbox.x + (hitbox.w / 2);
-    double center_blaster_y = hitbox.y + (hitbox.h / 2);
+    float center_blaster_x = hitbox.x + (hitbox.w / 2);
+    float center_blaster_y = hitbox.y + (hitbox.h / 2);
 
-    double x_dist = move_to.x - center_blaster_x;
-    double y_dist = move_to.y - center_blaster_y;
-    double longest = std::max( abs(x_dist), abs(y_dist) );
+    float x_dist = move_to.x - center_blaster_x;
+    float y_dist = move_to.y - center_blaster_y;
+    float longest = std::max( abs(x_dist), abs(y_dist) );
 
-    double delta_x = x_dist / longest;
-    double delta_y = y_dist /longest;
+    float delta_x = x_dist / longest;
+    float delta_y = y_dist /longest;
 
-    double move_x = delta_x * speed;
-    double move_y = delta_y * speed;
+    float move_x = delta_x * speed;
+    float move_y = delta_y * speed;
 
     hitbox.x = hitbox.x + static_cast<int>(round(move_x));
     hitbox.y = hitbox.y + static_cast<int>(round(move_y));
@@ -73,8 +73,8 @@ void Blaster::setAngle(const Point &player_pos)
     int center_x = hitbox.x + (hitbox.h / 2);
     int center_y = hitbox.y + (hitbox.w / 2);
 
-    double angle_in_radians = atan2(center_y - player_pos.y, center_x - player_pos.x);
-    double angle_in_degrees = angle_in_radians * 180 / M_PI;
+    float angle_in_radians = atan2(center_y - player_pos.y, center_x - player_pos.x);
+    float angle_in_degrees = angle_in_radians * 180 / M_PI;
 
     angle = (static_cast<int>(angle_in_degrees) + 90) % 360;
 }

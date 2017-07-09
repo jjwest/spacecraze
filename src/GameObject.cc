@@ -1,6 +1,6 @@
 #include "GameObject.h"
 
-GameObject::GameObject(Texture* t, const SDL_Rect& rect, double hp)
+GameObject::GameObject(Texture* t, const SDL_Rect& rect, float hp)
     : Sprite(t, rect),
       aabb{rect.y, rect.x, rect.y + rect.h, rect.x + rect.w},
       health{hp} {}
@@ -27,7 +27,7 @@ void GameObject::kill()
     health = 0;
 }
 
-void GameObject::reduceHealth(double damage)
+void GameObject::reduceHealth(float damage)
 {
     health -= damage;
 }

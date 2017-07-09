@@ -31,9 +31,9 @@ void Button::draw(SDL_Renderer* renderer)
 	SDL_Color color_hover = {0, 255, 0, 0};
 
 	auto normal_surface = TTF_RenderText_Solid(font, text.c_str(), color_normal);
+	texture_normal = SDL_CreateTextureFromSurface(renderer, normal_surface);
 	rect.w = normal_surface->w;
 	rect.h = normal_surface->h;
-	texture_normal = SDL_CreateTextureFromSurface(renderer, normal_surface);
 	SDL_FreeSurface(normal_surface);
 
 	auto hover_surface = TTF_RenderText_Solid(font, text.c_str(), color_hover);

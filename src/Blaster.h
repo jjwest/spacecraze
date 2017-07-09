@@ -10,8 +10,8 @@ public:
     void update(const Point& player_pos, World& lasers) override;
 
 private:
-    double damage = 1;
-    double speed = 1;
+    float damage = 1;
+    float speed = 1;
     Point move_to{ 0, 0 };
     Uint32 last_shot = 0;
     Uint32 shoot_cooldown = 700;

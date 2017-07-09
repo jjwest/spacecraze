@@ -10,7 +10,7 @@ public:
     void update(const Point&, World&) override;
 
 private:
-    double speed = 1.5;
+    float speed = 1.5;
     int move_x = 0;
     int move_y = 0;
 

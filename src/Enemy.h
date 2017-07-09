@@ -10,7 +10,7 @@
 class Enemy: public GameObject
 {
 public:
-    Enemy(Texture* t, const SDL_Rect& rect, double hp, int sc);
+    Enemy(Texture* t, const SDL_Rect& rect, float hp, int sc);
     Enemy(const Enemy &) = default;
     Enemy(Enemy &&) = default;
     Enemy& operator=(const Enemy &) = delete;

@@ -26,17 +26,17 @@ void World::addEnemy(std::unique_ptr<Enemy> enemy)
     enemies.push_back(move(enemy));
 }
 
-void World::addEnemyLaser(const Point& origin, const Point& destination, double damage)
+void World::addEnemyLaser(const Point& origin, const Point& destination, float damage)
 {
     auto texture = AssetManager::getInstance().getTexture("enemy_laser");
-    double speed = 2.5;
+    float speed = 2.5;
     enemy_lasers.push_back({texture, origin, destination, damage, speed});
 }
 
-void World::addPlayerLaser(const Point& origin, double damage)
+void World::addPlayerLaser(const Point& origin, float damage)
 {
     auto texture = AssetManager::getInstance().getTexture("player_laser");
-    double speed = 7.0;
+    float speed = 7.0;
     Point destination;
     SDL_GetMouseState(&destination.x, &destination.y);
     player_lasers.push_back({texture, origin, destination, damage, speed});

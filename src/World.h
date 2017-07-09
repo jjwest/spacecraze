@@ -27,8 +27,8 @@ public:
     World();
     WorldState getState() const;
     void addEnemy(std::unique_ptr<Enemy> enemy);
-    void addEnemyLaser(const Point& pos, const Point& dest, double dmg);
-    void addPlayerLaser(const Point& pos, double dmg);
+    void addEnemyLaser(const Point& pos, const Point& dest, float dmg);
+    void addPlayerLaser(const Point& pos, float dmg);
     void addPowerup(const Powerup& powerup);
     void clearEnemies();
     void draw(SDL_Renderer* renderer);

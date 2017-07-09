@@ -11,7 +11,7 @@ public:
     void update(const Point& player_pos, World&) override;
 
 private:
-    double speed = 2;
+    float speed = 2;
 
     void move(const Point& player_pos);
 };

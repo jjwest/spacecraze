@@ -18,20 +18,20 @@ void Drone::update(const Point& player_pos, World&)
 
 void Drone::move(const Point& player_pos)
 {
-    double dest_x = player_pos.x;
-    double dest_y = player_pos.y;
-    double center_drone_x = hitbox.x + (hitbox.h / 2);
-    double center_drone_y = hitbox.y + (hitbox.w / 2);
+    float dest_x = player_pos.x;
+    float dest_y = player_pos.y;
+    float center_drone_x = hitbox.x + (hitbox.h / 2);
+    float center_drone_y = hitbox.y + (hitbox.w / 2);
 
-    double x_dist = dest_x - center_drone_x;
-    double y_dist = dest_y - center_drone_y;
+    float x_dist = dest_x - center_drone_x;
+    float y_dist = dest_y - center_drone_y;
     int longest = std::max( abs( int(x_dist) ), abs( int(y_dist) ) );
 
-    double delta_x = x_dist / longest;
-    double delta_y = y_dist / longest;
+    float delta_x = x_dist / longest;
+    float delta_y = y_dist / longest;
 
-    double move_x = delta_x * speed;
-    double move_y = delta_y * speed;
+    float move_x = delta_x * speed;
+    float move_y = delta_y * speed;
 
     hitbox.x = hitbox.x + static_cast<int>(round(move_x));
     hitbox.y = hitbox.y + static_cast<int>(round(move_y));

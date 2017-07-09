@@ -14,18 +14,18 @@ class World;
 class GameObject: public Sprite
 {
 public:
-    GameObject(Texture* t, const SDL_Rect& rect, double hp);
+    GameObject(Texture* t, const SDL_Rect& rect, float hp);
     virtual ~GameObject();
     AABB getHitbox() const;
     bool collides(const GameObject& other) const;
     bool isDead() const;
     void kill();
-    void reduceHealth(double damage);
+    void reduceHealth(float damage);
     void updateHitbox(const SDL_Rect& pos);
 
 private:
     AABB aabb;
-    double health;
+    float health;
 };
 
 
