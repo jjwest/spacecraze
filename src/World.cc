@@ -194,9 +194,17 @@ void World::removeDeadObjects()
 {
     auto isDead = [] (const auto& object) { return object.isDead(); };
 
-    enemy_lasers.erase(std::remove_if(begin(enemy_lasers), end(enemy_lasers), isDead), end(enemy_lasers));
-    player_lasers.erase(std::remove_if(begin(player_lasers), end(player_lasers), isDead), end(player_lasers));
     powerups.erase(std::remove_if(begin(powerups), end(powerups), isDead), end(powerups));
+
+    enemy_lasers.erase(
+	std::remove_if(begin(enemy_lasers), end(enemy_lasers), isDead),
+	end(enemy_lasers)
+    );
+
+    player_lasers.erase(
+	std::remove_if(begin(player_lasers), end(player_lasers), isDead),
+	end(player_lasers)
+    );
 
     enemies.erase(std::remove_if(begin(enemies), end(enemies),
 				 [&] (const auto& enemy) {

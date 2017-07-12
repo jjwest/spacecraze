@@ -25,14 +25,8 @@ private:
     Uint32 last_shot_time = 0;
 
     void move();
-    bool canMoveLeft() const;
-    bool canMoveRight() const;
-    bool canMoveUp() const;
-    bool canMoveDown() const;
     void adjustAngle();
     void shoot(World& world);
-    bool leftMouseButtonPressed() const;
-    bool canShoot() const;
     void useSpecialWeapon(World& world);
 };
 

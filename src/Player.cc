@@ -46,48 +46,34 @@ void Player::move()
 {
     auto key_pressed = SDL_GetKeyboardState(NULL);
 
-    if (key_pressed[SDL_SCANCODE_A] && canMoveLeft())
+    bool can_move_left = hitbox.x - speed >= 0;
+    if (key_pressed[SDL_SCANCODE_A] && can_move_left)
     {
 	pos_x -= speed;
 	hitbox.x = round(pos_x);
     }
-    if (key_pressed[SDL_SCANCODE_D] && canMoveRight())
+
+    bool can_move_right = hitbox.x + hitbox.w + speed <= SCREEN_WIDTH;
+    if (key_pressed[SDL_SCANCODE_D] && can_move_right)
     {
 	pos_x += speed;
 	hitbox.x = round(pos_x);
     }
-    if (key_pressed[SDL_SCANCODE_W] && canMoveUp())
+
+    bool can_move_up = hitbox.y - speed >= 0;
+    if (key_pressed[SDL_SCANCODE_W] && can_move_up)
     {
 	pos_y -= speed;
 	hitbox.y = round(pos_y);
     }
-    if (key_pressed[SDL_SCANCODE_S] && canMoveDown())
+
+    bool can_move_down = hitbox.y + hitbox.h + speed <= SCREEN_HEIGHT;
+    if (key_pressed[SDL_SCANCODE_S] && can_move_down)
     {
 	pos_y += speed;
 	hitbox.y = round(pos_y);
     }
 }
-
-bool Player::canMoveLeft() const
-{
-    return hitbox.x - speed >= 0;
-}
-
-bool Player::canMoveRight() const
-{
-    return hitbox.x + hitbox.w + speed <= SCREEN_WIDTH;
-}
-
-bool Player::canMoveUp() const
-{
-    return hitbox.y - speed >= 0;
-}
-
-bool Player::canMoveDown() const
-{
-    return hitbox.y + hitbox.h + speed <= SCREEN_HEIGHT;
-}
-
 
 void Player::adjustAngle()
 {
@@ -104,11 +90,15 @@ void Player::adjustAngle()
 
 void Player::shoot(World& world)
 {
-    if (leftMouseButtonPressed() && canShoot())
+    auto current_time = SDL_GetTicks();
+    bool can_shoot = current_time - last_shot_time > shoot_cooldown;
+    bool left_mouse_button_pressed = SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT);
+
+    if (left_mouse_button_pressed && can_shoot)
     {
         auto player_center_x = hitbox.x + (hitbox.w / 2);
 	world.addPlayerLaser({player_center_x, hitbox.y}, damage);
-        last_shot_time = SDL_GetTicks();
+        last_shot_time = current_time;
 
 	if (GLOBAL_SETTINGS.sound_effects)
 	{
@@ -118,25 +108,10 @@ void Player::shoot(World& world)
     }
 }
 
-bool Player::leftMouseButtonPressed() const
-{
-    return SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT);
-}
-
-bool Player::canShoot() const
-{
-    auto current_time = SDL_GetTicks();
-    return current_time - last_shot_time > shoot_cooldown;
-}
-
-bool rightMouseButtonPressed()
-{
-    return SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT);
-}
-
 void Player::useSpecialWeapon(World& world)
 {
-    if (has_special_weapon && rightMouseButtonPressed())
+    bool right_mouse_button_pressed = SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT);
+    if (has_special_weapon && right_mouse_button_pressed)
     {
 	world.clearEnemies();
 	has_special_weapon = false;
