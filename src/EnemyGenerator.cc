@@ -63,10 +63,10 @@ Point getSpawnPoint(Texture* texture)
 	NUM_SECTIONS
     };
 
-    std::random_device random;
-    std::uniform_int_distribution<int> section(0, NUM_SECTIONS);
-    std::uniform_int_distribution<int> spawn_range_x(200, SCREEN_WIDTH - 200);
-    std::uniform_int_distribution<int> spawn_range_y(200, SCREEN_HEIGHT - 200);
+    static std::random_device random;
+    static std::uniform_int_distribution<int> section(0, NUM_SECTIONS);
+    static std::uniform_int_distribution<int> spawn_range_x(200, SCREEN_WIDTH - 200);
+    static std::uniform_int_distribution<int> spawn_range_y(200, SCREEN_HEIGHT - 200);
 
     Point spawn_point;
     switch (section(random))
