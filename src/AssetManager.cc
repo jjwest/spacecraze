@@ -4,7 +4,7 @@
 #include <stdexcept>
 #include <string>
 
-std::string parseProjectRoot()
+std::string getProjectRoot()
 {
     std::string current_path = __FILE__;
     std::string project_name = "spacecraze";
@@ -39,7 +39,7 @@ AssetManager* AssetManager::instance_(new AssetManager);
 
 void AssetManager::initialize()
 {
-    auto root = parseProjectRoot();
+    auto root = getProjectRoot();
     texture_path = root + "/assets/sprites/";
     music_path = root + "/assets/music/";
     font_path = root + "/assets/fonts/";
