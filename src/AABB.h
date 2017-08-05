@@ -11,15 +11,15 @@ class AABB
   bool contain(int, int) const;
   bool contain(const Point &) const;
   bool intersect(const AABB &) const;
-  bool will_not_collide(const AABB &, const Point &) const;
-  bool collision_point(const AABB &, const Point &, Point &) const;
-  AABB min_bounding_box(const AABB &) const;
-  int get_width() const;
-  int get_height() const;
-  int get_left() const;
-  int get_right() const;
-  int get_top() const;
-  int get_bottom() const;
+  bool willNotCollide(const AABB &, const Point &) const;
+  bool collisionPoint(const AABB &, const Point &, Point &) const;
+  AABB minBoundingBox(const AABB &) const;
+  int getWidth() const;
+  int getHeight() const;
+  int getLeft() const;
+  int getRight() const;
+  int getTop() const;
+  int getBottom() const;
 
  private:
   int top, left, bottom, right;

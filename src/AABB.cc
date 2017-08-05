@@ -38,24 +38,24 @@ bool AABB::intersect(const AABB & a) const
           a.bottom >= top);
 }
 
-bool AABB::will_not_collide(const AABB & from, const Point & to) const
+bool AABB::willNotCollide(const AABB & from, const Point & to) const
 {
   AABB destination(to.y, to.x,
-                   to.y + from.get_height(),
-		   to.x + from.get_width());
-  AABB collision_area = from.min_bounding_box(destination);
+                   to.y + from.getHeight(),
+		   to.x + from.getWidth());
+  AABB collision_area = from.minBoundingBox(destination);
 
   return !intersect(collision_area);
 }
 
-bool AABB::collision_point(const AABB & from, const Point & to,
+bool AABB::collisionPoint(const AABB & from, const Point & to,
                            Point & where) const
 {
-  float current_x{static_cast<float>(from.get_left())};
-  float current_y{static_cast<float>(from.get_top())};
+  float current_x{static_cast<float>(from.getLeft())};
+  float current_y{static_cast<float>(from.getTop())};
 
-  int x_distance{to.x - from.get_left()};
-  int y_distance{to.y - from.get_top()};
+  int x_distance{to.x - from.getLeft()};
+  int y_distance{to.y - from.getTop()};
   int longest_distance{max(abs(x_distance), abs(y_distance))};
 
   float dx{static_cast<float>(x_distance) / longest_distance};
@@ -69,8 +69,8 @@ bool AABB::collision_point(const AABB & from, const Point & to,
       int rounded_y{static_cast<int>(round(current_y))};
 
       AABB this_pos(rounded_y, rounded_x,
-                    rounded_y + from.get_height(),
-                    rounded_x + from.get_width());
+                    rounded_y + from.getHeight(),
+                    rounded_x + from.getWidth());
 
       if (intersect(this_pos))
       {
@@ -82,43 +82,43 @@ bool AABB::collision_point(const AABB & from, const Point & to,
   return false;
 }
 
-AABB AABB::min_bounding_box(const AABB & a) const
+AABB AABB::minBoundingBox(const AABB & a) const
 {
-  int new_left{min(left, a.get_left())};
-  int new_top{min(top, a.get_top() )};
-  int new_right{max(right, a.get_right())};
-  int new_bottom{max(bottom, a.get_bottom())};
+  int new_left{min(left, a.getLeft())};
+  int new_top{min(top, a.getTop() )};
+  int new_right{max(right, a.getRight())};
+  int new_bottom{max(bottom, a.getBottom())};
   AABB new_AABB(new_top, new_left, new_bottom, new_right);
 
   return new_AABB;
 }
 
-int AABB::get_width() const
+int AABB::getWidth() const
 {
   return (right - left);
 }
 
-int AABB::get_height() const
+int AABB::getHeight() const
 {
   return (bottom - top);
 }
 
-int AABB::get_left() const
+int AABB::getLeft() const
 {
   return left;
 }
 
-int AABB::get_right() const
+int AABB::getRight() const
 {
   return right;
 }
 
-int AABB::get_top() const
+int AABB::getTop() const
 {
   return top;
 }
 
-int AABB::get_bottom() const
+int AABB::getBottom() const
 {
   return bottom;
 }
