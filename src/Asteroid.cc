@@ -7,7 +7,7 @@
 #include "Constants.h"
 
 Asteroid::Asteroid(const SDL_Rect& rect)
-    : Enemy(AssetManager::getInstance().getTexture("asteroid"), rect, 50, 0)
+    : Enemy(AssetManager::instance().getTexture("asteroid"), rect, 50, 0)
 {
     static std::random_device rd;
     static std::uniform_int_distribution<int> random_x(50, 1100);

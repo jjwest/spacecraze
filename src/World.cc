@@ -12,8 +12,8 @@ World::World()
     : player {SDL_Rect {
 		  500,
 		  350,
-		  static_cast<int>(AssetManager::getInstance().getTexture("player")->getWidth() * 0.5),
-		  static_cast<int>(AssetManager::getInstance().getTexture("player")->getHeight() * 0.5)
+		  static_cast<int>(AssetManager::instance().getTexture("player")->getWidth() * 0.5),
+		  static_cast<int>(AssetManager::instance().getTexture("player")->getHeight() * 0.5)
 	      }} {}
 
 WorldState World::getState() const
@@ -28,14 +28,14 @@ void World::addEnemy(std::unique_ptr<Enemy> enemy)
 
 void World::addEnemyLaser(const Point& origin, const Point& destination, float damage)
 {
-    auto texture = AssetManager::getInstance().getTexture("enemy_laser");
+    auto texture = AssetManager::instance().getTexture("enemy_laser");
     float speed = 2.5;
     enemy_lasers.push_back({texture, origin, destination, damage, speed});
 }
 
 void World::addPlayerLaser(const Point& origin, float damage)
 {
-    auto texture = AssetManager::getInstance().getTexture("player_laser");
+    auto texture = AssetManager::instance().getTexture("player_laser");
     float speed = 7.0;
     Point destination;
     SDL_GetMouseState(&destination.x, &destination.y);
@@ -57,7 +57,7 @@ void World::draw(SDL_Renderer* renderer)
 {
     SDL_RenderClear(renderer);
 
-    auto background = AssetManager::getInstance().getTexture("background");
+    auto background = AssetManager::instance().getTexture("background");
     SDL_RenderCopy(renderer, background->getTexture(), NULL, NULL);
 
     for (auto& enemy : enemies)

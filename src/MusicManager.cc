@@ -5,7 +5,7 @@
 
 MusicManager::MusicManager()
 {
-    auto& assets = AssetManager::getInstance();
+    auto& assets = AssetManager::instance();
     music.insert( {"menu", assets.getMusic("menu")} );
     music.insert( {"play", assets.getMusic("play")} );
 }

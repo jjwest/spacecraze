@@ -26,7 +26,7 @@ public:
 
 private:
     SDL_Rect rect;
-    SDL_Texture* texture_hover = nullptr;
+    SDL_Texture* texture_highlighted = nullptr;
     SDL_Texture* texture_normal = nullptr;
 
     bool highlighted = false;

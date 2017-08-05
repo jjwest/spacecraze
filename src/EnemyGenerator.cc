@@ -84,7 +84,7 @@ std::unique_ptr<Enemy> EnemyGenerator::createEnemy(const std::string& type)
 {
     if (type == "asteroid")
     {
-        auto texture = AssetManager::getInstance().getTexture("asteroid");
+        auto texture = AssetManager::instance().getTexture("asteroid");
         auto spawn_point = getSpawnPoint(texture);
 	SDL_Rect hitbox {
 	    spawn_point.x,
@@ -96,7 +96,7 @@ std::unique_ptr<Enemy> EnemyGenerator::createEnemy(const std::string& type)
     }
     else if (type == "blaster")
     {
-        auto texture = AssetManager::getInstance().getTexture("blaster");
+        auto texture = AssetManager::instance().getTexture("blaster");
         auto spawn_point = getSpawnPoint(texture);
 	SDL_Rect hitbox {
 	    spawn_point.x,
@@ -110,7 +110,7 @@ std::unique_ptr<Enemy> EnemyGenerator::createEnemy(const std::string& type)
     else if (type == "drone")
     {
 	float scale = 0.5;
-        auto texture = AssetManager::getInstance().getTexture("drone");
+        auto texture = AssetManager::instance().getTexture("drone");
         auto spawn_point = getSpawnPoint(texture);
 	SDL_Rect hitbox {
 	    spawn_point.x,

@@ -44,7 +44,7 @@ void Play::draw(SDL_Renderer* renderer)
 {
     SDL_RenderClear(renderer);
 
-    auto background = AssetManager::getInstance().getTexture("background");
+    auto background = AssetManager::instance().getTexture("background");
     SDL_RenderCopy(renderer, background->getTexture(), NULL, NULL);
     world.draw(renderer);
     user_interface.draw(renderer);

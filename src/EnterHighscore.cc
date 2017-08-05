@@ -76,7 +76,7 @@ void EnterHighscore::draw(SDL_Renderer* renderer)
 {
     SDL_RenderClear(renderer);
 
-    auto background = AssetManager::getInstance().getTexture("background");
+    auto background = AssetManager::instance().getTexture("background");
     SDL_RenderCopy(renderer, background->getTexture(), NULL, NULL);
     back_button.draw(renderer);
 
@@ -87,7 +87,7 @@ void EnterHighscore::draw(SDL_Renderer* renderer)
 	    rendered_player_name.reset(new Text());
 	    rendered_player_name->setText(player_name);
 	    rendered_player_name->setPosition(550, 700);
-	    rendered_player_name->setFont(AssetManager::getInstance().getFont("text"));
+	    rendered_player_name->setFont(AssetManager::instance().getFont("text"));
 	}
 	else
 	{
@@ -108,7 +108,7 @@ void EnterHighscore::draw(SDL_Renderer* renderer)
 bool EnterHighscore::goodEnoughForHighscore(int score) const
 {
     auto highscores = HighscoreFile::read();
-    return score > 0 && (highscores.size() < 5 || score > highscores.back().second);
+    return score > 0 && (highscores.size() < 5 || score > highscores.back().score);
 }
 
 
@@ -141,7 +141,7 @@ void EnterHighscore::updateHighscoreFile() const
     std::sort(begin(highscores), end(highscores),
 	      [] (const auto& a, const auto& b)
 	      {
-		  return a.second > b.second;
+		  return a.score > b.score;
 	      });
 
     HighscoreFile::write(highscores);

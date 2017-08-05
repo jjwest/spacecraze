@@ -8,19 +8,19 @@ Options::Options()
 {
     title.setText("SETTINGS");
     title.setPosition(450, 150);
-    title.setFont(AssetManager::getInstance().getFont("title"));
+    title.setFont(AssetManager::instance().getFont("title"));
 
     back_button.setPosition(SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT - 150);
     back_button.setText("BACK");
 
     music_text.setText("Music");
     music_text.setPosition(450, 300);
-    music_text.setFont(AssetManager::getInstance().getFont("text"));
+    music_text.setFont(AssetManager::instance().getFont("text"));
     music_button.setPosition(650, 300);
 
     sound_text.setText("Sound effects");
     sound_text.setPosition(300, 350);
-    sound_text.setFont(AssetManager::getInstance().getFont("text"));
+    sound_text.setFont(AssetManager::instance().getFont("text"));
     sound_button.setPosition(650, 350);
 
     if (GLOBAL_SETTINGS.music)
@@ -155,7 +155,7 @@ void Options::draw(SDL_Renderer *renderer)
 {
     SDL_RenderClear(renderer);
 
-    auto background = AssetManager::getInstance().getTexture("background");
+    auto background = AssetManager::instance().getTexture("background");
     SDL_RenderCopy(renderer, background->getTexture(), NULL, NULL);
     title.draw(renderer);
     music_button.draw(renderer);

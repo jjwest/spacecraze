@@ -5,7 +5,7 @@
 
 const std::string FILE_PATH = "highscore.txt";
 
-score_t HighscoreFile::read()
+std::vector<ScoreEntry> HighscoreFile::read()
 {
     using namespace std;
 
@@ -21,7 +21,7 @@ score_t HighscoreFile::read()
         file.open(FILE_PATH);
     }
 
-    score_t entries;
+    std::vector<ScoreEntry> entries;
     string line;
     while (getline(file, line))
     {
@@ -36,11 +36,11 @@ score_t HighscoreFile::read()
     return entries;
 }
 
-void HighscoreFile::write(const score_t& scores)
+void HighscoreFile::write(const std::vector<ScoreEntry>& entries)
 {
     std::ofstream file{FILE_PATH};
-    for (const auto& score : scores)
+    for (const auto& score : entries)
     {
-	file << score.first << " " << score.second << '\n';
+	file << score.name << " " << score.score << '\n';
     }
 }

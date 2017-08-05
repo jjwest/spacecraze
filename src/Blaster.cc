@@ -8,7 +8,7 @@
 #include "World.h"
 
 Blaster::Blaster(const SDL_Rect& rect)
-    : Enemy(AssetManager::getInstance().getTexture("blaster"), rect, 15, 40)
+    : Enemy(AssetManager::instance().getTexture("blaster"), rect, 15, 40)
 {}
 
 void Blaster::update(const Point& player_pos, World& world)
@@ -42,9 +42,9 @@ void Blaster::move()
 
 void Blaster::changeDirection()
 {
-    std::random_device rd;
-    std::uniform_int_distribution<int> rand_x(0, SCREEN_WIDTH);
-    std::uniform_int_distribution<int> rand_y(0, SCREEN_HEIGHT);
+    static std::random_device rd;
+    static std::uniform_int_distribution<int> rand_x(0, SCREEN_WIDTH);
+    static std::uniform_int_distribution<int> rand_y(0, SCREEN_HEIGHT);
 
     if (hitbox.y - hitbox.h <= 0)
     {
@@ -70,8 +70,8 @@ void Blaster::changeDirection()
 
 void Blaster::setAngle(const Point &player_pos)
 {
-    int center_x = hitbox.x + (hitbox.h / 2);
-    int center_y = hitbox.y + (hitbox.w / 2);
+    int center_x = hitbox.x + (hitbox.w / 2);
+    int center_y = hitbox.y + (hitbox.h / 2);
 
     float angle_in_radians = atan2(center_y - player_pos.y, center_x - player_pos.x);
     float angle_in_degrees = angle_in_radians * 180 / M_PI;
@@ -83,22 +83,21 @@ void Blaster::setAngle(const Point &player_pos)
 
 void Blaster::shoot(const Point &player_pos, World& world)
 {
-    if (readyToShoot())
+    Uint32 current_time = SDL_GetTicks();
+    bool ready_to_shoot = current_time - last_shot > shoot_cooldown;
+
+    if (ready_to_shoot)
     {
-        Point this_pos{ hitbox.x + hitbox.w / 2, hitbox.y  + hitbox.h / 2};
+	int center_x = hitbox.x + hitbox.w / 2;
+	int center_y = hitbox.y + hitbox.h / 2;
+        Point this_pos{center_x, center_y};
         world.addEnemyLaser(this_pos, player_pos, damage);
-        last_shot = SDL_GetTicks();
+        last_shot = current_time;
 
 	if (GLOBAL_SETTINGS.sound_effects)
 	{
-	    auto shoot_sound = AssetManager::getInstance().getSoundEffect("big_laser");
+	    auto shoot_sound = AssetManager::instance().getSoundEffect("big_laser");
 	    Mix_PlayChannel(-1, shoot_sound, 0);
 	}
     }
-}
-
-bool Blaster::readyToShoot() const
-{
-    Uint32 current_time = SDL_GetTicks();
-    return current_time - last_shot > shoot_cooldown;
 }

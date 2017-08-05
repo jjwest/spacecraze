@@ -22,9 +22,10 @@ public:
     AssetManager(AssetManager&&) = delete;
     void operator=(const AssetManager&) = delete;
     void operator=(AssetManager&&) = delete;
-    static AssetManager& getInstance();
+    static AssetManager& instance();
     static void destroyInstance();
 
+    void setProjectRoot(const std::string& path);
     Mix_Music* getMusic(const std::string& name) const;
     Texture* getTexture(const std::string& name) const;
     TTF_Font* getFont(const std::string& name) const;
@@ -36,7 +37,8 @@ public:
 
 private:
     AssetManager() = default;
-    static AssetManager* instance;
+    static AssetManager* instance_;
+    std::string asset_root;
     std::map<std::string, std::unique_ptr<Texture>> textures;
     std::map<std::string, std::unique_ptr<Music>> music;
     std::map<std::string, std::unique_ptr<Font>> fonts;

@@ -6,7 +6,7 @@ Menu::Menu()
     {
     title.setText("SPACECRAZE");
     title.setPosition(450, 150);
-    title.setFont(AssetManager::getInstance().getFont("title"));
+    title.setFont(AssetManager::instance().getFont("title"));
 
     play_button.setText("PLAY");
     play_button.setPosition(550, 400);
@@ -113,7 +113,7 @@ void Menu::draw(SDL_Renderer* renderer)
 {
     SDL_RenderClear(renderer);
 
-    auto background = AssetManager::getInstance().getTexture("background");
+    auto background = AssetManager::instance().getTexture("background");
     SDL_RenderCopy(renderer, background->getTexture(), NULL, NULL);
 
     title.draw(renderer);

@@ -11,7 +11,7 @@ ViewHighscore::ViewHighscore(int last_score)
 {
     title.setText("HIGHSCORE");
     title.setPosition(SCREEN_WIDTH / 2 - 150, 150);
-    title.setFont(AssetManager::getInstance().getFont("title"));
+    title.setFont(AssetManager::instance().getFont("title"));
     back_button.setPosition(SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT - 150);
     back_button.setText("BACK");
 
@@ -20,7 +20,7 @@ ViewHighscore::ViewHighscore(int last_score)
 	latest_score.reset(new Text());
 	latest_score->setText("Your score: " + std::to_string(last_score));
 	latest_score->setPosition(SCREEN_WIDTH / 2 - 150, 300);
-	latest_score->setFont(AssetManager::getInstance().getFont("text"));
+	latest_score->setFont(AssetManager::instance().getFont("text"));
     }
 }
 
@@ -36,7 +36,7 @@ void ViewHighscore::draw(SDL_Renderer* renderer)
     if (render_new_textures)
     {
 	auto score_entries = HighscoreFile::read();
-	auto font = AssetManager::getInstance().getFont("text");
+	auto font = AssetManager::instance().getFont("text");
 	int row_y_pos = 400;
 	int name_x_pos = SCREEN_WIDTH / 2 - 170;
 	int score_x_pos = SCREEN_WIDTH / 2 + 100;
@@ -44,13 +44,13 @@ void ViewHighscore::draw(SDL_Renderer* renderer)
 	for (const auto& entry : score_entries)
 	{
 	    auto name = std::make_unique<Text>();
-	    name->setText(entry.first);
+	    name->setText(entry.name);
 	    name->setPosition(name_x_pos, row_y_pos);
 	    name->setFont(font);
 	    highscores.push_back(std::move(name));
 
 	    auto score = std::make_unique<Text>();
-	    score->setText(std::to_string(entry.second));
+	    score->setText(std::to_string(entry.score));
 	    score->setPosition(score_x_pos, row_y_pos);
 	    score->setFont(font);
 	    highscores.push_back(std::move(score));
@@ -59,7 +59,7 @@ void ViewHighscore::draw(SDL_Renderer* renderer)
 	}
     }
 
-    auto background = AssetManager::getInstance().getTexture("background");
+    auto background = AssetManager::instance().getTexture("background");
     SDL_RenderCopy(renderer, background->getTexture(), NULL, NULL);
     title.draw(renderer);
     back_button.draw(renderer);

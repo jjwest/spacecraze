@@ -9,7 +9,7 @@
 #include "World.h"
 
 Player::Player(const SDL_Rect& hitbox)
-    :  GameObject(AssetManager::getInstance().getTexture("player"), hitbox, 1.0),
+    :  GameObject(AssetManager::instance().getTexture("player"), hitbox, 1.0),
        pos_x{ static_cast<float>(hitbox.x) },
        pos_y{ static_cast<float>(hitbox.y) } {}
 
@@ -102,7 +102,7 @@ void Player::shoot(World& world)
 
 	if (GLOBAL_SETTINGS.sound_effects)
 	{
-	    auto shoot_sound = AssetManager::getInstance().getSoundEffect("small_laser");
+	    auto shoot_sound = AssetManager::instance().getSoundEffect("small_laser");
 	    Mix_PlayChannel(-1, shoot_sound, 0);
 	}
     }

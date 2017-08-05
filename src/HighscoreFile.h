@@ -4,14 +4,18 @@
 #include <vector>
 #include <string>
 
-using score_t = std::vector<std::pair<std::string, int>>;
+struct ScoreEntry
+{
+    std::string name;
+    int score;
+};
 
 class HighscoreFile
 {
 public:
     HighscoreFile() = default;
-    static score_t read();
-    static void write(const score_t& scores);
+    static std::vector<ScoreEntry> read();
+    static void write(const std::vector<ScoreEntry>& scores);
 };
 
 

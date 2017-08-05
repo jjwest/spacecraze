@@ -1,20 +1,26 @@
 #include "AssetManager.h"
+#include "Globals.h"
 
 #include <stdexcept>
 #include <string>
 
-AssetManager& AssetManager::getInstance()
+AssetManager& AssetManager::instance()
 {
-    return *instance;
+    return *instance_;
 }
 
 void AssetManager::destroyInstance()
 {
-    delete instance;
-    instance = nullptr;
+    delete instance_;
+    instance_ = nullptr;
 }
 
-AssetManager* AssetManager::instance(new AssetManager);
+AssetManager* AssetManager::instance_(new AssetManager);
+
+void AssetManager::setProjectRoot(const std::string& project_root)
+{
+    asset_root = project_root + "/assets/";
+}
 
 Texture* AssetManager::getTexture(const std::string& name) const
 {
@@ -68,20 +74,25 @@ void AssetManager::loadTexture(const std::string& name,
 			       const std::string& path,
                                SDL_Renderer* renderer)
 {
-    textures.insert(make_pair(name, std::make_unique<Texture>(renderer, path)));
+    textures.insert(
+	make_pair(
+	    name,
+	    std::make_unique<Texture>(renderer, asset_root + path)
+	    )
+	);
 }
 
 void AssetManager::loadMusic(const std::string& name, const std::string& path)
 {
-    music.insert(make_pair(name, std::make_unique<Music>(path)));
+    music.insert(make_pair(name, std::make_unique<Music>(asset_root + path)));
 }
 
 void AssetManager::loadFont(const std::string& name, const std::string& path, int size)
 {
-    fonts.insert(make_pair(name, std::make_unique<Font>(path, size)));
+    fonts.insert(make_pair(name, std::make_unique<Font>(asset_root + path, size)));
 }
 
 void AssetManager::loadSoundEffect(const std::string& name, const std::string& path)
 {
-    sounds.insert(make_pair(name, std::make_unique<SoundEffect>(path)));
+    sounds.insert(make_pair(name, std::make_unique<SoundEffect>(asset_root + path)));
 }
