@@ -25,6 +25,7 @@ public:
     static AssetManager& instance();
     static void destroyInstance();
 
+    void initialize();
     void setProjectRoot(const std::string& path);
     Mix_Music* getMusic(const std::string& name) const;
     Texture* getTexture(const std::string& name) const;
@@ -38,7 +39,10 @@ public:
 private:
     AssetManager() = default;
     static AssetManager* instance_;
-    std::string asset_root;
+    std::string texture_path;
+    std::string music_path;
+    std::string font_path;
+    std::string sound_path;
     std::map<std::string, std::unique_ptr<Texture>> textures;
     std::map<std::string, std::unique_ptr<Music>> music;
     std::map<std::string, std::unique_ptr<Font>> fonts;

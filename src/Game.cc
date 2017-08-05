@@ -152,23 +152,24 @@ void Game::createWindowAndRenderer()
 void Game::loadAssets() const
 {
     auto& assets = AssetManager::instance();
+    assets.initialize();
 
-    assets.loadTexture("asteroid", "sprites/meteor.png", renderer);
-    assets.loadTexture("background", "sprites/background.jpg", renderer);
-    assets.loadTexture("blaster", "sprites/blaster.png", renderer);
-    assets.loadTexture("drone", "sprites/drone.png", renderer);
-    assets.loadTexture("player", "sprites/playership.png", renderer);
-    assets.loadTexture("player_laser", "sprites/playerlaser.png", renderer);
-    assets.loadTexture("enemy_laser", "sprites/enemylaser.png", renderer);
-    assets.loadTexture("singularity", "sprites/singularity.png", renderer);
-    assets.loadTexture("doubledamage", "sprites/double_damage.png", renderer);
+    assets.loadTexture("asteroid", "meteor.png", renderer);
+    assets.loadTexture("background", "background.jpg", renderer);
+    assets.loadTexture("blaster", "blaster.png", renderer);
+    assets.loadTexture("drone", "drone.png", renderer);
+    assets.loadTexture("player", "playership.png", renderer);
+    assets.loadTexture("player_laser", "playerlaser.png", renderer);
+    assets.loadTexture("enemy_laser", "enemylaser.png", renderer);
+    assets.loadTexture("singularity", "singularity.png", renderer);
+    assets.loadTexture("doubledamage", "double_damage.png", renderer);
 
-    assets.loadFont("text", "fonts/Akashi.ttf", 36);
-    assets.loadFont("title", "fonts/Akashi.ttf", 60);
+    assets.loadFont("text", "Akashi.ttf", 36);
+    assets.loadFont("title", "Akashi.ttf", 60);
 
-    assets.loadMusic("menu", "sounds/menu_music.mp3");
-    assets.loadMusic("play", "sounds/play_music.mp3");
+    assets.loadMusic("menu", "menu_music.mp3");
+    assets.loadMusic("play", "play_music.mp3");
 
-    assets.loadSoundEffect("small_laser", "sounds/small_laser.wav");
-    assets.loadSoundEffect("big_laser", "sounds/big_laser.wav");
+    assets.loadSoundEffect("small_laser", "small_laser.wav");
+    assets.loadSoundEffect("big_laser", "big_laser.wav");
 }
