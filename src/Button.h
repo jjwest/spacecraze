@@ -4,8 +4,8 @@
 #include <SDL2/SDL.h>
 #include <string>
 
-#include "Point.h"
 #include "Enums.h"
+#include "Point.h"
 
 class Button
 {

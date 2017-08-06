@@ -1,7 +1,7 @@
 #include "Asteroid.h"
 
-#include <utility>
 #include <random>
+#include <utility>
 
 #include "AssetManager.h"
 #include "Constants.h"
@@ -9,12 +9,12 @@
 Asteroid::Asteroid(const SDL_Rect& rect)
     : Enemy(AssetManager::instance().getTexture("asteroid"), rect, 50, 0)
 {
-    static std::random_device rd;
-    static std::uniform_int_distribution<int> random_x(50, 1100);
-    static std::uniform_int_distribution<int> random_y(30, 700);
+    std::random_device rd;
+    std::uniform_int_distribution<int> random_x(50, 1100);
+    std::uniform_int_distribution<int> random_y(30, 700);
 
     // Calculate the exit point
-    Point exit{};
+    Point exit;
     if (hitbox.y < 0)
     {
         exit.x = random_x(rd);
@@ -58,8 +58,6 @@ void Asteroid::update(const Point&, World&)
     hitbox.y += move_y;
     ++angle;
 
-    updateHitbox(hitbox);
-
     bool outside_screen = (hitbox.x + hitbox.w < 0 ||
 			   hitbox.y + hitbox.h < 0 ||
 			   hitbox.x > SCREEN_WIDTH ||
@@ -68,4 +66,6 @@ void Asteroid::update(const Point&, World&)
     {
         kill();
     }
+
+    updateHitbox(hitbox);
 }
