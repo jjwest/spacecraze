@@ -6,20 +6,20 @@
 
 std::string getProjectRoot()
 {
-    std::string current_path = __FILE__;
+    std::string file_path = __FILE__;
     std::string project_name = "spacecraze";
-    auto pos = current_path.find(project_name);
-    if (pos == current_path.npos)
+    auto pos = file_path.find(project_name);
+    if (pos == file_path.npos)
     {
 	throw std::runtime_error("Could not parse project root");
     }
 
-    current_path.erase(
-	current_path.begin() + pos + project_name.size(),
-	current_path.end()
+    file_path.erase(
+	file_path.begin() + pos + project_name.size(),
+	file_path.end()
     );
 
-    return current_path;
+    return file_path;
 }
 
 
