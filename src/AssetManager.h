@@ -26,7 +26,6 @@ public:
     static void destroyInstance();
 
     void initialize();
-    void setProjectRoot(const std::string& path);
     Mix_Music* getMusic(const std::string& name) const;
     Texture* getTexture(const std::string& name) const;
     TTF_Font* getFont(const std::string& name) const;
@@ -37,7 +36,7 @@ public:
     void loadSoundEffect(const std::string& name, const std::string& path);
 
 private:
-    AssetManager() = default;
+    AssetManager();
     static AssetManager* instance_;
     std::string texture_path;
     std::string music_path;

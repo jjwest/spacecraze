@@ -152,7 +152,6 @@ void Game::createWindowAndRenderer()
 void Game::loadAssets() const
 {
     auto& assets = AssetManager::instance();
-    assets.initialize();
 
     assets.loadTexture("asteroid", "meteor.png", renderer);
     assets.loadTexture("background", "background.jpg", renderer);

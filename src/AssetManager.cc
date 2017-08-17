@@ -22,8 +22,6 @@ std::string getProjectRoot()
     return file_path;
 }
 
-
-
 AssetManager& AssetManager::instance()
 {
     return *instance_;
@@ -37,7 +35,7 @@ void AssetManager::destroyInstance()
 
 AssetManager* AssetManager::instance_(new AssetManager);
 
-void AssetManager::initialize()
+AssetManager::AssetManager()
 {
     auto root = getProjectRoot();
     texture_path = root + "/assets/sprites/";
