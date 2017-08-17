@@ -34,5 +34,5 @@ void GameObject::reduceHealth(float damage)
 
 void GameObject::updateHitbox(const SDL_Rect& rect)
 {
-    aabb = AABB(rect.y, rect.x, rect.y + rect.h, rect.x + rect.w);
+    aabb = AABB{rect.y, rect.x, rect.y + rect.h, rect.x + rect.w};
 }
