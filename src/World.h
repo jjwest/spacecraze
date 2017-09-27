@@ -30,7 +30,7 @@ public:
     void addEnemyLaser(const Point& pos, const Point& dest, float dmg);
     void addPlayerLaser(const Point& pos, float dmg);
     void addPowerup(const Powerup& powerup);
-    void clearEnemies();
+    void killAllEnemies();
     void draw(SDL_Renderer* renderer);
     void update();
 

@@ -47,10 +47,17 @@ void World::addPowerup(const Powerup& powerup)
     powerups.push_back(powerup);
 }
 
-void World::clearEnemies()
+void World::killAllEnemies()
 {
-    enemies.clear();
-    enemy_lasers.clear();
+    for (auto& enemy : enemies)
+    {
+	enemy->kill();
+    }
+
+    for (auto& laser : enemy_lasers)
+    {
+	laser.kill();
+    }
 }
 
 void World::draw(SDL_Renderer* renderer)

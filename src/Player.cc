@@ -113,7 +113,7 @@ void Player::useSpecialWeapon(World& world)
     bool right_mouse_button_pressed = SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT);
     if (has_special_weapon && right_mouse_button_pressed)
     {
-	world.clearEnemies();
+	world.killAllEnemies();
 	has_special_weapon = false;
     }
 }
