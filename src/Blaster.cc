@@ -88,16 +88,16 @@ void Blaster::shoot(const Point &player_pos, World& world)
 
     if (ready_to_shoot)
     {
-	int center_x = hitbox.x + hitbox.w / 2;
-	int center_y = hitbox.y + hitbox.h / 2;
+		int center_x = hitbox.x + hitbox.w / 2;
+		int center_y = hitbox.y + hitbox.h / 2;
         Point this_pos{center_x, center_y};
         world.addEnemyLaser(this_pos, player_pos, damage);
         last_shot = current_time;
 
-	if (GLOBAL_SETTINGS.sound_effects)
-	{
-	    auto shoot_sound = AssetManager::instance().getSoundEffect("big_laser");
-	    Mix_PlayChannel(-1, shoot_sound, 0);
-	}
+		if (GLOBAL_SETTINGS.sound_effects)
+		{
+			auto shoot_sound = AssetManager::instance().getSoundEffect("big_laser");
+			Mix_PlayChannel(-1, shoot_sound, 0);
+		}
     }
 }

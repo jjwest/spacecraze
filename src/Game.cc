@@ -46,16 +46,16 @@ void Game::run()
 
     while (running)
     {
-	auto frame_start_time = SDL_GetTicks();
-	current_state->handleEvents();
-	current_state->update();
-	current_state->draw(renderer);
-	music.update(current_state_id);
-	auto next_state = current_state->getNextState();
+		auto frame_start_time = SDL_GetTicks();
+		current_state->handleEvents();
+		current_state->update();
+		current_state->draw(renderer);
+		music.update(current_state_id);
+		auto next_state = current_state->getNextState();
 
-	changeStateIfRequired(next_state);
-	auto frame_end_time = SDL_GetTicks();
-	sleepIfFrameTooFast(frame_start_time, frame_end_time);
+		changeStateIfRequired(next_state);
+		auto frame_end_time = SDL_GetTicks();
+		sleepIfFrameTooFast(frame_start_time, frame_end_time);
     }
 }
 
@@ -64,38 +64,38 @@ void Game::changeStateIfRequired(State next_state)
     if (next_state != current_state_id)
     {
         switch (next_state)
-	{
+		{
         case State::PLAY:
-	{
+		{
             current_state.reset(new Play(renderer, score));
             break;
-	}
+		}
         case State::MENU:
-	{
-	    current_state.reset(new Menu());
-	    break;
-	}
-	case State::OPTIONS:
-	{
-	    current_state.reset(new Options());
-	    break;
-	}
+		{
+			current_state.reset(new Menu());
+			break;
+		}
+		case State::OPTIONS:
+		{
+			current_state.reset(new Options());
+			break;
+		}
         case State::VIEW_HIGHSCORE:
-	{
-	    current_state.reset(new ViewHighscore(score.get()));
-	    break;
-	}
-	case State::ENTER_HIGHSCORE:
-	{
-	    current_state.reset(new EnterHighscore(score));
-	    break;
-	}
-	case State::QUIT:
-	{
-	    running = false;
-	    break;
-	}
-	}
+		{
+			current_state.reset(new ViewHighscore(score.get()));
+			break;
+		}
+		case State::ENTER_HIGHSCORE:
+		{
+			current_state.reset(new EnterHighscore(score));
+			break;
+		}
+		case State::QUIT:
+		{
+			running = false;
+			break;
+		}
+		}
     }
     current_state_id = next_state;
 }
@@ -107,7 +107,7 @@ void Game::sleepIfFrameTooFast(Uint32 start, Uint32 end) const
 
     if (time_elapsed < INTENDED_DURATION_MS)
     {
-	SDL_Delay(INTENDED_DURATION_MS - time_elapsed);
+		SDL_Delay(INTENDED_DURATION_MS - time_elapsed);
     }
 }
 
@@ -135,13 +135,13 @@ void Game::initSDL() const
 void Game::createWindowAndRenderer()
 {
     window = SDL_CreateWindow(
-	"SPACECRAZE",
-	SDL_WINDOWPOS_UNDEFINED,
-	SDL_WINDOWPOS_UNDEFINED,
-	SCREEN_WIDTH,
-	SCREEN_HEIGHT,
-	SDL_WINDOW_SHOWN
-    );
+		"SPACECRAZE",
+		SDL_WINDOWPOS_UNDEFINED,
+		SDL_WINDOWPOS_UNDEFINED,
+		SCREEN_WIDTH,
+		SCREEN_HEIGHT,
+		SDL_WINDOW_SHOWN
+		);
 
     renderer = SDL_CreateRenderer(window, -1, 0);
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");

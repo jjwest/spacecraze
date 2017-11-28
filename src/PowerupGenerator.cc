@@ -14,8 +14,8 @@ void PowerupGenerator::update(World& world)
     Uint32 current_time = SDL_GetTicks();
     if (current_time - last_spawn_time > spawn_delay_ms)
     {
-	spawnPowerup(world);
-	last_spawn_time = current_time;
+		spawnPowerup(world);
+		last_spawn_time = current_time;
     }
 }
 
@@ -23,10 +23,10 @@ void PowerupGenerator::spawnPowerup(World& world)
 {
     Point pos = getSpawnPoint();
     SDL_Rect hitbox {
-	pos.x,
-	pos.y,
-	30,
-	30
+		pos.x,
+		pos.y,
+		30,
+		30
     };
 
     std::uniform_int_distribution<int> range(0, powerups.size() - 1);
@@ -34,8 +34,8 @@ void PowerupGenerator::spawnPowerup(World& world)
 
     if (powerup == "doubledamage")
     {
-	auto texture = AssetManager::instance().getTexture("doubledamage");
-	world.addPowerup(Powerup(texture, hitbox, PowerupType::BONUS_DAMAGE));
+		auto texture = AssetManager::instance().getTexture("doubledamage");
+		world.addPowerup(Powerup(texture, hitbox, PowerupType::BONUS_DAMAGE));
     }
 }
 

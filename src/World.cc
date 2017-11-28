@@ -10,11 +10,11 @@
 
 World::World()
     : player {SDL_Rect {
-		  500,
-		  350,
-		  static_cast<int>(AssetManager::instance().getTexture("player")->getWidth() * 0.5),
-		  static_cast<int>(AssetManager::instance().getTexture("player")->getHeight() * 0.5)
-	      }} {}
+		500,
+		350,
+		static_cast<int>(AssetManager::instance().getTexture("player")->getWidth() * 0.5),
+		static_cast<int>(AssetManager::instance().getTexture("player")->getHeight() * 0.5)
+	}} {}
 
 WorldState World::getState() const
 {
@@ -51,12 +51,12 @@ void World::killAllEnemies()
 {
     for (auto& enemy : enemies)
     {
-	enemy->kill();
+		enemy->kill();
     }
 
     for (auto& laser : enemy_lasers)
     {
-	laser.kill();
+		laser.kill();
     }
 }
 
@@ -69,22 +69,22 @@ void World::draw(SDL_Renderer* renderer)
 
     for (auto& enemy : enemies)
     {
-	enemy->draw(renderer);
+		enemy->draw(renderer);
     }
 
     for (auto& laser : enemy_lasers)
     {
-	laser.draw(renderer);
+		laser.draw(renderer);
     }
 
     for (auto& laser : player_lasers)
     {
-	laser.draw(renderer);
+		laser.draw(renderer);
     }
 
     for (auto& powerup : powerups)
     {
-	powerup.draw(renderer);
+		powerup.draw(renderer);
     }
 
     player.draw(renderer);
@@ -112,17 +112,17 @@ void World::updateObjects()
 
     for (auto& laser : player_lasers)
     {
-	laser.update();
+		laser.update();
     }
 
     for (auto& laser : enemy_lasers)
     {
-	laser.update();
+		laser.update();
     }
 
     for (auto& powerup : powerups)
     {
-	powerup.update();
+		powerup.update();
     }
 }
 
@@ -135,17 +135,17 @@ void World::resolveCollisions()
 void World::resolvePlayerCollisions()
 {
     bool hit_by_laser = std::any_of(
-	begin(enemy_lasers), end(enemy_lasers),
-	[&] (const Laser& laser)
-	{
-	    return laser.collides(player);
-	});
+		begin(enemy_lasers), end(enemy_lasers),
+		[&] (const Laser& laser)
+		{
+			return laser.collides(player);
+		});
     bool collides_with_enemy = std::any_of(
-	begin(enemies), end(enemies),
-	[&] (const auto& enemy)
-	{
-	    return enemy->collides(player);
-	});
+		begin(enemies), end(enemies),
+		[&] (const auto& enemy)
+		{
+			return enemy->collides(player);
+		});
 
     if (collides_with_enemy || hit_by_laser)
     {
@@ -158,9 +158,9 @@ void World::resolveLaserCollisions()
     for (auto& laser : player_lasers)
     {
         for (auto& enemy : enemies)
-	{
+		{
             if (laser.collides(*enemy))
-	    {
+			{
                 enemy->reduceHealth(laser.getDamage());
                 laser.kill();
             }
@@ -172,14 +172,14 @@ void World::resolvePowerups()
 {
     for (auto& powerup : powerups)
     {
-	if (player.collides(powerup))
-	{
-	    if (powerup.type() == PowerupType::BONUS_DAMAGE)
-	    {
-		player.increaseDamage();
-	    }
-	    powerup.kill();
-	}
+		if (player.collides(powerup))
+		{
+			if (powerup.type() == PowerupType::BONUS_DAMAGE)
+			{
+				player.increaseDamage();
+			}
+			powerup.kill();
+		}
     }
 }
 
@@ -187,10 +187,10 @@ void World::updateState()
 {
     for (const auto& enemy : enemies)
     {
-	if (enemy->isDead())
-	{
-	    state.score += enemy->getScore();
-	}
+		if (enemy->isDead())
+		{
+			state.score += enemy->getScore();
+		}
     }
 
     state.player_dead = player.isDead();
@@ -204,17 +204,17 @@ void World::removeDeadObjects()
     powerups.erase(std::remove_if(begin(powerups), end(powerups), isDead), end(powerups));
 
     enemy_lasers.erase(
-	std::remove_if(begin(enemy_lasers), end(enemy_lasers), isDead),
-	end(enemy_lasers)
-    );
+		std::remove_if(begin(enemy_lasers), end(enemy_lasers), isDead),
+		end(enemy_lasers)
+		);
 
     player_lasers.erase(
-	std::remove_if(begin(player_lasers), end(player_lasers), isDead),
-	end(player_lasers)
-    );
+		std::remove_if(begin(player_lasers), end(player_lasers), isDead),
+		end(player_lasers)
+		);
 
     enemies.erase(std::remove_if(begin(enemies), end(enemies),
-				 [&] (const auto& enemy) {
-				     return enemy->isDead();
-				 }), end(enemies));
+								 [&] (const auto& enemy) {
+									 return enemy->isDead();
+								 }), end(enemies));
 }

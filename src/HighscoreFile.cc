@@ -28,7 +28,7 @@ std::vector<ScoreEntry> HighscoreFile::read()
         istringstream iss{line};
         string name;
         iss >> name;
-	int score;
+		int score;
         iss >> score;
         entries.push_back({name, score});
     }
@@ -41,6 +41,6 @@ void HighscoreFile::write(const std::vector<ScoreEntry>& entries)
     std::ofstream file{FILE_PATH};
     for (const auto& score : entries)
     {
-	file << score.name << " " << score.score << '\n';
+		file << score.name << " " << score.score << '\n';
     }
 }

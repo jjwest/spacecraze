@@ -19,10 +19,10 @@ public:
 private:
     enum Buttons
     {
-	NONE,
-	MUSIC,
-	SOUND_EFFECTS,
-	BACK
+		NONE,
+		MUSIC,
+		SOUND_EFFECTS,
+		BACK
     };
     Button back_button;
     Button music_button;

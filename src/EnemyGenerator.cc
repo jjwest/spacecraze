@@ -29,19 +29,19 @@ void EnemyGenerator::update(World& world)
     for (auto& enemy : enemy_types)
     {
         if (readyToSpawn(enemy))
-	{
-	    for (int i = 0; i < enemy.spawn_amount; ++i)
-	    {
-		world.addEnemy(createEnemy(enemy.name));
-	    }
+		{
+			for (int i = 0; i < enemy.spawn_amount; ++i)
+			{
+				world.addEnemy(createEnemy(enemy.name));
+			}
 
-	    ++enemy.waves_spawned;
-	    enemy.last_time_spawned = SDL_GetTicks();
+			++enemy.waves_spawned;
+			enemy.last_time_spawned = SDL_GetTicks();
 
-	    if (isMultiple(enemy.waves_spawned, enemy.spawns_until_increased_spawn_rate))
-	    {
-		++enemy.spawn_amount;
-	    }
+			if (isMultiple(enemy.waves_spawned, enemy.spawns_until_increased_spawn_rate))
+			{
+				++enemy.spawn_amount;
+			}
         }
     }
 }
@@ -56,11 +56,11 @@ bool EnemyGenerator::readyToSpawn(const EnemyType& enemy)
 Point getSpawnPoint(Texture* texture)
 {
     enum Section {
-	UP,
-	DOWN,
-	LEFT,
-	RIGHT,
-	NUM_SECTIONS
+		UP,
+		DOWN,
+		LEFT,
+		RIGHT,
+		NUM_SECTIONS
     };
 
     static std::random_device random;
@@ -86,38 +86,38 @@ std::unique_ptr<Enemy> EnemyGenerator::createEnemy(const std::string& type)
     {
         auto texture = AssetManager::instance().getTexture("asteroid");
         auto spawn_point = getSpawnPoint(texture);
-	SDL_Rect hitbox {
-	    spawn_point.x,
-	    spawn_point.y,
-	    texture->getWidth(),
-	    texture->getHeight()
-	};
+		SDL_Rect hitbox {
+			spawn_point.x,
+			spawn_point.y,
+			texture->getWidth(),
+			texture->getHeight()
+		};
         return std::make_unique<Asteroid>(hitbox);
     }
     else if (type == "blaster")
     {
         auto texture = AssetManager::instance().getTexture("blaster");
         auto spawn_point = getSpawnPoint(texture);
-	SDL_Rect hitbox {
-	    spawn_point.x,
-	    spawn_point.y,
-	    texture->getWidth(),
-	    texture->getHeight()
-	};
+		SDL_Rect hitbox {
+			spawn_point.x,
+			spawn_point.y,
+			texture->getWidth(),
+			texture->getHeight()
+		};
 
         return std::make_unique<Blaster>(hitbox);
     }
     else if (type == "drone")
     {
-	float scale = 0.5;
+		float scale = 0.5;
         auto texture = AssetManager::instance().getTexture("drone");
         auto spawn_point = getSpawnPoint(texture);
-	SDL_Rect hitbox {
-	    spawn_point.x,
-	    spawn_point.y,
-	    static_cast<int>(texture->getWidth() * scale),
-	    static_cast<int>(texture->getHeight() * scale)
-	};
+		SDL_Rect hitbox {
+			spawn_point.x,
+			spawn_point.y,
+			static_cast<int>(texture->getWidth() * scale),
+			static_cast<int>(texture->getHeight() * scale)
+		};
 
         return std::make_unique<Drone>(hitbox);
     }

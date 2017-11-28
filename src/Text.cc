@@ -10,12 +10,12 @@ void Text::draw(SDL_Renderer *renderer)
 {
     if (render_new_texture && font != nullptr)
     {
-	SDL_Color white{ 255, 255, 255, 255 };
-	SDL_Surface* surface = TTF_RenderText_Solid(font, text.c_str(), white);
-	texture = SDL_CreateTextureFromSurface(renderer, surface);
-	rect.w = surface->w;
-	rect.h = surface->h;
-	SDL_FreeSurface(surface);
+		SDL_Color white{ 255, 255, 255, 255 };
+		SDL_Surface* surface = TTF_RenderText_Solid(font, text.c_str(), white);
+		texture = SDL_CreateTextureFromSurface(renderer, surface);
+		rect.w = surface->w;
+		rect.h = surface->h;
+		SDL_FreeSurface(surface);
     }
     SDL_RenderCopy(renderer, texture, NULL, &rect);
 }

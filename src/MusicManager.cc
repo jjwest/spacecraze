@@ -19,24 +19,24 @@ void MusicManager::update(State current_state)
 {
     if (GLOBAL_SETTINGS.music)
     {
-	if (shouldStartPlayMusic(current_state))
-	{
-	    Mix_PlayMusic(music.at("play"), -1);
-	    current_music = State::PLAY;
-	}
-	else if (shouldStartMenuMusic(current_state))
-	{
-	    Mix_PlayMusic(music.at("menu"), -1);
-	    current_music = State::MENU;
-	}
+		if (shouldStartPlayMusic(current_state))
+		{
+			Mix_PlayMusic(music.at("play"), -1);
+			current_music = State::PLAY;
+		}
+		else if (shouldStartMenuMusic(current_state))
+		{
+			Mix_PlayMusic(music.at("menu"), -1);
+			current_music = State::MENU;
+		}
     }
     else
     {
-	if (Mix_PlayingMusic())
-	{
-	    Mix_HaltMusic();
-	    current_music = State::QUIT;
-	}
+		if (Mix_PlayingMusic())
+		{
+			Mix_HaltMusic();
+			current_music = State::QUIT;
+		}
     }
 }
 

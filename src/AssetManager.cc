@@ -11,13 +11,13 @@ std::string getProjectRoot()
     auto pos = file_path.find(project_name);
     if (pos == file_path.npos)
     {
-	throw std::runtime_error("Could not parse project root");
+		throw std::runtime_error("Could not parse project root");
     }
 
     file_path.erase(
-	file_path.begin() + pos + project_name.size(),
-	file_path.end()
-    );
+		file_path.begin() + pos + project_name.size(),
+		file_path.end()
+		);
 
     return file_path;
 }
@@ -93,15 +93,15 @@ Mix_Chunk* AssetManager::getSoundEffect(const std::string& name) const
 }
 
 void AssetManager::loadTexture(const std::string& name,
-			       const std::string& path,
+							   const std::string& path,
                                SDL_Renderer* renderer)
 {
     textures.insert(
-	make_pair(
-	    name,
-	    std::make_unique<Texture>(renderer, texture_path + path)
-	    )
-	);
+		make_pair(
+			name,
+			std::make_unique<Texture>(renderer, texture_path + path)
+			)
+		);
 }
 
 void AssetManager::loadMusic(const std::string& name, const std::string& file_name)

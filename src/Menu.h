@@ -22,11 +22,11 @@ public:
 private:
     enum Buttons
     {
-	NONE,
-	PLAY,
-	HIGHSCORE,
-	OPTIONS,
-	QUIT
+		NONE,
+		PLAY,
+		HIGHSCORE,
+		OPTIONS,
+		QUIT
     };
     int active_button = NONE;
     Button highscore_button;

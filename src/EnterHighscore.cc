@@ -16,7 +16,7 @@ EnterHighscore::EnterHighscore(const ScoreKeeper& score)
 
     if (!goodEnoughForHighscore(player_score))
     {
-	next_state = State::VIEW_HIGHSCORE;
+		next_state = State::VIEW_HIGHSCORE;
     }
 }
 
@@ -35,38 +35,38 @@ void EnterHighscore::handleEvents()
     while (SDL_PollEvent(&event) != 0)
     {
         if (event.type == SDL_QUIT)
-	{
-	    next_state = State::QUIT;
-        }
-	else if (leftMouseButtonPressed())
-	{
-	    if (back_button.mouseOver())
-	    {
-		next_state = State::MENU;
-	    }
-	}
-	else if (backspaceIsPressed() && !player_name.empty())
-	{
-	    player_name.pop_back();
-	    name_changed = true;
-	}
-	else if (returnIsPressed())
-	{
-	    updateHighscoreFile();
-	    next_state = State::VIEW_HIGHSCORE;
-	}
-	else if (enteringName())
-	{
-	    std::string input = event.text.text;
-	    if (!containsSpace(input))
-	    {
-		if (player_name.size() < 6)
 		{
-		    player_name += input;
-		    name_changed = true;
+			next_state = State::QUIT;
+        }
+		else if (leftMouseButtonPressed())
+		{
+			if (back_button.mouseOver())
+			{
+				next_state = State::MENU;
+			}
 		}
-	    }
-	}
+		else if (backspaceIsPressed() && !player_name.empty())
+		{
+			player_name.pop_back();
+			name_changed = true;
+		}
+		else if (returnIsPressed())
+		{
+			updateHighscoreFile();
+			next_state = State::VIEW_HIGHSCORE;
+		}
+		else if (enteringName())
+		{
+			std::string input = event.text.text;
+			if (!containsSpace(input))
+			{
+				if (player_name.size() < 6)
+				{
+					player_name += input;
+					name_changed = true;
+				}
+			}
+		}
     }
 }
 
@@ -82,24 +82,24 @@ void EnterHighscore::draw(SDL_Renderer* renderer)
 
     if (name_changed)
     {
-	if (!player_name.empty())
-	{
-	    rendered_player_name.reset(new Text());
-	    rendered_player_name->setText(player_name);
-	    rendered_player_name->setPosition(550, 700);
-	    rendered_player_name->setFont(AssetManager::instance().getFont("text"));
-	}
-	else
-	{
-	    rendered_player_name.release();
-	}
+		if (!player_name.empty())
+		{
+			rendered_player_name.reset(new Text());
+			rendered_player_name->setText(player_name);
+			rendered_player_name->setPosition(550, 700);
+			rendered_player_name->setFont(AssetManager::instance().getFont("text"));
+		}
+		else
+		{
+			rendered_player_name.release();
+		}
 
-	name_changed = false;
+		name_changed = false;
     }
 
     if (rendered_player_name)
     {
-	rendered_player_name->draw(renderer);
+		rendered_player_name->draw(renderer);
     }
 
     SDL_RenderPresent(renderer);
@@ -115,7 +115,7 @@ bool EnterHighscore::goodEnoughForHighscore(int score) const
 bool EnterHighscore::leftMouseButtonPressed() const
 {
     return (event.type == SDL_MOUSEBUTTONDOWN &&
-	    SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT));
+			SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT));
 }
 
 bool EnterHighscore::backspaceIsPressed() const
@@ -134,15 +134,15 @@ void EnterHighscore::updateHighscoreFile() const
 
     if (highscores.size() == 5)
     {
-	highscores.pop_back();
+		highscores.pop_back();
     }
 
     highscores.push_back( {player_name, player_score} );
     std::sort(begin(highscores), end(highscores),
-	      [] (const auto& a, const auto& b)
-	      {
-		  return a.score > b.score;
-	      });
+			  [] (const auto& a, const auto& b)
+			  {
+				  return a.score > b.score;
+			  });
 
     HighscoreFile::write(highscores);
 }

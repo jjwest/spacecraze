@@ -34,18 +34,18 @@ void StateManager::changeStateIfRequired(State next_state)
     {
         switch (next_state) {
         case State::PLAY:
-	{
-	    score.reset();
+		{
+			score.reset();
             current_state.reset(new Play(renderer, score));
             break;
-	}
+		}
 
         case State::MENU:            current_state.reset(new Menu()); break;
-	case State::OPTIONS:         current_state.reset(new Options()); break;
+		case State::OPTIONS:         current_state.reset(new Options()); break;
         case State::VIEW_HIGHSCORE:  current_state.reset(new ViewHighscore(score.get())); break;
-	case State::ENTER_HIGHSCORE: current_state.reset(new EnterHighscore(score)); break;
-	case State::QUIT: break;
-	}
+		case State::ENTER_HIGHSCORE: current_state.reset(new EnterHighscore(score)); break;
+		case State::QUIT: break;
+		}
 
     }
     current_state_id = next_state;

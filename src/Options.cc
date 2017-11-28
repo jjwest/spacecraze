@@ -25,19 +25,19 @@ Options::Options()
 
     if (GLOBAL_SETTINGS.music)
     {
-	music_button.setText("ON");
+		music_button.setText("ON");
     }
     else
     {
-	music_button.setText("OFF");
+		music_button.setText("OFF");
     }
     if (GLOBAL_SETTINGS.sound_effects)
     {
-	sound_button.setText("ON");
+		sound_button.setText("ON");
     }
     else
     {
-	sound_button.setText("OFF");
+		sound_button.setText("OFF");
     }
 }
 
@@ -58,59 +58,59 @@ void Options::handleEvents()
     	{
     	    if (back_button.mouseOver())
     	    {
-    		next_state = State::MENU;
+				next_state = State::MENU;
     	    }
     	    else if (music_button.mouseOver())
     	    {
-		toggleMusic();
+				toggleMusic();
     	    }
     	    else if (sound_button.mouseOver())
     	    {
-		toggleSoundEffects();
+				toggleSoundEffects();
     	    }
-	}
+		}
     	else if (event.type == SDL_KEYDOWN)
     	{
     	    if (active_button == NONE)
     	    {
-    		active_button = MUSIC;
+				active_button = MUSIC;
     	    }
     	    else if (event.key.keysym.sym == SDLK_UP && active_button != MUSIC)
     	    {
-    		--active_button;
+				--active_button;
     	    }
     	    else if (event.key.keysym.sym == SDLK_DOWN && active_button != BACK)
     	    {
-    		++active_button;
+				++active_button;
     	    }
     	    else if (event.key.keysym.sym == SDLK_RETURN)
     	    {
-    		switch (active_button)
-    		{
-		case SOUND_EFFECTS: toggleSoundEffects();     break;
-    		case MUSIC:         toggleMusic();            break;
-    		case BACK:          next_state = State::MENU; break;
-    		}
+				switch (active_button)
+				{
+				case SOUND_EFFECTS: toggleSoundEffects();     break;
+				case MUSIC:         toggleMusic();            break;
+				case BACK:          next_state = State::MENU; break;
+				}
     	    }
     	}
     	else if (event.type == SDL_MOUSEMOTION)
     	{
     	    if (back_button.mouseOver())
     	    {
-    		active_button = BACK;
+				active_button = BACK;
     	    }
     	    else if (music_button.mouseOver())
     	    {
-    		active_button = MUSIC;
+				active_button = MUSIC;
     	    }
     	    else if (sound_button.mouseOver())
     	    {
-    		active_button = SOUND_EFFECTS;
+				active_button = SOUND_EFFECTS;
     	    }
-	    else
-	    {
-		active_button = NONE;
-	    }
+			else
+			{
+				active_button = NONE;
+			}
     	}
     }
 
@@ -122,31 +122,31 @@ void Options::update()
     {
     case NONE:
     {
-	back_button.removeHighlight();
-	music_button.removeHighlight();
-	sound_button.removeHighlight();
-	break;
+		back_button.removeHighlight();
+		music_button.removeHighlight();
+		sound_button.removeHighlight();
+		break;
     }
     case MUSIC:
     {
-	music_button.addHighlight();
-	back_button.removeHighlight();
-	sound_button.removeHighlight();
-	break;
+		music_button.addHighlight();
+		back_button.removeHighlight();
+		sound_button.removeHighlight();
+		break;
     }
     case SOUND_EFFECTS:
     {
-	sound_button.addHighlight();
-	back_button.removeHighlight();
-	music_button.removeHighlight();
-	break;
+		sound_button.addHighlight();
+		back_button.removeHighlight();
+		music_button.removeHighlight();
+		break;
     }
     case BACK:
     {
-	back_button.addHighlight();
-	music_button.removeHighlight();
-	sound_button.removeHighlight();
-	break;
+		back_button.addHighlight();
+		music_button.removeHighlight();
+		sound_button.removeHighlight();
+		break;
     }
     }
 }
@@ -170,7 +170,7 @@ void Options::draw(SDL_Renderer *renderer)
 bool Options::leftMouseButtonPressed() const
 {
     return (event.type == SDL_MOUSEBUTTONDOWN &&
-	    SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT));
+			SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT));
 }
 
 void Options::toggleMusic()
@@ -178,11 +178,11 @@ void Options::toggleMusic()
     GLOBAL_SETTINGS.music = !GLOBAL_SETTINGS.music;
     if (GLOBAL_SETTINGS.music)
     {
-	music_button.setText("ON");
+		music_button.setText("ON");
     }
     else
     {
-	music_button.setText("OFF");
+		music_button.setText("OFF");
     }
 }
 
@@ -191,10 +191,10 @@ void Options::toggleSoundEffects()
     GLOBAL_SETTINGS.sound_effects = !GLOBAL_SETTINGS.sound_effects;
     if (GLOBAL_SETTINGS.sound_effects)
     {
-	sound_button.setText("ON");
+		sound_button.setText("ON");
     }
     else
     {
-	sound_button.setText("OFF");
+		sound_button.setText("OFF");
     }
 }

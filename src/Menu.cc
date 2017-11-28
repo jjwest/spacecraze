@@ -3,7 +3,7 @@
 #include "Point.h"
 
 Menu::Menu()
-    {
+{
     title.setText("SPACECRAZE");
     title.setPosition(450, 150);
     title.setFont(AssetManager::instance().getFont("title"));
@@ -29,36 +29,36 @@ void Menu::handleEvents()
         if (event.type == SDL_QUIT) next_state = State::QUIT;
 
         else if (leftMouseButtonPressed())
-	{
-	    if (play_button.mouseOver()) next_state = State::PLAY;
-	    else if (highscore_button.mouseOver()) next_state = State::VIEW_HIGHSCORE;
-	    else if (options_button.mouseOver()) next_state = State::OPTIONS;
-	    else if (quit_button.mouseOver()) next_state = State::QUIT;
-        }
-	else if (event.type == SDL_KEYDOWN)
-	{
-	    if (event.key.keysym.sym == SDLK_UP && active_button > PLAY) --active_button;
-	    else if (event.key.keysym.sym == SDLK_DOWN && active_button != QUIT) ++active_button;
-	    else if (event.key.keysym.sym == SDLK_RETURN)
-	    {
-		switch (active_button)
 		{
-		case PLAY:      next_state = State::PLAY; break;
-		case HIGHSCORE: next_state = State::VIEW_HIGHSCORE; break;
-		case OPTIONS:   next_state = State::OPTIONS; break;
-		case QUIT:      next_state = State::QUIT; break;
+			if (play_button.mouseOver()) next_state = State::PLAY;
+			else if (highscore_button.mouseOver()) next_state = State::VIEW_HIGHSCORE;
+			else if (options_button.mouseOver()) next_state = State::OPTIONS;
+			else if (quit_button.mouseOver()) next_state = State::QUIT;
+        }
+		else if (event.type == SDL_KEYDOWN)
+		{
+			if (event.key.keysym.sym == SDLK_UP && active_button > PLAY) --active_button;
+			else if (event.key.keysym.sym == SDLK_DOWN && active_button != QUIT) ++active_button;
+			else if (event.key.keysym.sym == SDLK_RETURN)
+			{
+				switch (active_button)
+				{
+				case PLAY:      next_state = State::PLAY; break;
+				case HIGHSCORE: next_state = State::VIEW_HIGHSCORE; break;
+				case OPTIONS:   next_state = State::OPTIONS; break;
+				case QUIT:      next_state = State::QUIT; break;
+				}
+			}
 		}
-	    }
-	}
-	else if (event.type == SDL_MOUSEMOTION)
-	{
-	    active_button = NONE;
+		else if (event.type == SDL_MOUSEMOTION)
+		{
+			active_button = NONE;
 
-	    if (play_button.mouseOver()) active_button = PLAY;
-	    else if (highscore_button.mouseOver()) active_button = HIGHSCORE;
-	    else if (options_button.mouseOver()) active_button = OPTIONS;
-	    else if (quit_button.mouseOver()) active_button = QUIT;
-	}
+			if (play_button.mouseOver()) active_button = PLAY;
+			else if (highscore_button.mouseOver()) active_button = HIGHSCORE;
+			else if (options_button.mouseOver()) active_button = OPTIONS;
+			else if (quit_button.mouseOver()) active_button = QUIT;
+		}
     }
 }
 
@@ -68,43 +68,43 @@ void Menu::update()
     {
     case PLAY:
     {
-	play_button.addHighlight();
-	highscore_button.removeHighlight();
-	quit_button.removeHighlight();
-	options_button.removeHighlight();
-	break;
+		play_button.addHighlight();
+		highscore_button.removeHighlight();
+		quit_button.removeHighlight();
+		options_button.removeHighlight();
+		break;
     }
     case HIGHSCORE:
     {
-	highscore_button.addHighlight();
-	play_button.removeHighlight();
-	quit_button.removeHighlight();
-	options_button.removeHighlight();
-	break;
+		highscore_button.addHighlight();
+		play_button.removeHighlight();
+		quit_button.removeHighlight();
+		options_button.removeHighlight();
+		break;
     }
     case OPTIONS:
     {
-	options_button.addHighlight();
-	highscore_button.removeHighlight();
-	play_button.removeHighlight();
-	quit_button.removeHighlight();
-	break;
+		options_button.addHighlight();
+		highscore_button.removeHighlight();
+		play_button.removeHighlight();
+		quit_button.removeHighlight();
+		break;
     }
     case QUIT:
     {
-	quit_button.addHighlight();
-	highscore_button.removeHighlight();
-	play_button.removeHighlight();
-	options_button.removeHighlight();
-	break;
+		quit_button.addHighlight();
+		highscore_button.removeHighlight();
+		play_button.removeHighlight();
+		options_button.removeHighlight();
+		break;
     }
     case NONE:
     {
-	quit_button.removeHighlight();
-	highscore_button.removeHighlight();
-	play_button.removeHighlight();
-	options_button.removeHighlight();
-	break;
+		quit_button.removeHighlight();
+		highscore_button.removeHighlight();
+		play_button.removeHighlight();
+		options_button.removeHighlight();
+		break;
     }
     }
 }
@@ -133,5 +133,5 @@ State Menu::getNextState() const
 bool Menu::leftMouseButtonPressed() const
 {
     return (event.type == SDL_MOUSEBUTTONDOWN
-	    && SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT));
+			&& SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT));
 }

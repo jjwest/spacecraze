@@ -19,7 +19,7 @@ void Play::handleEvents()
     while (SDL_PollEvent(&event) != 0)
     {
         if (event.type == SDL_QUIT)
-	{
+		{
             next_state = State::QUIT;
         }
     }
@@ -36,7 +36,7 @@ void Play::update()
     if (state.player_dead)
     {
         next_state = State::ENTER_HIGHSCORE;
-	score.set(state.score);
+		score.set(state.score);
     }
 }
 

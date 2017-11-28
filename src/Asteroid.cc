@@ -59,9 +59,9 @@ void Asteroid::update(const Point&, World&)
     ++angle;
 
     bool outside_screen = (hitbox.x + hitbox.w < 0 ||
-			   hitbox.y + hitbox.h < 0 ||
-			   hitbox.x > SCREEN_WIDTH ||
-			   hitbox.y > SCREEN_HEIGHT);
+						   hitbox.y + hitbox.h < 0 ||
+						   hitbox.x > SCREEN_WIDTH ||
+						   hitbox.y > SCREEN_HEIGHT);
     if (outside_screen)
     {
         kill();
